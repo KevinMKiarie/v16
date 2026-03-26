@@ -150,6 +150,72 @@ const FeatureTooltip = ({ text }) => {
   );
 };
 
+// --- CARD FEATURE LIST WITH KEYFEATURES SUPPORT ---
+
+const CardFeatureList = ({ plan, s }) => {
+  const [showAll, setShowAll] = React.useState(false);
+
+  const displayFeatures = plan.keyFeatures
+    ? plan.keyFeatures.map((f) => ({ text: f, included: true }))
+    : plan.features.slice(0, 5);
+
+  const featuresToShow = showAll ? plan.features : displayFeatures;
+
+  return (
+    <div className="relative flex-1 mb-2">
+      <div className="space-y-3.5 pb-2">
+        {featuresToShow.map((f, j) => {
+          const isIncluded = f.included;
+          const isBadge = f.isBadge;
+          if (!showAll && plan.keyFeatures) {
+            return (
+              <div
+                key={j}
+                className="flex items-start gap-3 text-sm font-medium text-zinc-200"
+              >
+                <CheckCircle2 className="w-4 h-4 shrink-0 text-indigo-400 mt-0.5 drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]" />
+                <span className="leading-tight">{f.text}</span>
+              </div>
+            );
+          }
+          if (isBadge) {
+            return (
+              <div
+                key={j}
+                className={`flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] -mx-1 text-sm font-bold ${s.label} mb-1`}
+              >
+                <Sparkles className="w-3.5 h-3.5 shrink-0" />
+                <span className="leading-tight">{f.text}</span>
+              </div>
+            );
+          }
+          return (
+            <div
+              key={j}
+              className={`flex items-start gap-3 text-sm font-medium transition-colors
+                ${isIncluded ? "text-zinc-200" : "text-zinc-600 line-through decoration-zinc-700"}`}
+            >
+              {isIncluded ? (
+                <CheckCircle2 className="w-4 h-4 shrink-0 text-indigo-400 mt-0.5 drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]" />
+              ) : (
+                <MinusCircle className="w-4 h-4 shrink-0 text-zinc-700 mt-0.5" />
+              )}
+              <span className="leading-tight">{f.text}</span>
+              {f.tooltip && isIncluded && <FeatureTooltip text={f.tooltip} />}
+            </div>
+          );
+        })}
+      </div>
+      <button
+        onClick={() => setShowAll(!showAll)}
+        className="mt-3 text-xs text-indigo-400 hover:text-indigo-300 transition-colors underline underline-offset-2"
+      >
+        {showAll ? "Show less" : "See full feature list"}
+      </button>
+    </div>
+  );
+};
+
 // --- MAIN SECTION COMPONENT ---
 
 const containerVariants = {
@@ -301,62 +367,270 @@ export default function PricingSection() {
             </div>
           </ScrollReveal>
 
+          {/* Not ready to commit */}
+          <div className="text-center mb-6">
+            <span className="text-sm text-zinc-500">
+              Not ready to commit?{" "}
+              <a
+                href="https://app.nexuscale.ai/users/register"
+                className="text-indigo-400 underline underline-offset-2 hover:text-indigo-300 transition-colors"
+              >
+                Start free, no card needed.
+              </a>
+            </span>
+          </div>
+
           {/* Pricing Cards */}
           <motion.div
-            class="grid md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-[95%] mx-auto mb-16 justify-center place-items-center"
+            class="grid md:grid-cols-2 lg:grid-cols-3 gap-3 max-w-[95%] mx-auto mb-16 justify-center place-items-center"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-60px" }}
           >
-            {pricingPlansData.map((plan, i) => {
-              const isPopular = plan.popular;
-              const s = planStyles[plan.name] || planStyles["Free"];
-              const isLastAlone = i === pricingPlansData.length - 1 && pricingPlansData.length % 2 !== 0;
+            {pricingPlansData
+              .filter((plan) => plan.name !== "Free" && plan.name !== "Agency")
+              .map((plan, i) => {
+                const isPopular = plan.popular;
+                const s = planStyles[plan.name] || planStyles["Free"];
+                const isLastAlone = false;
 
-              return (
-                <motion.div
-                  key={i}
-                  variants={cardVariants}
-                  whileHover={{ y: -8, scale: 1.015 }}
-                  transition={{ type: "spring", stiffness: 320, damping: 25 }}
-                  className={`relative group rounded-3xl border bg-[#0A0A0C]/80 backdrop-blur-xl overflow-hidden cursor-default flex flex-col
+                return (
+                  <motion.div
+                    key={i}
+                    variants={cardVariants}
+                    whileHover={{ y: -8, scale: 1.015 }}
+                    transition={{ type: "spring", stiffness: 320, damping: 25 }}
+                    className={`relative group rounded-3xl border bg-[#0A0A0C]/80 backdrop-blur-xl overflow-hidden cursor-default flex flex-col
                               transition-all duration-500 ${s.border} ${s.glow}
                               ${isLastAlone ? "md:col-span-2 lg:col-span-4 w-full" : ""}
                               ${isPopular ? "lg:scale-[1.03] z-10 ring-1 ring-indigo-500/50 shadow-[0_0_40px_rgba(99,102,241,0.1)]" : ""}`}
-                >
-                  {isPopular && (
-                    <div className="absolute top-0 left-0 right-0 flex justify-center z-20">
-                      <div className="bg-gradient-to-r from-indigo-500 to-violet-500 text-white text-[10px] font-black px-4 py-1.5 rounded-b-xl uppercase tracking-widest flex items-center gap-1.5 shadow-lg">
-                        <Zap className="w-3 h-3 text-yellow-300" /> Most Popular
+                  >
+                    {isPopular && (
+                      <div className="absolute top-0 left-0 right-0 flex justify-center z-20">
+                        <div className="bg-gradient-to-r from-indigo-500 to-violet-500 text-white text-[10px] font-black px-4 py-1.5 rounded-b-xl uppercase tracking-widest flex items-center gap-1.5 shadow-lg">
+                          <Zap className="w-3 h-3 text-yellow-300" /> Most
+                          Popular
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {/* Ambient orb */}
-                  <div
-                    className={`absolute -top-16 -right-16 w-48 h-48 rounded-full blur-3xl ${s.orb} opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`}
-                  />
+                    {/* Ambient orb */}
+                    <div
+                      className={`absolute -top-16 -right-16 w-48 h-48 rounded-full blur-3xl ${s.orb} opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`}
+                    />
 
-                  {/* Top accent bar */}
-                  <div
-                    className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${s.accent} origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500`}
-                  />
+                    {/* Top accent bar */}
+                    <div
+                      className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${s.accent} origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500`}
+                    />
 
-                  {isLastAlone ? (
-                    /* Agency Plan — horizontal layout */
-                    <div className={`relative z-10 p-6 flex flex-col md:flex-row flex-1 gap-6 md:gap-8 ${isPopular ? "pt-10" : "pt-8"}`}>
-                      {/* Left: header + pricing + CTA */}
-                      <div className="flex flex-col gap-5 md:w-[280px] md:shrink-0 md:border-r md:border-white/[0.06] md:pr-8">
+                    {isLastAlone ? (
+                      /* Agency Plan — horizontal layout */
+                      <div
+                        className={`relative z-10 p-6 flex flex-col md:flex-row flex-1 gap-6 md:gap-8 ${isPopular ? "pt-10" : "pt-8"}`}
+                      >
+                        {/* Left: header + pricing + CTA */}
+                        <div className="flex flex-col gap-5 md:w-[280px] md:shrink-0 md:border-r md:border-white/[0.06] md:pr-8">
+                          {/* Header */}
+                          <div>
+                            <div
+                              className={`text-[10px] font-black uppercase tracking-widest ${s.label} mb-1.5`}
+                            >
+                              {plan.name}
+                            </div>
+                            <div className="text-xl font-black text-white mb-1">
+                              {plan.tier}
+                            </div>
+                            <div className="text-xs text-zinc-500 leading-relaxed">
+                              {plan.desc}
+                            </div>
+                          </div>
+
+                          {/* Pricing */}
+                          <div>
+                            <div className="flex items-baseline gap-1.5 flex-wrap">
+                              {s.priceGrad ? (
+                                <span
+                                  className={`text-5xl font-black tracking-tight leading-none text-transparent bg-clip-text bg-gradient-to-r ${s.price}`}
+                                >
+                                  ${getPrice(plan)}
+                                </span>
+                              ) : (
+                                <span className="text-5xl font-black tracking-tight leading-none text-white">
+                                  ${getPrice(plan)}
+                                </span>
+                              )}
+                              {plan.price !== "0" && (
+                                <>
+                                  {annual && (
+                                    <span className="text-xs text-emerald-500/80 font-bold uppercase tracking-wider">
+                                      Save 20%
+                                    </span>
+                                  )}
+                                  <span className="text-sm text-zinc-500 font-bold">
+                                    /mo
+                                  </span>
+                                </>
+                              )}
+                            </div>
+                            {plan.price !== "0" && annual && (
+                              <p className="text-[10px] text-emerald-500/80 mt-1.5 font-bold uppercase tracking-wider">
+                                Billed yearly
+                              </p>
+                            )}
+                          </div>
+
+                          {/* CTA */}
+                          <div className="mt-auto pt-2">
+                            <Button
+                              text={plan.cta}
+                              variant={isPopular ? "brand" : "secondary"}
+                              className="w-full py-3.5 text-sm"
+                              onClick={() => {
+                                if (
+                                  plan.cta.includes("Schedule Call") ||
+                                  plan.cta.includes("Demo")
+                                ) {
+                                  window.open(
+                                    "https://cal.com/kevin-nexuscale/15min",
+                                    "_blank",
+                                  );
+                                } else if (annual && plan.stripeAnnualUrl) {
+                                  window.open(plan.stripeAnnualUrl, "_blank");
+                                } else if (!annual && plan.stripeMonthlyUrl) {
+                                  window.open(plan.stripeMonthlyUrl, "_blank");
+                                } else {
+                                  window.open(
+                                    "https://app.nexuscale.ai/users/register",
+                                    "_blank",
+                                  );
+                                }
+                              }}
+                            />
+                            <div className="text-center mt-3">
+                              <span
+                                className={`text-[10px] font-semibold tracking-wide uppercase ${isPopular ? "text-indigo-400" : "text-zinc-500"}`}
+                              >
+                                {plan.microcopy}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Right: stat chips + features */}
+                        <div className="flex flex-col gap-5 flex-1 min-w-0">
+                          <div className="h-px md:hidden bg-gradient-to-r from-white/[0.05] via-white/[0.1] to-white/[0.05]" />
+
+                          {/* Hard Limits Grid */}
+                          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                            <StatChip
+                              value={plan.credits.contacts}
+                              label="Credits /mo"
+                              sublabel="Engine Credits"
+                            />
+                            <StatChip
+                              value={`${plan.credits.linkedinSeats}`}
+                              label="LinkedIn Add-ons"
+                              sublabel={plan.credits.linkedinSub}
+                              dim={plan.name === "Free"}
+                            />
+                            <StatChip
+                              value={plan.credits.agents}
+                              label="AI Agents"
+                              sublabel={plan.credits.agentsType}
+                            />
+                            <StatChip
+                              value={plan.credits.teamSeats}
+                              label="Team Seats"
+                              sublabel="Collaborators"
+                            />
+                            <StatChip
+                              value={plan.credits.mailboxes}
+                              label="Mailboxes"
+                              sublabel={`${plan.credits.mailboxSub}`}
+                            />
+                            <StatChip
+                              value={plan.credits.emails}
+                              label="Emails"
+                              sublabel="Sending Limit"
+                            />
+                            <StatChip
+                              value={plan.credits.warmup}
+                              label="Email Warmup"
+                              sublabel="Deliverability"
+                            />
+                            <StatChip
+                              value={plan.credits.workspaces}
+                              label={
+                                plan.credits.workspaces === "1"
+                                  ? "Workspace"
+                                  : "Workspaces"
+                              }
+                              sublabel="Team & Client Isolation"
+                            />
+                          </div>
+
+                          <div className="h-px bg-gradient-to-r from-white/[0.05] via-white/[0.1] to-white/[0.05]" />
+
+                          {/* Features List */}
+                          <div className="relative flex-1 mb-2">
+                            <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-[#0A0A0C]/95 to-transparent z-10 pointer-events-none" />
+                            <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3.5 overflow-y-auto max-h-[320px] pr-2 custom-scrollbar pb-6">
+                              {plan.features.map((f, j) => {
+                                const isIncluded = f.included;
+                                const isBadge = f.isBadge;
+                                if (isBadge) {
+                                  return (
+                                    <div
+                                      key={j}
+                                      className={`sm:col-span-2 flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] -mx-1 text-sm font-bold ${s.label} mb-1`}
+                                    >
+                                      <Sparkles className="w-3.5 h-3.5 shrink-0" />
+                                      <span className="leading-tight">
+                                        {f.text}
+                                      </span>
+                                    </div>
+                                  );
+                                }
+                                return (
+                                  <div
+                                    key={j}
+                                    className={`flex items-start gap-3 text-sm font-medium transition-colors ${isIncluded ? "text-zinc-200" : "text-zinc-600 line-through decoration-zinc-700"}`}
+                                  >
+                                    {isIncluded ? (
+                                      <CheckCircle2 className="w-4 h-4 shrink-0 text-indigo-400 mt-0.5 drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]" />
+                                    ) : (
+                                      <MinusCircle className="w-4 h-4 shrink-0 text-zinc-700 mt-0.5" />
+                                    )}
+                                    <span className="leading-tight">
+                                      {f.text}
+                                    </span>
+                                    {f.tooltip && isIncluded && (
+                                      <FeatureTooltip text={f.tooltip} />
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div
+                        className={`relative z-10 p-6 flex flex-col flex-1 gap-5 ${isPopular ? "pt-10" : "pt-8"}`}
+                      >
                         {/* Header */}
                         <div>
-                          <div className={`text-[10px] font-black uppercase tracking-widest ${s.label} mb-1.5`}>
+                          <div
+                            className={`text-[10px] font-black uppercase tracking-widest ${s.label} mb-1.5`}
+                          >
                             {plan.name}
                           </div>
                           <div className="text-xl font-black text-white mb-1">
                             {plan.tier}
                           </div>
-                          <div className="text-xs text-zinc-500 leading-relaxed">
+                          <div className="text-xs text-zinc-500 leading-relaxed min-h-[32px]">
                             {plan.desc}
                           </div>
                         </div>
@@ -365,7 +639,9 @@ export default function PricingSection() {
                         <div>
                           <div className="flex items-baseline gap-1.5 flex-wrap">
                             {s.priceGrad ? (
-                              <span className={`text-5xl font-black tracking-tight leading-none text-transparent bg-clip-text bg-gradient-to-r ${s.price}`}>
+                              <span
+                                className={`text-5xl font-black tracking-tight leading-none text-transparent bg-clip-text bg-gradient-to-r ${s.price}`}
+                              >
                                 ${getPrice(plan)}
                               </span>
                             ) : (
@@ -376,11 +652,13 @@ export default function PricingSection() {
                             {plan.price !== "0" && (
                               <>
                                 {annual && (
-                                  <span className="text-base text-zinc-600 line-through decoration-2 font-medium">
-                                    ${plan.price}
+                                  <span className="text-xs text-emerald-500/80 font-bold uppercase tracking-wider">
+                                    Save 20%
                                   </span>
                                 )}
-                                <span className="text-sm text-zinc-500 font-bold">/mo</span>
+                                <span className="text-sm text-zinc-500 font-bold">
+                                  /mo
+                                </span>
                               </>
                             )}
                           </div>
@@ -389,276 +667,217 @@ export default function PricingSection() {
                               Billed yearly
                             </p>
                           )}
+                          {plan.price === "0" && (
+                            <p className="text-[10px] text-zinc-600 mt-1.5 font-bold uppercase tracking-wider opacity-0">
+                              Spacer
+                            </p>
+                          )}
                         </div>
 
-                        {/* CTA */}
-                        <div className="mt-auto pt-2">
-                          <Button
-                            text={plan.cta}
-                            variant={isPopular ? "brand" : "secondary"}
-                            className="w-full py-3.5 text-sm"
-                            onClick={() => {
-                              if (plan.cta.includes("Schedule Call") || plan.cta.includes("Demo")) {
-                                window.open("https://cal.com/kevin-nexuscale/15min", "_blank");
-                              } else if (annual && plan.stripeAnnualUrl) {
-                                window.open(plan.stripeAnnualUrl, "_blank");
-                              } else if (!annual && plan.stripeMonthlyUrl) {
-                                window.open(plan.stripeMonthlyUrl, "_blank");
-                              } else {
-                                window.open("https://app.nexuscale.ai/users/register", "_blank");
-                              }
-                            }}
-                          />
-                          <div className="text-center mt-3">
-                            <span className={`text-[10px] font-semibold tracking-wide uppercase ${isPopular ? "text-indigo-400" : "text-zinc-500"}`}>
-                              {plan.microcopy}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Right: stat chips + features */}
-                      <div className="flex flex-col gap-5 flex-1 min-w-0">
-                        <div className="h-px md:hidden bg-gradient-to-r from-white/[0.05] via-white/[0.1] to-white/[0.05]" />
+                        <div className="h-px bg-gradient-to-r from-white/[0.05] via-white/[0.1] to-white/[0.05]" />
 
                         {/* Hard Limits Grid */}
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                          <StatChip value={plan.credits.contacts} label="Credits /mo" sublabel="Engine Credits" />
-                          <StatChip value={`${plan.credits.linkedinSeats}`} label="LinkedIn Add-ons" sublabel={plan.credits.linkedinSub} dim={plan.name === "Free"} />
-                          <StatChip value={plan.credits.agents} label="AI Agents" sublabel={plan.credits.agentsType} />
-                          <StatChip value={plan.credits.teamSeats} label="Team Seats" sublabel="Collaborators" />
-                          <StatChip value={plan.credits.mailboxes} label="Mailboxes" sublabel={`${plan.credits.mailboxSub}`} />
-                          <StatChip value={plan.credits.emails} label="Emails" sublabel="Sending Limit" />
-                          <StatChip value={plan.credits.warmup} label="Email Warmup" sublabel="Deliverability" />
-                          <StatChip value={plan.credits.workspaces} label={plan.credits.workspaces === "1" ? "Workspace" : "Workspaces"} sublabel="Team & Client Isolation" />
+                        <div className="grid grid-cols-2 gap-2">
+                          <StatChip
+                            value={plan.credits.contacts}
+                            label="Credits /mo"
+                            sublabel="Engine Credits"
+                          />
+                          <StatChip
+                            value={`${plan.credits.linkedinSeats}`}
+                            label="LinkedIn Add-ons"
+                            sublabel={plan.credits.linkedinSub}
+                            dim={plan.name === "Free"}
+                          />
+                          <StatChip
+                            value={plan.credits.agents}
+                            label="AI Agents"
+                            sublabel={plan.credits.agentsType}
+                          />
+
+                          <StatChip
+                            value={plan.credits.teamSeats}
+                            label="Team Seats"
+                            sublabel="Collaborators"
+                          />
+
+                          <StatChip
+                            value={plan.credits.mailboxes}
+                            label="Mailboxes"
+                            sublabel={`${plan.credits.mailboxSub}`}
+                          />
+                          <StatChip
+                            value={plan.credits.emails}
+                            label="Emails"
+                            sublabel="Sending Limit"
+                          />
+                          <StatChip
+                            value={plan.credits.warmup}
+                            label="Email Warmup"
+                            sublabel="Deliverability"
+                          />
+                          <StatChip
+                            value={plan.credits.workspaces}
+                            label={
+                              plan.credits.workspaces === "1"
+                                ? "Workspace"
+                                : "Workspaces"
+                            }
+                            sublabel="Team & Client Isolation"
+                          />
                         </div>
 
                         <div className="h-px bg-gradient-to-r from-white/[0.05] via-white/[0.1] to-white/[0.05]" />
 
                         {/* Features List */}
-                        <div className="relative flex-1 mb-2">
-                          <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-[#0A0A0C]/95 to-transparent z-10 pointer-events-none" />
-                          <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3.5 overflow-y-auto max-h-[320px] pr-2 custom-scrollbar pb-6">
-                            {plan.features.map((f, j) => {
-                              const isIncluded = f.included;
-                              const isBadge = f.isBadge;
-                              if (isBadge) {
-                                return (
-                                  <div key={j} className={`sm:col-span-2 flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] -mx-1 text-sm font-bold ${s.label} mb-1`}>
-                                    <Sparkles className="w-3.5 h-3.5 shrink-0" />
-                                    <span className="leading-tight">{f.text}</span>
-                                  </div>
+                        <CardFeatureList plan={plan} s={s} />
+
+                        {/* CTA Section */}
+                        <div className="pt-2 mt-auto">
+                          <Button
+                            text={plan.cta}
+                            variant={isPopular ? "brand" : "secondary"}
+                            className="w-full py-3.5 text-sm"
+                            onClick={() => {
+                              if (
+                                plan.cta.includes("Schedule Call") ||
+                                plan.cta.includes("Demo")
+                              ) {
+                                window.open(
+                                  "https://cal.com/kevin-nexuscale/15min",
+                                  "_blank",
+                                );
+                              } else if (annual && plan.stripeAnnualUrl) {
+                                window.open(plan.stripeAnnualUrl, "_blank");
+                              } else if (!annual && plan.stripeMonthlyUrl) {
+                                window.open(plan.stripeMonthlyUrl, "_blank");
+                              } else {
+                                window.open(
+                                  "https://app.nexuscale.ai/users/register",
+                                  "_blank",
                                 );
                               }
-                              return (
-                                <div key={j} className={`flex items-start gap-3 text-sm font-medium transition-colors ${isIncluded ? "text-zinc-200" : "text-zinc-600 line-through decoration-zinc-700"}`}>
-                                  {isIncluded ? (
-                                    <CheckCircle2 className="w-4 h-4 shrink-0 text-indigo-400 mt-0.5 drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]" />
-                                  ) : (
-                                    <MinusCircle className="w-4 h-4 shrink-0 text-zinc-700 mt-0.5" />
-                                  )}
-                                  <span className="leading-tight">{f.text}</span>
-                                  {f.tooltip && isIncluded && <FeatureTooltip text={f.tooltip} />}
-                                </div>
-                              );
-                            })}
+                            }}
+                          />
+                          <div className="text-center mt-3">
+                            <span
+                              className={`text-[10px] font-semibold tracking-wide uppercase ${isPopular ? "text-indigo-400" : "text-zinc-500"}`}
+                            >
+                              {plan.microcopy}
+                            </span>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ) : (
-                  <div
-                    className={`relative z-10 p-6 flex flex-col flex-1 gap-5 ${isPopular ? "pt-10" : "pt-8"}`}
-                  >
-                    {/* Header */}
-                    <div>
-                      <div
-                        className={`text-[10px] font-black uppercase tracking-widest ${s.label} mb-1.5`}
-                      >
-                        {plan.name}
-                      </div>
-                      <div className="text-xl font-black text-white mb-1">
-                        {plan.tier}
-                      </div>
-                      <div className="text-xs text-zinc-500 leading-relaxed min-h-[32px]">
-                        {plan.desc}
-                      </div>
-                    </div>
-
-                    {/* Pricing */}
-                    <div>
-                      <div className="flex items-baseline gap-1.5 flex-wrap">
-                        {s.priceGrad ? (
-                          <span
-                            className={`text-5xl font-black tracking-tight leading-none text-transparent bg-clip-text bg-gradient-to-r ${s.price}`}
-                          >
-                            ${getPrice(plan)}
-                          </span>
-                        ) : (
-                          <span className="text-5xl font-black tracking-tight leading-none text-white">
-                            ${getPrice(plan)}
-                          </span>
-                        )}
-                        {plan.price !== "0" && (
-                          <>
-                            {annual && (
-                              <span className="text-base text-zinc-600 line-through decoration-2 font-medium">
-                                ${plan.price}
-                              </span>
-                            )}
-                            <span className="text-sm text-zinc-500 font-bold">
-                              /mo
-                            </span>
-                          </>
-                        )}
-                      </div>
-                      {plan.price !== "0" && annual && (
-                        <p className="text-[10px] text-emerald-500/80 mt-1.5 font-bold uppercase tracking-wider">
-                          Billed yearly
-                        </p>
-                      )}
-                      {plan.price === "0" && (
-                        <p className="text-[10px] text-zinc-600 mt-1.5 font-bold uppercase tracking-wider opacity-0">
-                          Spacer
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="h-px bg-gradient-to-r from-white/[0.05] via-white/[0.1] to-white/[0.05]" />
-
-                    {/* Hard Limits Grid */}
-                    <div className="grid grid-cols-2 gap-2">
-                      <StatChip
-                        value={plan.credits.contacts}
-                        label="Credits /mo"
-                        sublabel="Engine Credits"
-                      />
-                      <StatChip
-                        value={`${plan.credits.linkedinSeats}`}
-                        label="LinkedIn Add-ons"
-                        sublabel={plan.credits.linkedinSub}
-                        dim={plan.name === "Free"}
-                      />
-                      <StatChip
-                        value={plan.credits.agents}
-                        label="AI Agents"
-                        sublabel={plan.credits.agentsType}
-                      />
-
-                      <StatChip
-                        value={plan.credits.teamSeats}
-                        label="Team Seats"
-                        sublabel="Collaborators"
-                      />
-
-                      <StatChip
-                        value={plan.credits.mailboxes}
-                        label="Mailboxes"
-                        sublabel={`${plan.credits.mailboxSub}`}
-                      />
-                      <StatChip
-                        value={plan.credits.emails}
-                        label="Emails"
-                        sublabel="Sending Limit"
-                      />
-                      <StatChip
-                        value={plan.credits.warmup}
-                        label="Email Warmup"
-                        sublabel="Deliverability"
-                      />
-                      <StatChip
-                        value={plan.credits.workspaces}
-                        label={
-                          plan.credits.workspaces === "1"
-                            ? "Workspace"
-                            : "Workspaces"
-                        }
-                        sublabel="Team & Client Isolation"
-                      />
-                    </div>
-
-                    <div className="h-px bg-gradient-to-r from-white/[0.05] via-white/[0.1] to-white/[0.05]" />
-
-                    {/* Features List */}
-                    <div className="relative flex-1 mb-2">
-                      <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-[#0A0A0C]/95 to-transparent z-10 pointer-events-none" />
-                      <div className="space-y-3.5 overflow-y-auto h-[500px] pr-2 custom-scrollbar pb-6">
-                        {plan.features.map((f, j) => {
-                          const isIncluded = f.included;
-                          const isBadge = f.isBadge;
-                          if (isBadge) {
-                            return (
-                              <div
-                                key={j}
-                                className={`flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] -mx-1 text-sm font-bold ${s.label} mb-1`}
-                              >
-                                <Sparkles className="w-3.5 h-3.5 shrink-0" />
-                                <span className="leading-tight">{f.text}</span>
-                              </div>
-                            );
-                          }
-                          return (
-                            <div
-                              key={j}
-                              className={`flex items-start gap-3 text-sm font-medium transition-colors
-                                ${isIncluded ? "text-zinc-200" : "text-zinc-600 line-through decoration-zinc-700"}`}
-                            >
-                              {isIncluded ? (
-                                <CheckCircle2 className="w-4 h-4 shrink-0 text-indigo-400 mt-0.5 drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]" />
-                              ) : (
-                                <MinusCircle className="w-4 h-4 shrink-0 text-zinc-700 mt-0.5" />
-                              )}
-                              <span className="leading-tight">{f.text}</span>
-                              {f.tooltip && isIncluded && (
-                                <FeatureTooltip text={f.tooltip} />
-                              )}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    {/* CTA Section */}
-                    <div className="pt-2 mt-auto">
-                      <Button
-                        text={plan.cta}
-                        variant={isPopular ? "brand" : "secondary"}
-                        className="w-full py-3.5 text-sm"
-                        onClick={() => {
-                          if (
-                            plan.cta.includes("Schedule Call") ||
-                            plan.cta.includes("Demo")
-                          ) {
-                            window.open(
-                              "https://cal.com/kevin-nexuscale/15min",
-                              "_blank",
-                            );
-                          } else if (annual && plan.stripeAnnualUrl) {
-                            window.open(plan.stripeAnnualUrl, "_blank");
-                          } else if (!annual && plan.stripeMonthlyUrl) {
-                            window.open(plan.stripeMonthlyUrl, "_blank");
-                          } else {
-                            window.open(
-                              "https://app.nexuscale.ai/users/register",
-                              "_blank",
-                            );
-                          }
-                        }}
-                      />
-                      <div className="text-center mt-3">
-                        <span
-                          className={`text-[10px] font-semibold tracking-wide uppercase ${isPopular ? "text-indigo-400" : "text-zinc-500"}`}
-                        >
-                          {plan.microcopy}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  )}
-                </motion.div>
-              );
-            })}
+                    )}
+                  </motion.div>
+                );
+              })}
           </motion.div>
+
+          {/* Agency Section */}
+          <div className="mt-12 p-8 rounded-2xl border border-indigo-500/20 bg-indigo-500/5 text-center max-w-2xl mx-auto">
+            <p className="text-zinc-400 text-sm mb-1 uppercase tracking-widest font-bold">
+              For agencies
+            </p>
+            <h3 className="text-2xl font-bold text-white mb-2">
+              Running an agency? We built something different for you.
+            </h3>
+            <p className="text-zinc-400 text-sm mb-6">
+              White-label infrastructure, multi-tenant management, and
+              margin-boosting automation — purpose-built for agency scale.
+            </p>
+            <a
+              href="/contact"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-indigo-600 text-white font-bold text-sm hover:bg-indigo-500 transition-colors"
+            >
+              Book a call →
+            </a>
+          </div>
+
+          {/* Compare Plans Table */}
+          <div className="my-20">
+            <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-400 mb-8 font-black text-center text-7xl">
+              Compare plans
+            </h3>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b font-semibold border-white/10">
+                    <th className="text-left py-4 px-4 text-zinc-400 font-bold uppercase tracking-wider text-xs ">
+                      Feature
+                    </th>
+                    <th className="text-center py-4 px-4 text-zinc-400 font-bold uppercase tracking-wider text-xs">
+                      Start Up
+                    </th>
+                    <th className="text-center py-4 px-4 text-zinc-400 font-bold uppercase tracking-wider text-xs">
+                      Growth
+                    </th>
+                    <th className="text-center py-4 px-4 text-zinc-400 font-bold uppercase tracking-wider text-xs">
+                      Scale Up
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {[
+                    {
+                      feature: "AI Agents",
+                      startup: "2",
+                      growth: "10",
+                      scale: "50",
+                    },
+                    {
+                      feature: "Workspaces",
+                      startup: "1",
+                      growth: "3",
+                      scale: "10",
+                    },
+                    {
+                      feature: "Credits/mo",
+                      startup: "2,500",
+                      growth: "4,000",
+                      scale: "15,000",
+                    },
+                    {
+                      feature: "LinkedIn seats",
+                      startup: "Add-on (max 2)",
+                      growth: "Add-on (max 10)",
+                      scale: "Unlimited",
+                    },
+                    {
+                      feature: "Lead scoring",
+                      startup: "Basic",
+                      growth: "Advanced",
+                      scale: "Advanced",
+                    },
+                    {
+                      feature: "Support",
+                      startup: "Live chat",
+                      growth: "Priority",
+                      scale: "Priority",
+                    },
+                  ].map((row) => (
+                    <tr
+                      key={row.feature}
+                      className="hover:bg-white/[0.02] transition-colors"
+                    >
+                      <td className="py-4 px-4 text-white font-medium">
+                        {row.feature}
+                      </td>
+                      <td className="py-4 px-4 text-zinc-400 text-center">
+                        {row.startup}
+                      </td>
+                      <td className="py-4 px-4 text-zinc-400 text-center">
+                        {row.growth}
+                      </td>
+                      <td className="py-4 px-4 text-zinc-400 text-center">
+                        {row.scale}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
 
           {/* Enterprise Trust & ROI Section */}
           <ScrollReveal delay={100}>

@@ -303,18 +303,18 @@ function StackVisual() {
 }
 
 const oldStack = [
-  { name: "Apollo", purpose: "Leads", price: "$1,188/yr", pain: "Data silos" },
+  { name: "Apollo", purpose: "Leads", price: "$1,188/yr", pain: "Export CSV, import to Clay" },
   {
     name: "Clay",
     purpose: "Enrichment",
     price: "$1,788/yr",
-    pain: "Complex setup",
+    pain: "Build the table, hope it maps right",
   },
   {
     name: "Instantly",
     purpose: "Sending",
     price: "$1,068/yr",
-    pain: "Disconnected",
+    pain: "Paste it in, pray for deliverability",
   },
 ];
 
@@ -357,39 +357,10 @@ export default function App() {
 
           <ScrollReveal>
             <h1 className="text-4xl md:text-6xl  font-black text-white tracking-tighter leading-[1.1] max-w-4xl mx-auto mt-4 drop-shadow-xl">
-              You're already paying{" "}
-              <span className="relative inline-block px-1 sm:px-2">
-                <span className="relative z-10 text-red-500 drop-shadow-[0_0_20px_rgba(239,68,68,0.3)]">
-                  $4,044 a year
-                </span>
-                {/* Vibrant Red Strikethrough */}
-                <motion.svg
-                  viewBox="0 0 100 20"
-                  className="absolute top-1/2 left-0 w-full h-full -translate-y-[40%] z-20 pointer-events-none overflow-visible"
-                  preserveAspectRatio="none"
-                >
-                  <motion.path
-                    d="M -5 15 Q 45 5 105 12"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="8"
-                    strokeLinecap="round"
-                    className="text-red-500"
-                    initial={{ pathLength: 0 }}
-                    whileInView={{ pathLength: 1 }}
-                    transition={{ duration: 0.5, delay: 0.4, ease: "easeOut" }}
-                  />
-                </motion.svg>
-              </span>
-              <br className="hidden md:block" />
-              <span className="text-zinc-300">
-                You're just paying 3 companies for it.
-              </span>
+              The hidden cost of your current stack
             </h1>
             <p className="mt-4 sm:mt-8 text-sm sm:text-base md:text-lg lg:text-xl text-zinc-400 max-w-2xl mx-auto font-medium leading-relaxed px-2 sm:px-0">
-              Apollo finds the leads. Clay enriches them. Instantly sends them.
-              None of them talk to each other naturally, and you're the one
-              doing the duct-taping.
+              Apollo finds leads. Clay enriches them. Instantly sends them. You're the one making them talk to each other — and paying three invoices to do it.
             </p>
           </ScrollReveal>
         </div>
@@ -415,7 +386,7 @@ export default function App() {
                 The Old Stack
               </h3>
               <p className="text-xs sm:text-sm text-zinc-400 mb-6 sm:mb-10 font-medium leading-relaxed">
-                3 separate tools. 3 separate invoices. Zero native coordination.
+                3 separate tools. 3 separate invoices. You're the integration layer.
               </p>
 
               <div className="space-y-4 flex-grow relative z-10">

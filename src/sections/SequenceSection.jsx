@@ -1225,30 +1225,16 @@ export default function AutopilotSequence() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-40">
-          <ScrollReveal direction="up" scale={0.95}>
-            <div className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-zinc-400 mb-8 px-4 py-2 rounded-full border border-white/5 bg-[#0a0a0f] shadow-xl">
-              <Sparkles className="w-3 h-3 text-indigo-400" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-200 to-zinc-500">
-                Autonomous Engine
-              </span>
-            </div>
-          </ScrollReveal>
-
           <TextReveal
             as="h2"
             className="text-4xl md:text-6xl lg:text-6xl font-bold text-white md:tracking-tighter justify-center mb-8 md:leading-[0.8] max-w-4xl mx-auto"
           >
-            The autonomous engine
+            How it works
           </TextReveal>
 
           <ScrollReveal delay={200}>
             <p className="text-zinc-400 max-w-2xl mx-auto text-xl md:text-2xl leading-relaxed font-light">
-              From live signal to booked meeting. How the system executes the
-              <span className="text-white font-medium border-b border-indigo-500/50 pb-0.5">
-                {" "}
-                perfect pursuit
-              </span>
-              .
+              Three steps that used to be three tools.
             </p>
           </ScrollReveal>
         </div>

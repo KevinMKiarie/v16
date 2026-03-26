@@ -72,23 +72,24 @@ export default function HeroSection() {
         </ScrollReveal>
         <ScrollReveal delay={200}>
           <p className="text-lg md:text-xl text-zinc-400 mb-8 max-w-4xl mx-auto font-medium leading-relaxed antialiased">
-            Other platforms hand you a lead list and wish you luck. Nexuscale is
-            the database, the AI writer, and the sending infrastructure, built
-            together, under your control. No Google Workspace. No GoDaddy. No
-            Zapier. No duct tape.
+            Database, AI writer, and sending infrastructure, built together. No Apollo. No Clay. No Instantly. No $4,000/yr duct-tape bill.
           </p>
 
           <HeroInput />
 
-          <div className="mb-12 flex justify-center">
-            <G2ReviewCard />
+          <div className="mb-12 flex flex-col items-center gap-6 max-w-2xl mx-auto">
+            <div className="flex justify-center">
+              <G2ReviewCard />
+            </div>
+            <blockquote className="text-sm text-zinc-300 italic text-center">
+              "Got 3 signups from 13 emails on day one." — <span className="font-semibold text-white not-italic">Peter Poulos, Founder, Photostudio.io</span>
+            </blockquote>
+            <blockquote className="text-sm text-zinc-300 italic text-center">
+              "The personalization is miles ahead of anything else I've tested." — <span className="font-semibold text-white not-italic">Francis Rozange, CEO, La Factory</span>
+            </blockquote>
           </div>
 
           <div className="mb-20 w-full max-w-5xl mx-auto overflow-hidden relative py-10">
-            <p className=" text-xs md:text-sm font-medium text-white mb-8 uppercase tracking-normal md:tracking-widest text-center">
-              Trusted and loved by thousands of teams around the world
-            </p>
-
             <div className="absolute left-0 top-0 bottom-0 w-40 bg-gradient-to-r from-[#09090B] to-transparent z-10 pointer-events-none" />
             <div className="absolute right-0 top-0 bottom-0 w-40 bg-gradient-to-l from-[#09090B] to-transparent z-10 pointer-events-none" />
 
