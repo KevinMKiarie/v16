@@ -775,23 +775,57 @@ export default function PricingSection() {
           </motion.div>
 
           {/* Agency Section */}
-          <div className="mt-12 p-8 rounded-2xl border border-indigo-500/20 bg-indigo-500/5 text-center max-w-2xl mx-auto">
-            <p className="text-zinc-400 text-sm mb-1 uppercase tracking-widest font-bold">
-              For agencies
-            </p>
-            <h3 className="text-2xl font-bold text-white mb-2">
-              Running an agency? We built something different for you.
-            </h3>
-            <p className="text-zinc-400 text-sm mb-6">
-              White-label infrastructure, multi-tenant management, and
-              margin-boosting automation — purpose-built for agency scale.
-            </p>
-            <a
-              href="/contact"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-indigo-600 text-white font-bold text-sm hover:bg-indigo-500 transition-colors"
+          <div className="relative mt-16 max-w-4xl mx-auto px-4">
+           
+            <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-indigo-600/20 blur-[120px] rounded-full animate-pulse pointer-events-none" />
+
+            <div className="absolute top-0 right-1/4 w-[300px] h-[300px] bg-purple-600/10 blur-[100px] rounded-full pointer-events-none" />
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="relative group overflow-hidden rounded-[2.5rem] border border-white/10 bg-zinc-900/40 backdrop-blur-2xl p-8 md:p-12 shadow-2xl"
             >
-              Book a call →
-            </a>
+              {/* Top Highlight "Beam" */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
+
+              <div className="flex flex-col items-center text-center">
+                <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-6 group-hover:border-indigo-500/30 transition-colors">
+                  <Sparkles className="w-3 h-3 text-indigo-400" />
+                  <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-zinc-400">
+                    Agency Partners
+                  </span>
+                </div>
+
+                <h3 className="text-3xl md:text-5xl font-semibold tracking-tight text-white mb-6">
+                  Running an agency? <br />
+                  <span className="text-zinc-500">We built something </span>
+                  <span className="italic text-indigo-400">
+                    different
+                  </span>
+                  <span className="text-zinc-500"> for you.</span>
+                </h3>
+
+                <p className="text-zinc-400 text-base md:text-lg mb-10 max-w-2xl leading-relaxed">
+                  White-label infrastructure, multi-tenant management, and
+                  margin-boosting automation—purpose-built for firms ready to
+                  scale.
+                </p>
+
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                  <a
+                    href="/contact"
+                    className="relative inline-flex h-12 items-center justify-center rounded-full bg-white px-8 text-sm font-bold text-black transition-all hover:bg-zinc-200 hover:scale-105 active:scale-95"
+                  >
+                    Book a call
+                  </a>
+                </div>
+              </div>
+
+              {/* Bottom Corner Accent */}
+              <div className="absolute -bottom-12 -right-12 w-32 h-32 bg-indigo-500/10 blur-3xl rounded-full" />
+            </motion.div>
           </div>
 
           {/* Compare Plans Table */}
