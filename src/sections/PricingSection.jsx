@@ -238,7 +238,6 @@ const cardVariants = {
 export default function PricingSection() {
   const [annual, setAnnual] = useState(true);
 
-
   const revealVariants = {
     visible: (i) => ({
       y: 0,
@@ -308,18 +307,30 @@ export default function PricingSection() {
           customVariants={revealVariants}
           className="absolute left-0 top-[-114px] w-full h-[113.625vh] overflow-hidden pointer-events-none z-0"
         >
-          <div className="absolute left-[-568px] right-[-568px] top-0 h-[2053px] rounded-full"
-            style={{ border: "200px solid #3131f5", filter: "blur(92px)", WebkitFilter: "blur(92px)" }}
+          <div
+            className="absolute left-[-568px] right-[-568px] top-0 h-[2053px] rounded-full"
+            style={{
+              border: "200px solid #3131f5",
+              filter: "blur(92px)",
+              WebkitFilter: "blur(92px)",
+            }}
           />
-          <div className="absolute left-[-568px] right-[-568px] top-0 h-[2053px] rounded-full"
-            style={{ border: "200px solid #3131f5", filter: "blur(92px)", WebkitFilter: "blur(92px)" }}
+          <div
+            className="absolute left-[-568px] right-[-568px] top-0 h-[2053px] rounded-full"
+            style={{
+              border: "200px solid #3131f5",
+              filter: "blur(92px)",
+              WebkitFilter: "blur(92px)",
+            }}
           />
         </TimelineContent>
 
         {/* Blue radial gradient overlay */}
-        <div className="absolute top-0 left-[10%] w-[80%] h-full z-0 pointer-events-none"
+        <div
+          className="absolute top-0 left-[10%] w-[80%] h-full z-0 pointer-events-none"
           style={{
-            backgroundImage: "radial-gradient(circle at center, #206ce8 0%, transparent 70%)",
+            backgroundImage:
+              "radial-gradient(circle at center, #206ce8 0%, transparent 70%)",
             opacity: 0.15,
             mixBlendMode: "screen",
           }}
@@ -357,7 +368,12 @@ export default function PricingSection() {
                   staggerFrom="first"
                   reverse={true}
                   containerClassName="justify-center"
-                  transition={{ type: "spring", stiffness: 250, damping: 40, delay: 0 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 250,
+                    damping: 40,
+                    delay: 0,
+                  }}
                 >
                   Enterprise Power.
                 </VerticalCutReveal>
@@ -369,7 +385,12 @@ export default function PricingSection() {
                     staggerFrom="first"
                     reverse={true}
                     containerClassName="justify-center"
-                    transition={{ type: "spring", stiffness: 250, damping: 40, delay: 0.3 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 250,
+                      damping: 40,
+                      delay: 0.3,
+                    }}
                   >
                     Total Flexibility.
                   </VerticalCutReveal>
@@ -391,7 +412,11 @@ export default function PricingSection() {
                       <motion.span
                         layoutId="pricing-switch"
                         className="absolute top-0 left-0 h-10 w-full rounded-full border-4 shadow-sm shadow-blue-600 border-blue-600 bg-gradient-to-t from-blue-500 to-blue-600"
-                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 500,
+                          damping: 30,
+                        }}
                       />
                     )}
                     <span className="relative">Monthly</span>
@@ -404,7 +429,11 @@ export default function PricingSection() {
                       <motion.span
                         layoutId="pricing-switch"
                         className="absolute top-0 left-0 h-10 w-full rounded-full border-4 shadow-sm shadow-blue-600 border-blue-600 bg-gradient-to-t from-blue-500 to-blue-600"
-                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 500,
+                          damping: 30,
+                        }}
                       />
                     )}
                     <span className="relative flex items-center gap-2">
@@ -523,7 +552,10 @@ export default function PricingSection() {
                                       initial={{ y: -16, opacity: 0 }}
                                       animate={{ y: 0, opacity: 1 }}
                                       exit={{ y: 16, opacity: 0 }}
-                                      transition={{ duration: 0.2, ease: "easeOut" }}
+                                      transition={{
+                                        duration: 0.2,
+                                        ease: "easeOut",
+                                      }}
                                       className="inline-block"
                                     >
                                       ${getPrice(plan)}
@@ -538,7 +570,10 @@ export default function PricingSection() {
                                       initial={{ y: -16, opacity: 0 }}
                                       animate={{ y: 0, opacity: 1 }}
                                       exit={{ y: 16, opacity: 0 }}
-                                      transition={{ duration: 0.2, ease: "easeOut" }}
+                                      transition={{
+                                        duration: 0.2,
+                                        ease: "easeOut",
+                                      }}
                                       className="inline-block"
                                     >
                                       ${getPrice(plan)}
@@ -733,7 +768,10 @@ export default function PricingSection() {
                                     initial={{ y: -16, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
                                     exit={{ y: 16, opacity: 0 }}
-                                    transition={{ duration: 0.2, ease: "easeOut" }}
+                                    transition={{
+                                      duration: 0.2,
+                                      ease: "easeOut",
+                                    }}
                                     className="inline-block"
                                   >
                                     ${getPrice(plan)}
@@ -748,7 +786,10 @@ export default function PricingSection() {
                                     initial={{ y: -16, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
                                     exit={{ y: 16, opacity: 0 }}
-                                    transition={{ duration: 0.2, ease: "easeOut" }}
+                                    transition={{
+                                      duration: 0.2,
+                                      ease: "easeOut",
+                                    }}
                                     className="inline-block"
                                   >
                                     ${getPrice(plan)}
@@ -883,7 +924,6 @@ export default function PricingSection() {
 
           {/* Agency Section */}
           <div className="relative mt-16 max-w-4xl mx-auto px-4">
-           
             <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-indigo-600/20 blur-[120px] rounded-full animate-pulse pointer-events-none" />
 
             <div className="absolute top-0 right-1/4 w-[300px] h-[300px] bg-purple-600/10 blur-[100px] rounded-full pointer-events-none" />
@@ -908,9 +948,7 @@ export default function PricingSection() {
                 <h3 className="text-3xl md:text-5xl font-semibold tracking-tight text-white mb-6">
                   Running an agency? <br />
                   <span className="text-zinc-500">We built something </span>
-                  <span className="italic text-indigo-400">
-                    different
-                  </span>
+                  <span className="italic text-indigo-400">different</span>
                   <span className="text-zinc-500"> for you.</span>
                 </h3>
 
@@ -937,7 +975,7 @@ export default function PricingSection() {
 
           {/* Compare Plans Table */}
           <div className="my-20">
-            <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-400 mb-8 font-black text-center text-7xl">
+            <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 mb-8 font-black text-center text-7xl">
               Compare plans
             </h3>
             <div className="overflow-x-auto">
@@ -1178,9 +1216,7 @@ export default function PricingSection() {
 
                     <div className="relative z-10 flex flex-col h-full">
                       <div className="flex items-center justify-between mb-8">
-                        <div
-                          className="w-14 h-14 rounded-2xl flex items-center justify-center bg-[#111116] border border-white/[0.08] shadow-inner group-hover:scale-110 transition-transform duration-500"
-                        >
+                        <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-[#111116] border border-white/[0.08] shadow-inner group-hover:scale-110 transition-transform duration-500">
                           <module.icon className={`w-6 h-6 ${module.color}`} />
                         </div>
                         <div
