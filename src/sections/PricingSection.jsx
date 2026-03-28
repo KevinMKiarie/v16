@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Sparkles,
+  Sparkles as LucideSparkles,
   CheckCircle2,
   MinusCircle,
   Zap,
@@ -22,6 +22,8 @@ import {
   faqData,
   planStyles,
 } from "../data/pricing";
+import { VerticalCutReveal } from "../components/ui/vertical-cut-reveal";
+import { TimelineContent } from "../components/ui/timeline-animation";
 
 const ScrollReveal = ({ children, delay = 0 }) => (
   <motion.div
@@ -184,7 +186,7 @@ const CardFeatureList = ({ plan, s }) => {
                 key={j}
                 className={`flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] -mx-1 text-sm font-bold ${s.label} mb-1`}
               >
-                <Sparkles className="w-3.5 h-3.5 shrink-0" />
+                <LucideSparkles className="w-3.5 h-3.5 shrink-0" />
                 <span className="leading-tight">{f.text}</span>
               </div>
             );
@@ -236,6 +238,17 @@ const cardVariants = {
 export default function PricingSection() {
   const [annual, setAnnual] = useState(true);
 
+
+  const revealVariants = {
+    visible: (i) => ({
+      y: 0,
+      opacity: 1,
+      filter: "blur(0px)",
+      transition: { delay: i * 0.4, duration: 0.5 },
+    }),
+    hidden: { filter: "blur(10px)", y: -20, opacity: 0 },
+  };
+
   const savingsHighlight = annual
     ? "opacity-100 translate-y-0"
     : "opacity-0 -translate-y-1 pointer-events-none";
@@ -280,8 +293,37 @@ export default function PricingSection() {
       `}</style>
 
       <section className="py-24 relative px-6 overflow-hidden">
-        {/* Background Gradients */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] opacity-20 pointer-events-none blur-[120px] bg-gradient-to-b from-indigo-500/30 to-transparent" />
+        {/* Dot grid + glow reveal */}
+        <TimelineContent
+          animationNum={4}
+          customVariants={revealVariants}
+          className="absolute top-0 h-96 w-full overflow-hidden pointer-events-none [mask-image:radial-gradient(50%_50%,white,transparent)]"
+        >
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff2c_1px,transparent_1px),linear-gradient(to_bottom,#3a3a3a01_1px,transparent_1px)] bg-[size:70px_80px]" />
+        </TimelineContent>
+
+        {/* Animated dual-ellipse glow */}
+        <TimelineContent
+          animationNum={5}
+          customVariants={revealVariants}
+          className="absolute left-0 top-[-114px] w-full h-[113.625vh] overflow-hidden pointer-events-none z-0"
+        >
+          <div className="absolute left-[-568px] right-[-568px] top-0 h-[2053px] rounded-full"
+            style={{ border: "200px solid #3131f5", filter: "blur(92px)", WebkitFilter: "blur(92px)" }}
+          />
+          <div className="absolute left-[-568px] right-[-568px] top-0 h-[2053px] rounded-full"
+            style={{ border: "200px solid #3131f5", filter: "blur(92px)", WebkitFilter: "blur(92px)" }}
+          />
+        </TimelineContent>
+
+        {/* Blue radial gradient overlay */}
+        <div className="absolute top-0 left-[10%] w-[80%] h-full z-0 pointer-events-none"
+          style={{
+            backgroundImage: "radial-gradient(circle at center, #206ce8 0%, transparent 70%)",
+            opacity: 0.15,
+            mixBlendMode: "screen",
+          }}
+        />
 
         <div className="max-w-7xl mx-auto relative z-10 w-full">
           <ScrollReveal>
@@ -309,9 +351,28 @@ export default function PricingSection() {
               </div>
 
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 tracking-tight">
-                Enterprise Power. <br className="hidden sm:block" />
+                <VerticalCutReveal
+                  splitBy="words"
+                  staggerDuration={0.15}
+                  staggerFrom="first"
+                  reverse={true}
+                  containerClassName="justify-center"
+                  transition={{ type: "spring", stiffness: 250, damping: 40, delay: 0 }}
+                >
+                  Enterprise Power.
+                </VerticalCutReveal>
+                <br className="hidden sm:block" />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">
-                  Total Flexibility.
+                  <VerticalCutReveal
+                    splitBy="words"
+                    staggerDuration={0.15}
+                    staggerFrom="first"
+                    reverse={true}
+                    containerClassName="justify-center"
+                    transition={{ type: "spring", stiffness: 250, damping: 40, delay: 0.3 }}
+                  >
+                    Total Flexibility.
+                  </VerticalCutReveal>
                 </span>
               </h2>
               <p className="text-zinc-400 text-base max-w-xl mx-auto mb-10 leading-relaxed">
@@ -321,34 +382,36 @@ export default function PricingSection() {
 
               {/* Pricing Toggle */}
               <div className="flex flex-col items-center gap-3">
-                <div className="flex items-center gap-1 bg-white/[0.03] p-1.5 rounded-full border border-white/[0.08] backdrop-blur-md">
+                <div className="relative z-10 mx-auto flex w-fit rounded-full bg-neutral-900 border border-gray-700 p-1">
                   <button
                     onClick={() => setAnnual(false)}
-                    className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${
-                      !annual
-                        ? "bg-white text-black shadow-[0_4px_20px_rgba(255,255,255,0.15)]"
-                        : "text-zinc-400 hover:text-white"
-                    }`}
+                    className="relative z-10 w-fit h-10 rounded-full sm:px-6 px-4 sm:py-2 py-1 font-bold text-sm transition-colors text-gray-200"
                   >
-                    Monthly
+                    {!annual && (
+                      <motion.span
+                        layoutId="pricing-switch"
+                        className="absolute top-0 left-0 h-10 w-full rounded-full border-4 shadow-sm shadow-blue-600 border-blue-600 bg-gradient-to-t from-blue-500 to-blue-600"
+                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                      />
+                    )}
+                    <span className="relative">Monthly</span>
                   </button>
                   <button
                     onClick={() => setAnnual(true)}
-                    className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 flex items-center gap-2 ${
-                      annual
-                        ? "bg-white text-black shadow-[0_4px_20px_rgba(255,255,255,0.15)]"
-                        : "text-zinc-400 hover:text-white"
-                    }`}
+                    className="relative z-10 w-fit h-10 flex-shrink-0 rounded-full sm:px-6 px-4 sm:py-2 py-1 font-bold text-sm transition-colors text-gray-200 flex items-center gap-2"
                   >
-                    Yearly
-                    <span
-                      className={`text-[10px] px-2 py-0.5 rounded-full border transition-colors ${
-                        annual
-                          ? "bg-emerald-500 text-white border-emerald-600 shadow-sm"
-                          : "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-                      }`}
-                    >
-                      2months Free
+                    {annual && (
+                      <motion.span
+                        layoutId="pricing-switch"
+                        className="absolute top-0 left-0 h-10 w-full rounded-full border-4 shadow-sm shadow-blue-600 border-blue-600 bg-gradient-to-t from-blue-500 to-blue-600"
+                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                      />
+                    )}
+                    <span className="relative flex items-center gap-2">
+                      Yearly
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500 text-white border border-emerald-600 shadow-sm">
+                        2 months Free
+                      </span>
                     </span>
                   </button>
                 </div>
@@ -356,7 +419,7 @@ export default function PricingSection() {
                   <div
                     className={`text-emerald-400 text-xs font-bold tracking-widest uppercase transition-all duration-500 ${savingsHighlight}`}
                   >
-                    <Sparkles className="w-3.5 h-3.5 inline-block mr-1.5 mb-0.5" />
+                    <LucideSparkles className="w-3.5 h-3.5 inline-block mr-1.5 mb-0.5" />
                     Save up to $2,397 a year
                   </div>
                   <div className="text-[10px] text-zinc-500 uppercase tracking-widest font-semibold">
@@ -454,11 +517,33 @@ export default function PricingSection() {
                                 <span
                                   className={`text-5xl font-black tracking-tight leading-none text-transparent bg-clip-text bg-gradient-to-r ${s.price}`}
                                 >
-                                  ${getPrice(plan)}
+                                  <AnimatePresence mode="wait">
+                                    <motion.span
+                                      key={getPrice(plan)}
+                                      initial={{ y: -16, opacity: 0 }}
+                                      animate={{ y: 0, opacity: 1 }}
+                                      exit={{ y: 16, opacity: 0 }}
+                                      transition={{ duration: 0.2, ease: "easeOut" }}
+                                      className="inline-block"
+                                    >
+                                      ${getPrice(plan)}
+                                    </motion.span>
+                                  </AnimatePresence>
                                 </span>
                               ) : (
                                 <span className="text-5xl font-black tracking-tight leading-none text-white">
-                                  ${getPrice(plan)}
+                                  <AnimatePresence mode="wait">
+                                    <motion.span
+                                      key={getPrice(plan)}
+                                      initial={{ y: -16, opacity: 0 }}
+                                      animate={{ y: 0, opacity: 1 }}
+                                      exit={{ y: 16, opacity: 0 }}
+                                      transition={{ duration: 0.2, ease: "easeOut" }}
+                                      className="inline-block"
+                                    >
+                                      ${getPrice(plan)}
+                                    </motion.span>
+                                  </AnimatePresence>
                                 </span>
                               )}
                               {plan.price !== "0" && (
@@ -586,7 +671,7 @@ export default function PricingSection() {
                                       key={j}
                                       className={`sm:col-span-2 flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] -mx-1 text-sm font-bold ${s.label} mb-1`}
                                     >
-                                      <Sparkles className="w-3.5 h-3.5 shrink-0" />
+                                      <LucideSparkles className="w-3.5 h-3.5 shrink-0" />
                                       <span className="leading-tight">
                                         {f.text}
                                       </span>
@@ -642,11 +727,33 @@ export default function PricingSection() {
                               <span
                                 className={`text-5xl font-black tracking-tight leading-none text-transparent bg-clip-text bg-gradient-to-r ${s.price}`}
                               >
-                                ${getPrice(plan)}
+                                <AnimatePresence mode="wait">
+                                  <motion.span
+                                    key={getPrice(plan)}
+                                    initial={{ y: -16, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    exit={{ y: 16, opacity: 0 }}
+                                    transition={{ duration: 0.2, ease: "easeOut" }}
+                                    className="inline-block"
+                                  >
+                                    ${getPrice(plan)}
+                                  </motion.span>
+                                </AnimatePresence>
                               </span>
                             ) : (
                               <span className="text-5xl font-black tracking-tight leading-none text-white">
-                                ${getPrice(plan)}
+                                <AnimatePresence mode="wait">
+                                  <motion.span
+                                    key={getPrice(plan)}
+                                    initial={{ y: -16, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    exit={{ y: 16, opacity: 0 }}
+                                    transition={{ duration: 0.2, ease: "easeOut" }}
+                                    className="inline-block"
+                                  >
+                                    ${getPrice(plan)}
+                                  </motion.span>
+                                </AnimatePresence>
                               </span>
                             )}
                             {plan.price !== "0" && (
@@ -785,14 +892,14 @@ export default function PricingSection() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="relative group overflow-hidden rounded-[2.5rem] border border-white/10 bg-zinc-900/40 backdrop-blur-2xl p-8 md:p-12 shadow-2xl"
+              className="relative group overflow-hidden rounded-[2.5rem] bg-zinc-900/40 backdrop-blur-2xl p-8 md:p-12 shadow-2xl"
             >
               {/* Top Highlight "Beam" */}
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
 
               <div className="flex flex-col items-center text-center">
                 <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-6 group-hover:border-indigo-500/30 transition-colors">
-                  <Sparkles className="w-3 h-3 text-indigo-400" />
+                  <LucideSparkles className="w-3 h-3 text-indigo-400" />
                   <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-zinc-400">
                     Agency Partners
                   </span>
@@ -1034,26 +1141,45 @@ export default function PricingSection() {
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <motion.div
+                className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+                variants={containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-60px" }}
+              >
                 {platformEcosystemData.map((module, idx) => (
-                  <div
+                  <motion.div
                     key={idx}
-                    className="relative group bg-[#0A0A0C] border border-white/[0.06] hover:border-white/[0.15] rounded-[2rem] p-8 transition-all duration-500 overflow-hidden hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)]"
+                    variants={cardVariants}
+                    whileHover={{ y: -8, scale: 1.015 }}
+                    transition={{ type: "spring", stiffness: 320, damping: 25 }}
+                    className="relative group bg-[#0A0A0C] border border-white/[0.06] hover:border-white/[0.15] rounded-[2rem] p-8 transition-all duration-500 overflow-hidden hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)] cursor-default"
                   >
+                    {/* Top accent bar */}
+                    <div
+                      className={`absolute top-0 left-0 right-0 h-[2px] ${module.bg} origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500`}
+                    />
+
                     {/* Ambient Inner Glow */}
                     <div
                       className={`absolute inset-0 bg-gradient-to-br ${module.bg}/[0.02] pointer-events-none`}
                     />
 
-                    {/* Interactive Hover Aura */}
+                    {/* Orb */}
                     <div
-                      className={`absolute -top-24 -right-24 w-64 h-64 bg-gradient-to-br ${module.bg} blur-[80px] opacity-0 group-hover:opacity-20 transition-opacity duration-700 rounded-full pointer-events-none`}
+                      className={`absolute -top-8 -right-8 w-32 h-32 ${module.bg} blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-700 rounded-full pointer-events-none`}
                     />
+
+                    {/* Shimmer sweep */}
+                    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                      <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/[0.05] to-transparent transition-transform duration-[900ms] ease-in-out" />
+                    </div>
 
                     <div className="relative z-10 flex flex-col h-full">
                       <div className="flex items-center justify-between mb-8">
                         <div
-                          className={`w-14 h-14 rounded-2xl flex items-center justify-center bg-[#111116] border border-white/[0.08] shadow-inner group-hover:scale-110 transition-transform duration-500`}
+                          className="w-14 h-14 rounded-2xl flex items-center justify-center bg-[#111116] border border-white/[0.08] shadow-inner group-hover:scale-110 transition-transform duration-500"
                         >
                           <module.icon className={`w-6 h-6 ${module.color}`} />
                         </div>
@@ -1095,14 +1221,13 @@ export default function PricingSection() {
                         })}
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </div>
           </ScrollReveal>
 
-          {/* Custom Enterprise Banner */}
-          <ScrollReveal delay={300}>
+          {/* <ScrollReveal delay={300}>
             <motion.div
               whileHover={{ scale: 1.01 }}
               transition={{ type: "spring", stiffness: 300, damping: 24 }}
@@ -1137,7 +1262,7 @@ export default function PricingSection() {
                 }
               />
             </motion.div>
-          </ScrollReveal>
+          </ScrollReveal> */}
         </div>
       </section>
     </div>

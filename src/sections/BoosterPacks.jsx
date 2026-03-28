@@ -1,7 +1,9 @@
-import { motion } from "framer-motion"; 
+import { motion } from "framer-motion";
 import { ScrollReveal } from "../components/ScrollReveal";
 import { Button } from "../components/Button";
 import { boosterPacksData } from "../data/pricing";
+import { VerticalCutReveal } from "../components/ui/vertical-cut-reveal";
+import { TimelineContent } from "../components/ui/timeline-animation";
 
 const targetStyles = {
   Startup: {
@@ -179,43 +181,44 @@ export default function BoosterPacks() {
       <div className="max-w-6xl mx-auto">
         <ScrollReveal>
           <div className="text-center mb-16">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4 }}
-              className="inline-flex items-center gap-2 bg-white/[0.04] border border-white/10 rounded-full px-4 py-1.5 mb-5"
-            >
+            <TimelineContent animationNum={0} className="inline-flex items-center gap-2 bg-white/[0.04] border border-white/10 rounded-full px-4 py-1.5 mb-5">
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
               <span className="text-xs font-semibold text-zinc-400 uppercase tracking-widest">
                 Add-ons
               </span>
-            </motion.div>
+            </TimelineContent>
 
-            <motion.h3
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-3 tracking-tight"
-            >
-              Need More{" "}
+            <h3 className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-3 tracking-tight">
+              <VerticalCutReveal
+                splitBy="words"
+                staggerDuration={0.15}
+                staggerFrom="first"
+                reverse={true}
+                containerClassName="justify-center"
+                transition={{ type: "spring", stiffness: 250, damping: 40, delay: 0 }}
+              >
+                Need More
+              </VerticalCutReveal>
+              {" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-400">
-                Firepower?
+                <VerticalCutReveal
+                  splitBy="characters"
+                  staggerDuration={0.04}
+                  staggerFrom="first"
+                  reverse={true}
+                  containerClassName="justify-center"
+                  transition={{ type: "spring", stiffness: 250, damping: 40, delay: 0.25 }}
+                >
+                  Firepower?
+                </VerticalCutReveal>
               </span>
-            </motion.h3>
+            </h3>
 
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-zinc-400 text-base"
-            >
+            <TimelineContent animationNum={1} className="text-zinc-400 text-base">
               Add a{" "}
               <span className="text-white font-semibold">"Booster Pack"</span>{" "}
               to your plan.
-            </motion.p>
+            </TimelineContent>
           </div>
         </ScrollReveal>
 

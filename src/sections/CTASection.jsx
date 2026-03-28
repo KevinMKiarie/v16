@@ -90,10 +90,10 @@ export default function CTASection() {
           </div>
 
           <h2 className="text-5xl  md:text-6xl lg:text-6xl font-black text-white mb-12 tracking-tighter leading-[0.9] drop-shadow-2xl select-none">
-            Start free. Upgrade when it pays for itself.
+            Free plan included.
             <br className="hidden md:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-white/50 leading-4">
-              Free plan included. No card, no expiry.
+              No card, no expiry.
             </span>
           </h2>
 

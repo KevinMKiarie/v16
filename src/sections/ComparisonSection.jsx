@@ -105,7 +105,7 @@ const SpotlightCard = ({
       onMouseEnter={() => setOpacity(1)}
       onMouseLeave={() => setOpacity(0)}
       className={cn(
-        "relative overflow-hidden rounded-[2rem] border border-white/10 bg-zinc-950 transition-all duration-300 shadow-2xl",
+        "relative overflow-hidden rounded-lg border border-white/10 bg-zinc-950 transition-all duration-300 shadow-2xl",
         className,
       )}
     >
@@ -216,7 +216,7 @@ function StackVisual() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-full min-h-[260px] flex items-center justify-center overflow-hidden bg-zinc-950/50"
+      className="relative w-full h-full min-h-[220px] flex items-center justify-center overflow-hidden bg-zinc-950/50"
     >
       {/* Grid Background */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
@@ -225,8 +225,8 @@ function StackVisual() {
         containerRef={containerRef}
         fromRef={apolloRef}
         toRef={nexusRef}
-        gradientStartColor="#ef4444" // Red
-        gradientStopColor="#6366f1" // Indigo
+        gradientStartColor="#ef4444"
+        gradientStopColor="#6366f1"
         curvature={-55}
         duration={2.5}
       />
@@ -234,7 +234,7 @@ function StackVisual() {
         containerRef={containerRef}
         fromRef={clayRef}
         toRef={nexusRef}
-        gradientStartColor="#f59e0b" // Amber
+        gradientStartColor="#f59e0b"
         gradientStopColor="#6366f1"
         curvature={0}
         duration={3}
@@ -249,7 +249,6 @@ function StackVisual() {
         duration={3.5}
       />
 
-      {/* Input Nodes (Left) */}
       <div className="absolute left-4 sm:left-6 md:left-12 flex flex-col gap-5 sm:gap-8 top-1/2 -translate-y-1/2 z-10">
         <div
           ref={apolloRef}
@@ -274,7 +273,6 @@ function StackVisual() {
         </div>
       </div>
 
-      {/* Central Hub (Right) */}
       <div
         ref={nexusRef}
         className="absolute right-4 sm:right-6 md:right-16 top-1/2 -translate-y-1/2 z-20 rounded-[1.5rem] sm:rounded-[2rem] bg-zinc-900 border-2 border-indigo-400/50 flex flex-col items-center justify-center shadow-[0_0_60px_rgba(99,102,241,0.5)] group hover:scale-105 transition-transform"
@@ -287,14 +285,13 @@ function StackVisual() {
         <img
           src="https://cdn.brandfetch.io/nexuscale.ai/w/40/h/40"
           alt="Nexuscale"
-          className="w-6 h-6 sm:w-8 sm:h-8 rounded-full mx-auto"
+          className="w-6 h-6 sm:w-12 sm:h-12 rounded-full mx-auto"
         />
         <span className="text-[8px] sm:text-[10px] font-black text-white/90 uppercase tracking-widest relative z-10">
           NEXUS
         </span>
       </div>
 
-      {/* Footer Label */}
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[10px] text-zinc-500 font-mono uppercase tracking-widest flex items-center gap-2 bg-black/60 px-4 py-2 rounded-full border border-white/5 backdrop-blur-md">
         <Workflow size={14} className="text-indigo-400" /> Unified Workflow
       </div>
@@ -303,7 +300,12 @@ function StackVisual() {
 }
 
 const oldStack = [
-  { name: "Apollo", purpose: "Leads", price: "$1,188/yr", pain: "Export CSV, import to Clay" },
+  {
+    name: "Apollo",
+    purpose: "Leads",
+    price: "$1,188/yr",
+    pain: "Export CSV, import to Clay",
+  },
   {
     name: "Clay",
     purpose: "Enrichment",
@@ -319,17 +321,17 @@ const oldStack = [
 ];
 
 const nexusFeatures = [
+  "AI Writer",
+  "Database",
+  "Sending Infrastructure",
   "One Platform. One Price.",
-  "Database. AI Writer. Sending Infrastructure. All built together from scratch.",
-  "Database ",
-  "AI Writer ",
-  "Sending Infrastructure ",
   "LinkedIn Outreach (Beta)",
+  "Database. AI Writer. Sending Infrastructure. All built together from scratch.",
 ];
 
 export default function App() {
   return (
-    <div className="min-h-screen py-16 md:py-24 lg:py-32 bg-transparent text-zinc-100 overflow-hidden relative font-sans selection:bg-indigo-500/30">
+    <div className="min-h-screen py-16 md:py-24 lg:py-32  text-zinc-100 overflow-hidden relative font-sans">
       {/* Background Decor - Vibrant Gradients */}
       <div
         className="absolute inset-0 pointer-events-none z-[0] opacity-[0.25]"
@@ -360,22 +362,22 @@ export default function App() {
               The hidden cost of your current stack
             </h1>
             <p className="mt-4 sm:mt-8 text-sm sm:text-base md:text-lg lg:text-xl text-zinc-400 max-w-2xl mx-auto font-medium leading-relaxed px-2 sm:px-0">
-              Apollo finds leads. Clay enriches them. Instantly sends them. You're the one making them talk to each other — and paying three invoices to do it.
+              Apollo finds leads. Clay enriches them. Instantly sends them.
+              You're the one making them talk to each other — and paying three
+              invoices to do it.
             </p>
           </ScrollReveal>
         </div>
 
-        {/* Comparison Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12">
-          {/* Column 1: The Old Stack */}
           <ScrollReveal delay={100} direction="left" className="h-full">
             <SpotlightCard
-              className="h-full flex flex-col p-5 sm:p-7 md:p-10 group bg-zinc-950/80 backdrop-blur-xl border-red-900/20"
+              className="h-full flex flex-col  p-3 group bg-zinc-950/80 backdrop-blur-xl border-red-900/20"
               spotlightColor="rgba(239, 68, 68, 0.15)"
             >
               <div className="absolute inset-0 bg-gradient-to-b from-red-950/20 to-transparent pointer-events-none opacity-70" />
 
-              <div className="flex items-center gap-3 mb-6 sm:mb-8 relative z-10">
+              <div className="flex items-center gap-3 mb-3 relative z-10">
                 <div className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.8)] animate-pulse" />
                 <span className="text-[10px] sm:text-xs font-black text-red-500 uppercase tracking-widest">
                   Legacy Approach
@@ -385,8 +387,9 @@ export default function App() {
               <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-2 sm:mb-3 tracking-tight">
                 The Old Stack
               </h3>
-              <p className="text-xs sm:text-sm text-zinc-400 mb-6 sm:mb-10 font-medium leading-relaxed">
-                3 separate tools. 3 separate invoices. You're the integration layer.
+              <p className="text-xs sm:text-sm text-zinc-400 mb-6  font-medium leading-relaxed">
+                3 separate tools. 3 separate invoices. You're the integration
+                layer.
               </p>
 
               <div className="space-y-4 flex-grow relative z-10">
@@ -396,7 +399,7 @@ export default function App() {
                     className="relative flex items-center justify-between p-3 sm:p-5 rounded-2xl border border-white/5 bg-white/[0.03] hover:bg-red-500/10 hover:border-red-500/30 transition-all duration-300 group/item overflow-hidden shadow-lg"
                   >
                     <div className="flex items-center gap-3 sm:gap-4 z-10">
-                      <div className="flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-zinc-900 text-red-400 border border-red-500/20 group-hover/item:bg-red-500/20 group-hover/item:text-red-300 transition-colors flex-shrink-0">
+                      <div className="flex h-6 w-6 md:h-12 md:w-12 items-center justify-center rounded-xl bg-zinc-900 text-red-400 border border-red-500/20 group-hover/item:bg-red-500/20 group-hover/item:text-red-300 transition-colors flex-shrink-0">
                         <Puzzle
                           className="w-4 h-4 sm:w-5 sm:h-5"
                           strokeWidth={2.5}
@@ -441,15 +444,14 @@ export default function App() {
             </SpotlightCard>
           </ScrollReveal>
 
-          {/* Column 2: Nexuscale */}
           <ScrollReveal delay={200} direction="right" className="h-full">
             <SpotlightCard
-              className="h-full flex flex-col p-5 sm:p-7 md:p-10 group bg-zinc-950/80 backdrop-blur-xl border-indigo-500/30 shadow-[0_0_50px_rgba(99,102,241,0.15)] hover:border-indigo-500/50"
+              className="h-full flex flex-col p-3  rounded-md  group bg-zinc-950/80 backdrop-blur-xl border-indigo-500/30 shadow-[0_0_50px_rgba(99,102,241,0.15)] hover:border-indigo-500/50"
               spotlightColor="rgba(99, 102, 241, 0.2)"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/20 via-transparent to-transparent pointer-events-none opacity-80" />
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/20 via-transparent to-transparent pointer-events-none opacity-50" />
 
-              <div className="flex items-center gap-3 mb-6 sm:mb-8 relative z-10">
+              <div className="flex items-center gap-3 mb-3 relative z-10">
                 <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.8)] animate-pulse" />
                 <span className="text-[10px] sm:text-xs font-black text-emerald-400 uppercase tracking-widest">
                   All-in-One
@@ -459,16 +461,16 @@ export default function App() {
               <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-2 sm:mb-3 tracking-tight">
                 Nexuscale
               </h3>
-              <p className="text-xs sm:text-sm text-zinc-400 mb-6 sm:mb-10 font-medium leading-relaxed">
+              <p className="text-xs sm:text-sm text-zinc-400 mb-6 font-medium leading-relaxed">
                 The Intelligent Autopilot. Everything you need unified in one
                 seamless platform.
               </p>
 
-              <div className="relative rounded-2xl border border-white/10 bg-black/50 mb-6 sm:mb-8 overflow-hidden min-h-[200px] sm:min-h-[260px] shadow-[inset_0_0_50px_rgba(0,0,0,0.5)] group-hover:border-indigo-500/40 transition-colors duration-500">
+              <div className="relative rounded-2xl border border-white/10 bg-black/50 mb-3 sm:mb-8 overflow-hidden min-h-[200px] md:min-h-20 shadow-[inset_0_0_50px_rgba(0,0,0,0.5)] group-hover:border-indigo-500/40 transition-colors duration-500 p-3">
                 <StackVisual />
               </div>
 
-              <div className="flex flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-10 relative z-10">
+              <div className="flex flex-wrap gap-2 md:gap-3 mb-3  relative z-10">
                 {nexusFeatures.map((f) => (
                   <div
                     key={f}
@@ -504,17 +506,15 @@ export default function App() {
                       "_blank",
                     )
                   }
-                  className="w-full sm:w-auto inline-flex px-4 py-2 md:px-6 md:py-3 items-center justify-center rounded-xl bg-white  font-black text-zinc-900 transition-all hover:bg-zinc-200 hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(255,255,255,0.2)] focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-zinc-900 text-sm sm:text-base"
+                  className="w-full sm:w-auto inline-flex px-4 py-2 md:px-6 md:py-3 items-center justify-center rounded-lg bg-white  font-black text-zinc-900 transition-all hover:bg-zinc-200 hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(255,255,255,0.2)] focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-zinc-900 text-sm sm:text-base"
                 >
-                  <Zap className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-2.5 fill-zinc-900" />
+                  <Zap className="w-4 h-4 mr-3 fill-blue-900" />
                   Start Now
                 </button>
               </div>
             </SpotlightCard>
           </ScrollReveal>
         </div>
-
-    
       </div>
     </div>
   );
