@@ -1,53 +1,32 @@
-import React, { useRef, useState, useEffect, useId } from "react";
-import { motion, useInView, useSpring } from "framer-motion";
+import { useRef, useState, useEffect, useId } from "react";
+import { motion, useInView, useSpring, AnimatePresence } from "framer-motion";
 import {
   Check,
-  ArrowRight,
   Zap,
   Database,
   Layers,
   Send,
   AlertTriangle,
   Workflow,
-  Puzzle,
   Sparkles,
 } from "lucide-react";
 
 // --- UTILITIES ---
-
 const cn = (...classes) => classes.filter(Boolean).join(" ");
 
-// --- ANIMATION COMPONENTS ---
-
-// Smooth but energetic easing
+// --- SCROLL REVEAL ---
 const bouncyEasing = [0.17, 0.67, 0.46, 0.99];
 
-const ScrollReveal = ({
-  children,
-  delay = 0,
-  direction = "up",
-  className = "",
-}) => {
+const ScrollReveal = ({ children, delay = 0, direction = "up", className = "" }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
-
-  const directions = {
-    up: { y: 40, x: 0 },
-    down: { y: -40, x: 0 },
-    left: { x: -40, y: 0 },
-    right: { x: 40, y: 0 },
-  };
-
+  const dirs = { up: { y: 40, x: 0 }, down: { y: -40, x: 0 }, left: { x: -40, y: 0 }, right: { x: 40, y: 0 } };
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, ...directions[direction], filter: "blur(5px)" }}
+      initial={{ opacity: 0, ...dirs[direction], filter: "blur(5px)" }}
       animate={isInView ? { opacity: 1, x: 0, y: 0, filter: "blur(0px)" } : {}}
-      transition={{
-        duration: 0.5,
-        delay: delay / 1000,
-        ease: bouncyEasing,
-      }}
+      transition={{ duration: 0.5, delay: delay / 1000, ease: bouncyEasing }}
       className={className}
     >
       {children}
@@ -55,117 +34,67 @@ const ScrollReveal = ({
   );
 };
 
-const NumberTicker = ({ value, className = "", prefix = "", suffix = "" }) => {
+// --- NUMBER TICKER ---
+const NumberTicker = ({ value, prefix = "", suffix = "" }) => {
   const ref = useRef(null);
   const motionValue = useSpring(0, { duration: 1500, bounce: 0 });
   const isInView = useInView(ref, { once: true, margin: "-20px" });
   const [display, setDisplay] = useState(0);
-
-  useEffect(() => {
-    if (isInView) {
-      motionValue.set(value);
-    }
-  }, [isInView, value, motionValue]);
-
-  useEffect(() => {
-    return motionValue.on("change", (latest) => {
-      setDisplay(Math.round(latest));
-    });
-  }, [motionValue]);
-
-  return (
-    <span ref={ref} className={className}>
-      {prefix}
-      {display.toLocaleString()}
-      {suffix}
-    </span>
-  );
+  useEffect(() => { if (isInView) motionValue.set(value); }, [isInView, value, motionValue]);
+  useEffect(() => motionValue.on("change", (v) => setDisplay(Math.round(v))), [motionValue]);
+  return <span ref={ref}>{prefix}{display.toLocaleString()}{suffix}</span>;
 };
 
-// Vibrant Spotlight Effect Wrapper
-const SpotlightCard = ({
-  children,
-  className = "",
-  spotlightColor = "rgba(255, 255, 255, 0.1)",
-}) => {
+// --- SPOTLIGHT CARD ---
+const SpotlightCard = ({ children, className = "", spotlightColor = "rgba(255,255,255,0.08)" }) => {
   const divRef = useRef(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [pos, setPos] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
-
   const handleMouseMove = (e) => {
     if (!divRef.current) return;
     const rect = divRef.current.getBoundingClientRect();
-    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    setPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
-
   return (
     <div
       ref={divRef}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setOpacity(1)}
       onMouseLeave={() => setOpacity(0)}
-      className={cn(
-        "relative overflow-hidden rounded-lg border border-white/10 bg-zinc-950 transition-all duration-300 shadow-2xl",
-        className,
-      )}
+      className={cn("relative overflow-hidden transition-all duration-300", className)}
     >
       <div
         className="pointer-events-none absolute -inset-px transition-opacity duration-300 z-10"
-        style={{
-          opacity,
-          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${spotlightColor}, transparent 40%)`,
-        }}
+        style={{ opacity, background: `radial-gradient(500px circle at ${pos.x}px ${pos.y}px, ${spotlightColor}, transparent 40%)` }}
       />
       <div className="relative z-20 h-full">{children}</div>
     </div>
   );
 };
 
-// Glowing Animated Beam
-const AnimatedBeam = ({
-  containerRef,
-  fromRef,
-  toRef,
-  curvature = 0,
-  gradientStartColor = "#ff0000",
-  gradientStopColor = "#0000ff",
-  duration = 3,
-}) => {
+// --- ANIMATED BEAM ---
+const AnimatedBeam = ({ containerRef, fromRef, toRef, curvature = 0, gradientStartColor, gradientStopColor, duration = 3 }) => {
   const [path, setPath] = useState("");
   const id = useId();
-
   useEffect(() => {
-    const updatePath = () => {
+    const update = () => {
       if (!containerRef.current || !fromRef.current || !toRef.current) return;
-
-      const containerRect = containerRef.current.getBoundingClientRect();
-      const fromRect = fromRef.current.getBoundingClientRect();
-      const toRect = toRef.current.getBoundingClientRect();
-
-      const startX = fromRect.left - containerRect.left + fromRect.width / 2;
-      const startY = fromRect.top - containerRect.top + fromRect.height / 2;
-      const endX = toRect.left - containerRect.left + toRect.width / 2;
-      const endY = toRect.top - containerRect.top + toRect.height / 2;
-
-      const controlX = (startX + endX) / 2;
-      const controlY = (startY + endY) / 2 + curvature;
-
-      setPath(
-        `M ${startX},${startY} Q ${controlX},${controlY} ${endX},${endY}`,
-      );
+      const cr = containerRef.current.getBoundingClientRect();
+      const fr = fromRef.current.getBoundingClientRect();
+      const tr = toRef.current.getBoundingClientRect();
+      const sx = fr.left - cr.left + fr.width / 2;
+      const sy = fr.top - cr.top + fr.height / 2;
+      const ex = tr.left - cr.left + tr.width / 2;
+      const ey = tr.top - cr.top + tr.height / 2;
+      const cx = (sx + ex) / 2, cy = (sy + ey) / 2 + curvature;
+      setPath(`M ${sx},${sy} Q ${cx},${cy} ${ex},${ey}`);
     };
-
-    updatePath();
-    const resizeObserver = new ResizeObserver(updatePath);
-    if (containerRef.current) resizeObserver.observe(containerRef.current);
-    window.addEventListener("resize", updatePath);
-
-    return () => {
-      window.removeEventListener("resize", updatePath);
-      resizeObserver.disconnect();
-    };
+    update();
+    const ro = new ResizeObserver(update);
+    if (containerRef.current) ro.observe(containerRef.current);
+    window.addEventListener("resize", update);
+    return () => { window.removeEventListener("resize", update); ro.disconnect(); };
   }, [containerRef, fromRef, toRef, curvature]);
-
   return (
     <svg className="pointer-events-none absolute inset-0 h-full w-full z-0 overflow-visible">
       <defs>
@@ -175,340 +104,321 @@ const AnimatedBeam = ({
           <stop offset="100%" stopColor={gradientStopColor} stopOpacity="0" />
         </linearGradient>
         <filter id={`glow-${id}`} x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="4" result="blur" />
+          <feGaussianBlur stdDeviation="3" result="blur" />
           <feComposite in="SourceGraphic" in2="blur" operator="over" />
         </filter>
       </defs>
-      <path
-        d={path}
-        fill="none"
-        strokeWidth="1.5"
-        stroke={gradientStartColor}
-        strokeOpacity="0.15"
-      />
+      <path d={path} fill="none" strokeWidth="1" stroke={gradientStartColor} strokeOpacity="0.12" />
       <motion.path
-        d={path}
-        fill="none"
-        strokeWidth="3"
-        stroke={`url(#${id})`}
-        strokeLinecap="round"
+        d={path} fill="none" strokeWidth="2.5" stroke={`url(#${id})`} strokeLinecap="round"
         filter={`url(#glow-${id})`}
         initial={{ pathLength: 0, opacity: 0 }}
         animate={{ pathLength: 1, opacity: 1 }}
-        transition={{
-          duration,
-          repeat: Infinity,
-          ease: "linear",
-          repeatDelay: 0.2,
-        }}
+        transition={{ duration, repeat: Infinity, ease: "linear", repeatDelay: 0.2 }}
       />
     </svg>
   );
 };
 
+// --- NEXUS STACK VISUAL ---
 function StackVisual() {
   const containerRef = useRef(null);
   const apolloRef = useRef(null);
   const clayRef = useRef(null);
   const instantlyRef = useRef(null);
   const nexusRef = useRef(null);
-
   return (
-    <div
-      ref={containerRef}
-      className="relative w-full h-full min-h-[220px] flex items-center justify-center overflow-hidden bg-zinc-950/50"
-    >
-      {/* Grid Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
-
-      <AnimatedBeam
-        containerRef={containerRef}
-        fromRef={apolloRef}
-        toRef={nexusRef}
-        gradientStartColor="#ef4444"
-        gradientStopColor="#6366f1"
-        curvature={-55}
-        duration={2.5}
-      />
-      <AnimatedBeam
-        containerRef={containerRef}
-        fromRef={clayRef}
-        toRef={nexusRef}
-        gradientStartColor="#f59e0b"
-        gradientStopColor="#6366f1"
-        curvature={0}
-        duration={3}
-      />
-      <AnimatedBeam
-        containerRef={containerRef}
-        fromRef={instantlyRef}
-        toRef={nexusRef}
-        gradientStartColor="#f97316" // Orange
-        gradientStopColor="#6366f1"
-        curvature={55}
-        duration={3.5}
-      />
-
-      <div className="absolute left-4 sm:left-6 md:left-12 flex flex-col gap-5 sm:gap-8 top-1/2 -translate-y-1/2 z-10">
-        <div
-          ref={apolloRef}
-          className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-red-400 shadow-[0_0_20px_rgba(239,68,68,0.2)] relative group hover:scale-110 transition-transform cursor-default z-10"
-        >
-          <div className="absolute inset-0 bg-red-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-          <Database className="w-4 h-4 sm:w-5 sm:h-5 relative z-10" />
-        </div>
-        <div
-          ref={clayRef}
-          className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-amber-400 shadow-[0_0_20px_rgba(245,158,11,0.2)] relative group hover:scale-110 transition-transform cursor-default z-10"
-        >
-          <div className="absolute inset-0 bg-amber-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-          <Layers className="w-4 h-4 sm:w-5 sm:h-5 relative z-10" />
-        </div>
-        <div
-          ref={instantlyRef}
-          className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-orange-400 shadow-[0_0_20px_rgba(249,115,22,0.2)] relative group hover:scale-110 transition-transform cursor-default z-10"
-        >
-          <div className="absolute inset-0 bg-orange-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-          <Send className="w-4 h-4 sm:w-5 sm:h-5 relative z-10" />
-        </div>
+    <div ref={containerRef} className="relative w-full h-full min-h-[180px] flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808010_1px,transparent_1px),linear-gradient(to_bottom,#80808010_1px,transparent_1px)] bg-[size:20px_20px]" />
+      <AnimatedBeam containerRef={containerRef} fromRef={apolloRef} toRef={nexusRef} gradientStartColor="#ef4444" gradientStopColor="#6366f1" curvature={-45} duration={2.5} />
+      <AnimatedBeam containerRef={containerRef} fromRef={clayRef} toRef={nexusRef} gradientStartColor="#f59e0b" gradientStopColor="#6366f1" curvature={0} duration={3} />
+      <AnimatedBeam containerRef={containerRef} fromRef={instantlyRef} toRef={nexusRef} gradientStartColor="#f97316" gradientStopColor="#6366f1" curvature={45} duration={3.5} />
+      <div className="absolute left-4 sm:left-8 flex flex-col gap-4 top-1/2 -translate-y-1/2 z-10">
+        {[
+          { ref: apolloRef, colorClass: "red", IconComp: Database },
+          { ref: clayRef, colorClass: "amber", IconComp: Layers },
+          { ref: instantlyRef, colorClass: "orange", IconComp: Send },
+        ].map(({ ref, colorClass, IconComp }, i) => (
+          <div key={i} ref={ref}
+            className={`w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-${colorClass}-400 shadow-[0_0_16px_rgba(239,68,68,0.15)] relative z-10 hover:scale-110 transition-transform`}
+          >
+            <IconComp className="w-4 h-4" />
+          </div>
+        ))}
       </div>
-
-      <div
-        ref={nexusRef}
-        className="absolute right-4 sm:right-6 md:right-16 top-1/2 -translate-y-1/2 z-20 rounded-[1.5rem] sm:rounded-[2rem] bg-zinc-900 border-2 border-indigo-400/50 flex flex-col items-center justify-center shadow-[0_0_60px_rgba(99,102,241,0.5)] group hover:scale-105 transition-transform"
-        style={{
-          width: "clamp(4rem, 10vw, 6rem)",
-          height: "clamp(4rem, 10vw, 6rem)",
-        }}
-      >
-        <div className="absolute inset-0 bg-white/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        <img
-          src="https://cdn.brandfetch.io/nexuscale.ai/w/40/h/40"
-          alt="Nexuscale"
-          className="w-6 h-6 sm:w-12 sm:h-12 rounded-full mx-auto"
-        />
-        <span className="text-[8px] sm:text-[10px] font-black text-white/90 uppercase tracking-widest relative z-10">
-          NEXUS
-        </span>
+      <div ref={nexusRef} className="absolute right-4 sm:right-10 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-2xl bg-zinc-900 border-2 border-indigo-400/50 flex flex-col items-center justify-center shadow-[0_0_40px_rgba(99,102,241,0.4)]">
+        <img src="https://cdn.brandfetch.io/nexuscale.ai/w/40/h/40" alt="Nexuscale" className="w-5 h-5 rounded-full" />
+        <span className="text-[7px] font-black text-white/90 uppercase tracking-widest mt-0.5">NEXUS</span>
       </div>
-
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[10px] text-zinc-500 font-mono uppercase tracking-widest flex items-center gap-2 bg-black/60 px-4 py-2 rounded-full border border-white/5 backdrop-blur-md">
-        <Workflow size={14} className="text-indigo-400" /> Unified Workflow
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[9px] text-zinc-500 font-mono uppercase tracking-widest flex items-center gap-1.5 bg-black/60 px-3 py-1.5 rounded-full border border-white/5 backdrop-blur-md">
+        <Workflow size={11} className="text-indigo-400" /> Unified Workflow
       </div>
     </div>
   );
 }
 
+// --- OLD STACK DATA ---
 const oldStack = [
-  {
-    name: "Apollo",
-    purpose: "Leads",
-    price: "$1,188/yr",
-    pain: "Export CSV, import to Clay",
-  },
-  {
-    name: "Clay",
-    purpose: "Enrichment",
-    price: "$1,788/yr",
-    pain: "Build the table, hope it maps right",
-  },
-  {
-    name: "Instantly",
-    purpose: "Sending",
-    price: "$1,068/yr",
-    pain: "Paste it in, pray for deliverability",
-  },
+  { name: "Apollo", purpose: "Leads", price: "$1,188/yr", pain: "Export CSV, import to Clay", Icon: Database, color: "#ef4444", glow: "rgba(239,68,68,0.25)" },
+  { name: "Clay", purpose: "Enrichment", price: "$1,788/yr", pain: "Build the table, hope it maps right", Icon: Layers, color: "#f59e0b", glow: "rgba(245,158,11,0.25)" },
+  { name: "Instantly", purpose: "Sending", price: "$1,068/yr", pain: "Paste it in, pray for deliverability", Icon: Send, color: "#f97316", glow: "rgba(249,115,22,0.25)" },
 ];
 
 const nexusFeatures = [
-  "AI Writer",
-  "Database",
-  "Sending Infrastructure",
-  "One Platform. One Price.",
-  "LinkedIn Outreach (Beta)",
+  "AI Writer", "Database", "Sending Infrastructure",
+  "One Platform. One Price.", "LinkedIn Outreach (Beta)",
   "Database. AI Writer. Sending Infrastructure. All built together from scratch.",
 ];
 
+// --- 3D CAROUSEL POSITIONS ---
+// Stacked forward-rolling deck: front card at top, others stacked behind rotated on X axis
+const carouselPositions = [
+  { y: 0,  scale: 1,    opacity: 1,    zIndex: 20, rotateX: 0   }, // front
+  { y: 9,  scale: 0.94, opacity: 0.42, zIndex: 10, rotateX: -9  }, // middle (behind)
+  { y: 16, scale: 0.88, opacity: 0.18, zIndex: 5,  rotateX: -17 }, // back (furthest)
+];
+
+function OldStackCarousel() {
+  const [active, setActive] = useState(0);
+  const [hovered, setHovered] = useState(false);
+
+  useEffect(() => {
+    const timer = setInterval(() => setActive((p) => (p + 1) % oldStack.length), 4000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const getPosition = (itemIdx) => {
+    const slot = (itemIdx - active + oldStack.length) % oldStack.length;
+    return carouselPositions[slot];
+  };
+
+  return (
+    <div
+      className="relative w-full"
+      style={{ perspective: "700px", height: "72px" }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {oldStack.map((tool, i) => {
+        const pos = getPosition(i);
+        const isActive = i === active;
+        return (
+          <motion.div
+            key={tool.name}
+            animate={{
+              y: pos.y,
+              scale: pos.scale,
+              opacity: pos.opacity,
+              rotateX: pos.rotateX,
+              zIndex: pos.zIndex,
+            }}
+            transition={{ duration: 0.72, ease: [0.32, 0.72, 0, 1] }}
+            className="absolute inset-x-0 top-0"
+            style={{ transformStyle: "preserve-3d", transformOrigin: "center bottom" }}
+          >
+            <div
+              className={cn(
+                "relative flex items-center justify-between px-4 py-3 rounded-2xl border overflow-hidden",
+                isActive ? "border-white/10 bg-zinc-900/90" : "border-white/5 bg-zinc-900/60"
+              )}
+              style={{ boxShadow: isActive ? `0 4px 28px ${tool.glow}` : "none" }}
+            >
+              {/* Animated pain-point banner — slides down from top on hover */}
+              <AnimatePresence>
+                {isActive && hovered && (
+                  <motion.div
+                    initial={{ y: "-100%", opacity: 0 }}
+                    animate={{ y: "0%", opacity: 1 }}
+                    exit={{ y: "-100%", opacity: 0 }}
+                    transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                    className="absolute inset-x-0 top-0 z-30 flex items-center justify-center gap-1.5 py-1.5 bg-red-950/95 border-b border-red-500/30 backdrop-blur-md"
+                  >
+                    <AlertTriangle size={10} className="text-red-400 shrink-0" />
+                    <span className="text-[10px] font-bold text-red-300 leading-none">{tool.pain}</span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Glow orb behind active card */}
+              {isActive && (
+                <div
+                  className="absolute -top-6 -left-6 w-24 h-24 rounded-full blur-2xl pointer-events-none"
+                  style={{ background: tool.color, opacity: 0.1 }}
+                />
+              )}
+
+              <div className="flex items-center gap-3 z-10">
+                <div
+                  className="w-8 h-8 rounded-xl flex items-center justify-center border border-white/[0.06] flex-shrink-0"
+                  style={{ background: `${tool.color}18`, color: tool.color }}
+                >
+                  <tool.Icon className="w-3.5 h-3.5" />
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-white leading-tight">{tool.name}</p>
+                  <p className="text-[10px] text-zinc-500 uppercase tracking-wider font-bold">{tool.purpose}</p>
+                </div>
+              </div>
+
+              <span className="text-sm font-bold text-zinc-400 z-10">{tool.price}</span>
+            </div>
+          </motion.div>
+        );
+      })}
+
+      {/* Dot indicators */}
+      <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1.5">
+        {oldStack.map((_, i) => (
+          <button key={i} onClick={() => setActive(i)} className="transition-all duration-300">
+            <motion.div
+              animate={{ width: i === active ? 16 : 5, opacity: i === active ? 1 : 0.3 }}
+              transition={{ duration: 0.3 }}
+              className="h-1 rounded-full bg-red-400"
+            />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// --- MAIN EXPORT ---
 export default function App() {
   return (
-    <div className="min-h-screen py-16 md:py-24 lg:py-32  text-zinc-100 overflow-hidden relative font-sans">
-      {/* Background Decor - Vibrant Gradients */}
+    <div className="py-16 md:py-20 text-zinc-100 overflow-hidden relative font-sans">
+      {/* Subtle grid */}
       <div
-        className="absolute inset-0 pointer-events-none z-[0] opacity-[0.25]"
+        className="absolute inset-0 pointer-events-none z-0 opacity-[0.18]"
         style={{
           backgroundImage: `linear-gradient(to right, #ffffff0a 1px, transparent 1px), linear-gradient(to bottom, #ffffff0a 1px, transparent 1px)`,
-          backgroundSize: "64px 64px",
-          maskImage:
-            "radial-gradient(ellipse 80% 50% at 50% 0%, #000 70%, transparent 100%)",
+          backgroundSize: "56px 56px",
+          maskImage: "radial-gradient(ellipse 80% 50% at 50% 0%, #000 70%, transparent 100%)",
         }}
       />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-indigo-900/30 rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-900/20 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-indigo-900/25 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-900/15 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-        {/* Header Section */}
-        <div className="w-full flex flex-col gap-4 sm:gap-6 mb-12 md:mb-20 lg:mb-28 items-center text-center">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+
+        {/* Header */}
+        <div className="flex flex-col gap-3 mb-10 md:mb-14 items-center text-center">
           <ScrollReveal direction="down">
-            <div className="inline-flex px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/30 items-center justify-center backdrop-blur-md shadow-[0_0_30px_rgba(99,102,241,0.2)] hover:bg-indigo-500/20 transition-colors cursor-default">
-              <div className="w-2.5 h-2.5 rounded-full bg-indigo-400 animate-pulse mr-2.5 shadow-[0_0_10px_rgba(99,102,241,0.8)]" />
-              <span className="text-[11px] font-black text-indigo-300 uppercase tracking-widest">
-                ROI Analysis
-              </span>
+            <div className="inline-flex px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/25 items-center gap-2 backdrop-blur-md">
+              <div className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse shadow-[0_0_8px_rgba(99,102,241,0.8)]" />
+              <span className="text-[10px] font-black text-indigo-300 uppercase tracking-widest">ROI Analysis</span>
             </div>
           </ScrollReveal>
 
           <ScrollReveal>
-            <h1 className="text-4xl md:text-6xl  font-black text-white tracking-tighter leading-[1.1] max-w-4xl mx-auto mt-4 drop-shadow-xl">
+            <h2 className="text-3xl md:text-5xl font-black text-white tracking-tighter leading-[1.05] max-w-3xl mx-auto mt-2 drop-shadow-xl">
               The hidden cost of your current stack
-            </h1>
-            <p className="mt-4 sm:mt-8 text-sm sm:text-base md:text-lg lg:text-xl text-zinc-400 max-w-2xl mx-auto font-medium leading-relaxed px-2 sm:px-0">
+            </h2>
+            <p className="mt-3 text-sm sm:text-base text-zinc-400 max-w-xl mx-auto font-medium leading-relaxed">
               Apollo finds leads. Clay enriches them. Instantly sends them.
-              You're the one making them talk to each other — and paying three
-              invoices to do it.
+              You're the one making them talk — and paying three invoices to do it.
             </p>
           </ScrollReveal>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12">
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+
+          {/* ── OLD STACK CARD ── */}
           <ScrollReveal delay={100} direction="left" className="h-full">
             <SpotlightCard
-              className="h-full flex flex-col  p-3 group bg-zinc-950/80 backdrop-blur-xl border-red-900/20"
-              spotlightColor="rgba(239, 68, 68, 0.15)"
+              className="h-full flex flex-col p-5 rounded-2xl border border-red-900/25 bg-zinc-950/80 backdrop-blur-xl shadow-[0_0_40px_rgba(239,68,68,0.04)]"
+              spotlightColor="rgba(239,68,68,0.12)"
             >
-              <div className="absolute inset-0 bg-gradient-to-b from-red-950/20 to-transparent pointer-events-none opacity-70" />
+              <div className="absolute inset-0 bg-gradient-to-b from-red-950/15 to-transparent pointer-events-none rounded-2xl" />
 
-              <div className="flex items-center gap-3 mb-3 relative z-10">
-                <div className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.8)] animate-pulse" />
-                <span className="text-[10px] sm:text-xs font-black text-red-500 uppercase tracking-widest">
-                  Legacy Approach
-                </span>
+              {/* Card header */}
+              <div className="flex items-center justify-between mb-4 relative z-10">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.8)] animate-pulse" />
+                  <span className="text-[10px] font-black text-red-500 uppercase tracking-widest">Legacy Approach</span>
+                </div>
+                <span className="text-[10px] text-zinc-600 font-mono">3 tools · 3 invoices</span>
               </div>
 
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-2 sm:mb-3 tracking-tight">
-                The Old Stack
-              </h3>
-              <p className="text-xs sm:text-sm text-zinc-400 mb-6  font-medium leading-relaxed">
-                3 separate tools. 3 separate invoices. You're the integration
-                layer.
-              </p>
+              <h3 className="text-xl sm:text-2xl font-black text-white mb-1 tracking-tight relative z-10">The Old Stack</h3>
+              <p className="text-xs text-zinc-500 mb-6 font-medium relative z-10">You're the integration layer.</p>
 
-              <div className="space-y-4 flex-grow relative z-10">
-                {oldStack.map((tool) => (
-                  <div
-                    key={tool.name}
-                    className="relative flex items-center justify-between p-3 sm:p-5 rounded-2xl border border-white/5 bg-white/[0.03] hover:bg-red-500/10 hover:border-red-500/30 transition-all duration-300 group/item overflow-hidden shadow-lg"
-                  >
-                    <div className="flex items-center gap-3 sm:gap-4 z-10">
-                      <div className="flex h-6 w-6 md:h-12 md:w-12 items-center justify-center rounded-xl bg-zinc-900 text-red-400 border border-red-500/20 group-hover/item:bg-red-500/20 group-hover/item:text-red-300 transition-colors flex-shrink-0">
-                        <Puzzle
-                          className="w-4 h-4 sm:w-5 sm:h-5"
-                          strokeWidth={2.5}
-                        />
-                      </div>
-                      <div>
-                        <p className="text-sm sm:text-lg font-bold text-white mb-0.5">
-                          {tool.name}
-                        </p>
-                        <p className="text-[10px] sm:text-[11px] text-zinc-500 uppercase tracking-wider font-bold group-hover/item:text-red-400/80 transition-colors">
-                          {tool.purpose}
-                        </p>
-                      </div>
-                    </div>
-                    <span className="text-sm sm:text-base font-bold text-zinc-500 group-hover/item:text-red-400 transition-colors z-10 flex-shrink-0">
-                      {tool.price}
-                    </span>
-
-                    <div className="absolute right-20 sm:right-24 top-1/2 -translate-y-1/2 opacity-0 group-hover/item:opacity-100 group-hover/item:translate-x-0 translate-x-4 transition-all duration-300 text-[10px] sm:text-xs text-red-300 font-bold bg-red-950/90 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg border border-red-500/40 hidden sm:flex items-center gap-1.5 shadow-2xl backdrop-blur-md">
-                      <AlertTriangle size={12} /> {tool.pain}
-                    </div>
-                  </div>
-                ))}
+              {/* 3D Carousel */}
+              <div className="relative z-10 mb-10">
+                <OldStackCarousel />
               </div>
 
-              <div className="mt-6 sm:mt-10 pt-6 sm:pt-8 border-t border-white/10 flex items-end justify-between relative z-10">
-                <span className="text-[10px] sm:text-xs text-zinc-500 uppercase tracking-widest font-bold mb-1">
-                  Total Cost
-                </span>
+              {/* Divider + Total */}
+              <div className="mt-auto pt-4 border-t border-white/[0.06] flex items-end justify-between relative z-10">
+                <span className="text-[10px] text-zinc-600 uppercase tracking-widest font-bold">Total Cost</span>
                 <div className="flex flex-col items-end">
-                  <span className="text-3xl sm:text-4xl font-black text-red-500 drop-shadow-[0_0_15px_rgba(239,68,68,0.4)]">
-                    $4,044
-                    <span className="text-base sm:text-lg font-bold text-red-500/60 ml-1">
-                      /yr
-                    </span>
+                  <span className="text-3xl font-black text-red-500 drop-shadow-[0_0_12px_rgba(239,68,68,0.35)]">
+                    $4,044<span className="text-base font-bold text-red-500/50 ml-0.5">/yr</span>
                   </span>
-                  <span className="text-[10px] sm:text-xs text-red-400/80 font-bold mt-1">
-                    + Hidden integration costs
-                  </span>
+                  <span className="text-[10px] text-red-400/70 font-bold mt-0.5">+ Hidden integration costs</span>
                 </div>
               </div>
             </SpotlightCard>
           </ScrollReveal>
 
+          {/* ── NEXUSCALE CARD ── */}
           <ScrollReveal delay={200} direction="right" className="h-full">
             <SpotlightCard
-              className="h-full flex flex-col p-3  rounded-md  group bg-zinc-950/80 backdrop-blur-xl border-indigo-500/30 shadow-[0_0_50px_rgba(99,102,241,0.15)] hover:border-indigo-500/50"
-              spotlightColor="rgba(99, 102, 241, 0.2)"
+              className="h-full flex flex-col p-5 rounded-2xl border border-indigo-500/25 bg-zinc-950/80 backdrop-blur-xl shadow-[0_0_50px_rgba(99,102,241,0.1)]"
+              spotlightColor="rgba(99,102,241,0.18)"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/20 via-transparent to-transparent pointer-events-none opacity-50" />
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/15 via-transparent to-transparent pointer-events-none rounded-2xl" />
 
-              <div className="flex items-center gap-3 mb-3 relative z-10">
-                <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.8)] animate-pulse" />
-                <span className="text-[10px] sm:text-xs font-black text-emerald-400 uppercase tracking-widest">
-                  All-in-One
-                </span>
+              {/* Card header */}
+              <div className="flex items-center justify-between mb-4 relative z-10">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)] animate-pulse" />
+                  <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">All-in-One</span>
+                </div>
+                <span className="text-[10px] text-zinc-600 font-mono">1 platform · 1 invoice</span>
               </div>
 
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-2 sm:mb-3 tracking-tight">
-                Nexuscale
-              </h3>
-              <p className="text-xs sm:text-sm text-zinc-400 mb-6 font-medium leading-relaxed">
-                The Intelligent Autopilot. Everything you need unified in one
-                seamless platform.
-              </p>
+              <h3 className="text-xl sm:text-2xl font-black text-white mb-1 tracking-tight relative z-10">Nexuscale</h3>
+              <p className="text-xs text-zinc-500 mb-4 font-medium relative z-10">The Intelligent Autopilot. Everything unified.</p>
 
-              <div className="relative rounded-2xl border border-white/10 bg-black/50 mb-3 sm:mb-8 overflow-hidden min-h-[200px] md:min-h-20 shadow-[inset_0_0_50px_rgba(0,0,0,0.5)] group-hover:border-indigo-500/40 transition-colors duration-500 p-3">
+              {/* Stack Visual */}
+              <div className="relative rounded-xl border border-white/8 bg-black/40 mb-4 overflow-hidden min-h-[180px] shadow-[inset_0_0_40px_rgba(0,0,0,0.5)] hover:border-indigo-500/30 transition-colors duration-500 relative z-10">
                 <StackVisual />
               </div>
 
-              <div className="flex flex-wrap gap-2 md:gap-3 mb-3  relative z-10">
-                {nexusFeatures.map((f) => (
+              {/* Feature chips */}
+              <div className="flex flex-wrap gap-1.5 mb-4 relative z-10">
+                {nexusFeatures.slice(0, 5).map((f) => (
                   <div
                     key={f}
-                    className="flex items-center gap-1.5 sm:gap-2 bg-indigo-500/10 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl border border-indigo-500/30 text-[10px] sm:text-xs font-bold text-indigo-200 shadow-[0_0_15px_rgba(99,102,241,0.15)] backdrop-blur-sm"
+                    className="flex items-center gap-1.5 bg-indigo-500/8 px-3 py-1.5 rounded-lg border border-indigo-500/20 text-[10px] font-bold text-indigo-200"
                   >
-                    <Check
-                      className="w-3 h-3 sm:w-4 sm:h-4 text-indigo-400 flex-shrink-0"
-                      strokeWidth={3}
-                    />
+                    <Check className="w-3 h-3 text-indigo-400 flex-shrink-0" strokeWidth={3} />
                     {f}
                   </div>
                 ))}
+                <div className="flex items-center gap-1.5 bg-indigo-500/8 px-3 py-1.5 rounded-lg border border-indigo-500/20 text-[10px] font-bold text-indigo-200/60 col-span-full w-full">
+                  <Sparkles className="w-3 h-3 text-indigo-400/60 flex-shrink-0" />
+                  {nexusFeatures[5]}
+                </div>
               </div>
 
-              <div className="pt-6 sm:pt-8 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 mt-auto relative z-10">
-                <div className="flex flex-col">
-                  <div className="text-4xl sm:text-5xl font-black text-white tracking-tight flex items-baseline drop-shadow-lg">
+              {/* Pricing row */}
+              <div className="pt-4 border-t border-white/[0.06] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mt-auto relative z-10">
+                <div>
+                  <div className="text-3xl font-black text-white tracking-tight flex items-baseline drop-shadow-lg">
                     $<NumberTicker value={1188} />
-                    <span className="text-lg sm:text-xl text-zinc-500 font-bold ml-1">
-                      /yr
-                    </span>
+                    <span className="text-base text-zinc-500 font-bold ml-1">/yr</span>
                   </div>
-                  <div className="text-emerald-300 text-[10px] sm:text-xs font-bold bg-emerald-500/20 inline-flex items-center px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg border border-emerald-500/30 mt-2 sm:mt-3 uppercase tracking-wider shadow-[0_0_20px_rgba(16,185,129,0.2)]">
-                    <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 mr-1.5" />{" "}
-                    You save $2,856 every year.
+                  <div className="text-emerald-300 text-[9px] font-bold bg-emerald-500/15 inline-flex items-center px-2.5 py-1 rounded-md border border-emerald-500/25 mt-2 uppercase tracking-wider">
+                    <Sparkles className="w-2.5 h-2.5 mr-1.5" /> You save $2,856 every year.
                   </div>
                 </div>
-
                 <button
-                  onClick={() =>
-                    window.open(
-                      "https://app.nexuscale.ai/users/register",
-                      "_blank",
-                    )
-                  }
-                  className="w-full sm:w-auto inline-flex px-4 py-2 md:px-6 md:py-3 items-center justify-center rounded-lg bg-white  font-black text-zinc-900 transition-all hover:bg-zinc-200 hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(255,255,255,0.2)] focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-zinc-900 text-sm sm:text-base"
+                  onClick={() => window.open("https://app.nexuscale.ai/users/register", "_blank")}
+                  className="w-full sm:w-auto inline-flex px-5 py-2.5 items-center justify-center rounded-xl bg-white font-black text-zinc-900 text-sm hover:bg-zinc-100 hover:scale-105 active:scale-95 transition-all shadow-[0_0_25px_rgba(255,255,255,0.15)] gap-2"
                 >
-                  <Zap className="w-4 h-4 mr-3 fill-blue-900" />
+                  <Zap className="w-3.5 h-3.5 fill-blue-900" />
                   Start Now
                 </button>
               </div>
@@ -517,54 +427,5 @@ export default function App() {
         </div>
       </div>
     </div>
-  );
-}
-
-// Vibrant Stat Card
-function StatCard({
-  icon,
-  value,
-  prefix = "",
-  suffix = "",
-  label,
-  colorClass,
-  delay,
-}) {
-  const colorMap = {
-    blue: "hover:border-blue-500/40 hover:shadow-[0_0_50px_rgba(59,130,246,0.15)] bg-blue-500/5 group-hover:bg-blue-500/10",
-    emerald:
-      "hover:border-emerald-500/40 hover:shadow-[0_0_50px_rgba(16,185,129,0.15)] bg-emerald-500/5 group-hover:bg-emerald-500/10",
-    indigo:
-      "hover:border-indigo-500/40 hover:shadow-[0_0_50px_rgba(99,102,241,0.15)] bg-indigo-500/5 group-hover:bg-indigo-500/10",
-  };
-
-  const iconBgMap = {
-    blue: "bg-blue-500/10 border-blue-500/20 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.4)]",
-    emerald:
-      "bg-emerald-500/10 border-emerald-500/20 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.4)]",
-    indigo:
-      "bg-indigo-500/10 border-indigo-500/20 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.4)]",
-  };
-
-  return (
-    <ScrollReveal delay={delay} direction="up">
-      <div
-        className={`p-5 sm:p-7 md:p-10 rounded-[1.5rem] sm:rounded-[2rem] bg-zinc-900/40 border border-white/5 flex flex-col items-center justify-center text-center transition-all duration-500 group backdrop-blur-md ${colorMap[colorClass]}`}
-      >
-        <div
-          className={`mb-4 sm:mb-6 p-3 sm:p-4 rounded-2xl border transition-all duration-500 group-hover:scale-110 ${iconBgMap[colorClass]}`}
-        >
-          {icon}
-        </div>
-        <div className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-2 sm:mb-3 tracking-tighter drop-shadow-xl">
-          {prefix}
-          <NumberTicker value={value} />
-          {suffix}
-        </div>
-        <p className="text-[10px] sm:text-xs md:text-sm text-zinc-400 font-bold uppercase tracking-widest group-hover:text-zinc-200 transition-colors">
-          {label}
-        </p>
-      </div>
-    </ScrollReveal>
   );
 }
