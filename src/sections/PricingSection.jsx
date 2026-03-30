@@ -278,13 +278,23 @@ const cardVariants = {
 export default function PricingSection() {
   const [annual, setAnnual] = useState(true);
   const [linkedinSeatsByPlan, setLinkedinSeatsByPlan] = useState({});
+  const [mailboxesByPlan, setMailboxesByPlan] = useState({});
 
   const getLinkedinSeats = (planName) => linkedinSeatsByPlan[planName] ?? 0;
+  const getMailboxes = (planName) => mailboxesByPlan[planName] ?? 0;
 
   const updateLinkedinSeats = (planName, delta, max) => {
     setLinkedinSeatsByPlan((prev) => {
       const current = prev[planName] ?? 0;
       const next = Math.min(Math.max(0, current + delta), max);
+      return { ...prev, [planName]: next };
+    });
+  };
+
+  const updateMailboxes = (planName, delta) => {
+    setMailboxesByPlan((prev) => {
+      const current = prev[planName] ?? 0;
+      const next = Math.max(0, current + delta);
       return { ...prev, [planName]: next };
     });
   };
@@ -318,7 +328,8 @@ export default function PricingSection() {
   const getTotalPrice = (plan) => {
     const base = Number(getPrice(plan));
     const seats = getLinkedinSeats(plan.name);
-    return base + seats * 19;
+    const mailboxes = getMailboxes(plan.name);
+    return base + seats * 19 + mailboxes * 3;
   };
 
   return (
@@ -842,23 +853,35 @@ export default function PricingSection() {
                               </>
                             )}
                           </div>
-                          {/* LinkedIn add-on breakdown */}
+                          {/* Add-on breakdown */}
                           <AnimatePresence>
-                            {getLinkedinSeats(plan.name) > 0 && (
+                            {(getLinkedinSeats(plan.name) > 0 || getMailboxes(plan.name) > 0) && (
                               <motion.div
                                 initial={{ opacity: 0, height: 0, marginTop: 0 }}
                                 animate={{ opacity: 1, height: "auto", marginTop: 6 }}
                                 exit={{ opacity: 0, height: 0, marginTop: 0 }}
                                 transition={{ duration: 0.2 }}
-                                className="flex items-center gap-1.5 overflow-hidden"
+                                className="flex items-center gap-1.5 flex-wrap overflow-hidden"
                               >
                                 <span className="text-[10px] text-zinc-500">
                                   Base ${getPrice(plan)}
                                 </span>
-                                <span className="text-[10px] text-zinc-600">+</span>
-                                <span className="text-[10px] font-bold text-[#4fa3d4]">
-                                  ${getLinkedinSeats(plan.name) * 19} LinkedIn
-                                </span>
+                                {getLinkedinSeats(plan.name) > 0 && (
+                                  <>
+                                    <span className="text-[10px] text-zinc-600">+</span>
+                                    <span className="text-[10px] font-bold text-[#4fa3d4]">
+                                      ${getLinkedinSeats(plan.name) * 19} LinkedIn
+                                    </span>
+                                  </>
+                                )}
+                                {getMailboxes(plan.name) > 0 && (
+                                  <>
+                                    <span className="text-[10px] text-zinc-600">+</span>
+                                    <span className="text-[10px] font-bold text-emerald-400">
+                                      ${getMailboxes(plan.name) * 3} Mailboxes
+                                    </span>
+                                  </>
+                                )}
                               </motion.div>
                             )}
                           </AnimatePresence>
@@ -1001,6 +1024,80 @@ export default function PricingSection() {
                                       className="text-[10px] text-zinc-600 uppercase tracking-wider"
                                     >
                                       Max {getMaxSeats(plan)}
+                                    </motion.span>
+                                  )}
+                                </AnimatePresence>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Mailbox Add-on Calculator */}
+                        {plan.price !== "0" && (
+                          <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/[0.06] p-3.5 space-y-2.5">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <svg className="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <rect x="2" y="4" width="20" height="16" rx="2"/>
+                                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                                </svg>
+                                <span className="text-xs font-bold text-zinc-300">
+                                  Native Mailboxes
+                                </span>
+                              </div>
+                              <div className="text-right">
+                                <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">
+                                  $3/mo · $36/yr
+                                </span>
+                              </div>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2 bg-white/[0.05] rounded-lg p-1">
+                                <button
+                                  onClick={() => updateMailboxes(plan.name, -1)}
+                                  disabled={getMailboxes(plan.name) === 0}
+                                  className="w-7 h-7 rounded-md bg-white/[0.08] hover:bg-white/[0.18] disabled:opacity-20 disabled:cursor-not-allowed flex items-center justify-center text-white font-bold text-base transition-all active:scale-90 select-none"
+                                >
+                                  −
+                                </button>
+                                <span className="text-sm font-black text-white w-6 text-center tabular-nums select-none">
+                                  {getMailboxes(plan.name)}
+                                </span>
+                                <button
+                                  onClick={() => updateMailboxes(plan.name, 1)}
+                                  className="w-7 h-7 rounded-md bg-emerald-500/40 hover:bg-emerald-500/65 flex items-center justify-center text-white font-bold text-base transition-all active:scale-90 select-none"
+                                >
+                                  +
+                                </button>
+                              </div>
+                              <div className="text-right h-5 flex items-center">
+                                <AnimatePresence mode="wait">
+                                  {getMailboxes(plan.name) > 0 ? (
+                                    <motion.div
+                                      key="mbcost"
+                                      initial={{ opacity: 0, y: -6 }}
+                                      animate={{ opacity: 1, y: 0 }}
+                                      exit={{ opacity: 0, y: 6 }}
+                                      transition={{ duration: 0.15 }}
+                                      className="text-right"
+                                    >
+                                      <div className="text-xs font-bold text-emerald-400">
+                                        +${getMailboxes(plan.name) * 3}/mo
+                                      </div>
+                                      <div className="text-[9px] text-emerald-600 font-semibold">
+                                        ${getMailboxes(plan.name) * 36}/yr
+                                      </div>
+                                    </motion.div>
+                                  ) : (
+                                    <motion.span
+                                      key="mbhint"
+                                      initial={{ opacity: 0, y: 6 }}
+                                      animate={{ opacity: 1, y: 0 }}
+                                      exit={{ opacity: 0, y: -6 }}
+                                      transition={{ duration: 0.15 }}
+                                      className="text-[10px] text-zinc-600 uppercase tracking-wider"
+                                    >
+                                      Unlimited
                                     </motion.span>
                                   )}
                                 </AnimatePresence>
