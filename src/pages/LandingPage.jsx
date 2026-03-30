@@ -14,7 +14,7 @@ export default function LandingPage() {
       <HeroSection />
       <SequenceSection />
 
-      <SDRSection />
+      {/* <SDRSection /> */}
       <FounderQuote />
       <ReviewsSection />
       <CTASection />
