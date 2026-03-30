@@ -13,7 +13,6 @@ export default function LandingPage() {
       <IntercomWidget />
       <HeroSection />
       <SequenceSection />
-
       {/* <SDRSection /> */}
       <FounderQuote />
       <ReviewsSection />
