@@ -218,6 +218,46 @@ const CardFeatureList = ({ plan, s }) => {
   );
 };
 
+// --- PRICE TICKER ---
+
+const PriceTicker = ({ value, gradClass }) => {
+  const prevRef = React.useRef(value);
+  const [dir, setDir] = React.useState(0);
+
+  React.useEffect(() => {
+    const prev = prevRef.current;
+    if (value !== prev) {
+      setDir(value > prev ? 1 : -1);
+      prevRef.current = value;
+    }
+  }, [value]);
+
+  const inner = (
+    <AnimatePresence mode="wait">
+      <motion.span
+        key={value}
+        initial={{ y: dir === 0 ? -16 : dir > 0 ? -22 : 22, opacity: 0, scale: 0.94 }}
+        animate={{ y: 0, opacity: 1, scale: 1 }}
+        exit={{ y: dir === 0 ? 16 : dir > 0 ? 22 : -22, opacity: 0, scale: 0.94 }}
+        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+        className={
+          gradClass
+            ? `inline-block text-transparent bg-clip-text bg-gradient-to-r ${gradClass}`
+            : "inline-block"
+        }
+      >
+        ${value}
+      </motion.span>
+    </AnimatePresence>
+  );
+
+  return gradClass ? (
+    <span>{inner}</span>
+  ) : (
+    <span className="text-white">{inner}</span>
+  );
+};
+
 // --- MAIN SECTION COMPONENT ---
 
 const containerVariants = {
@@ -237,6 +277,24 @@ const cardVariants = {
 
 export default function PricingSection() {
   const [annual, setAnnual] = useState(true);
+  const [linkedinSeatsByPlan, setLinkedinSeatsByPlan] = useState({});
+
+  const getLinkedinSeats = (planName) => linkedinSeatsByPlan[planName] ?? 0;
+
+  const updateLinkedinSeats = (planName, delta, max) => {
+    setLinkedinSeatsByPlan((prev) => {
+      const current = prev[planName] ?? 0;
+      const next = Math.min(Math.max(0, current + delta), max);
+      return { ...prev, [planName]: next };
+    });
+  };
+
+  const getMaxSeats = (plan) => {
+    const seats = plan.credits.linkedinSeats;
+    if (seats === "∞") return 20;
+    const n = parseInt(seats, 10);
+    return isNaN(n) ? 0 : n;
+  };
 
   const revealVariants = {
     visible: (i) => ({
@@ -255,6 +313,12 @@ export default function PricingSection() {
   const getPrice = (plan) => {
     if (plan.price === "0") return "0";
     return annual && plan.annualPrice ? plan.annualPrice : plan.price;
+  };
+
+  const getTotalPrice = (plan) => {
+    const base = Number(getPrice(plan));
+    const seats = getLinkedinSeats(plan.name);
+    return base + seats * 19;
   };
 
   return (
@@ -759,45 +823,12 @@ export default function PricingSection() {
                         {/* Pricing */}
                         <div>
                           <div className="flex items-baseline gap-1.5 flex-wrap">
-                            {s.priceGrad ? (
-                              <span
-                                className={`text-5xl font-black tracking-tight leading-none text-transparent bg-clip-text bg-gradient-to-r ${s.price}`}
-                              >
-                                <AnimatePresence mode="wait">
-                                  <motion.span
-                                    key={getPrice(plan)}
-                                    initial={{ y: -16, opacity: 0 }}
-                                    animate={{ y: 0, opacity: 1 }}
-                                    exit={{ y: 16, opacity: 0 }}
-                                    transition={{
-                                      duration: 0.2,
-                                      ease: "easeOut",
-                                    }}
-                                    className="inline-block"
-                                  >
-                                    ${getPrice(plan)}
-                                  </motion.span>
-                                </AnimatePresence>
-                              </span>
-                            ) : (
-                              <span className="text-5xl font-black tracking-tight leading-none text-white">
-                                <AnimatePresence mode="wait">
-                                  <motion.span
-                                    key={getPrice(plan)}
-                                    initial={{ y: -16, opacity: 0 }}
-                                    animate={{ y: 0, opacity: 1 }}
-                                    exit={{ y: 16, opacity: 0 }}
-                                    transition={{
-                                      duration: 0.2,
-                                      ease: "easeOut",
-                                    }}
-                                    className="inline-block"
-                                  >
-                                    ${getPrice(plan)}
-                                  </motion.span>
-                                </AnimatePresence>
-                              </span>
-                            )}
+                            <span className="text-5xl font-black tracking-tight leading-none">
+                              <PriceTicker
+                                value={getTotalPrice(plan)}
+                                gradClass={s.priceGrad ? s.price : null}
+                              />
+                            </span>
                             {plan.price !== "0" && (
                               <>
                                 {annual && (
@@ -811,6 +842,26 @@ export default function PricingSection() {
                               </>
                             )}
                           </div>
+                          {/* LinkedIn add-on breakdown */}
+                          <AnimatePresence>
+                            {getLinkedinSeats(plan.name) > 0 && (
+                              <motion.div
+                                initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                                animate={{ opacity: 1, height: "auto", marginTop: 6 }}
+                                exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                                transition={{ duration: 0.2 }}
+                                className="flex items-center gap-1.5 overflow-hidden"
+                              >
+                                <span className="text-[10px] text-zinc-500">
+                                  Base ${getPrice(plan)}
+                                </span>
+                                <span className="text-[10px] text-zinc-600">+</span>
+                                <span className="text-[10px] font-bold text-[#4fa3d4]">
+                                  ${getLinkedinSeats(plan.name) * 19} LinkedIn
+                                </span>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
                           {plan.price !== "0" && annual && (
                             <p className="text-[10px] text-emerald-500/80 mt-1.5 font-bold uppercase tracking-wider">
                               Billed yearly
@@ -875,6 +926,88 @@ export default function PricingSection() {
                             sublabel="Team & Client Isolation"
                           />
                         </div>
+
+                        {/* LinkedIn Add-on Calculator */}
+                        {getMaxSeats(plan) > 0 && (
+                          <div className="rounded-xl border border-[#0077b5]/25 bg-[#0077b5]/[0.07] p-3.5 space-y-2.5">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <span className="text-[8px] font-black text-white bg-[#0077b5] rounded px-1.5 py-[3px] tracking-wider leading-none">
+                                  in
+                                </span>
+                                <span className="text-xs font-bold text-zinc-300">
+                                  LinkedIn Seats
+                                </span>
+                              </div>
+                              <span className="text-[10px] font-bold text-[#4fa3d4] uppercase tracking-widest">
+                                $19 / seat
+                              </span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2 bg-white/[0.05] rounded-lg p-1">
+                                <button
+                                  onClick={() =>
+                                    updateLinkedinSeats(
+                                      plan.name,
+                                      -1,
+                                      getMaxSeats(plan),
+                                    )
+                                  }
+                                  disabled={getLinkedinSeats(plan.name) === 0}
+                                  className="w-7 h-7 rounded-md bg-white/[0.08] hover:bg-white/[0.18] disabled:opacity-20 disabled:cursor-not-allowed flex items-center justify-center text-white font-bold text-base transition-all active:scale-90 select-none"
+                                >
+                                  −
+                                </button>
+                                <span className="text-sm font-black text-white w-6 text-center tabular-nums select-none">
+                                  {getLinkedinSeats(plan.name)}
+                                </span>
+                                <button
+                                  onClick={() =>
+                                    updateLinkedinSeats(
+                                      plan.name,
+                                      1,
+                                      getMaxSeats(plan),
+                                    )
+                                  }
+                                  disabled={
+                                    getLinkedinSeats(plan.name) >=
+                                    getMaxSeats(plan)
+                                  }
+                                  className="w-7 h-7 rounded-md bg-[#0077b5]/50 hover:bg-[#0077b5]/75 disabled:opacity-20 disabled:cursor-not-allowed flex items-center justify-center text-white font-bold text-base transition-all active:scale-90 select-none"
+                                >
+                                  +
+                                </button>
+                              </div>
+                              <div className="text-right h-5 flex items-center">
+                                <AnimatePresence mode="wait">
+                                  {getLinkedinSeats(plan.name) > 0 ? (
+                                    <motion.span
+                                      key="cost"
+                                      initial={{ opacity: 0, y: -6 }}
+                                      animate={{ opacity: 1, y: 0 }}
+                                      exit={{ opacity: 0, y: 6 }}
+                                      transition={{ duration: 0.15 }}
+                                      className="text-xs font-bold text-[#4fa3d4]"
+                                    >
+                                      +${getLinkedinSeats(plan.name) * 19}/mo
+                                    </motion.span>
+                                  ) : (
+                                    <motion.span
+                                      key="hint"
+                                      initial={{ opacity: 0, y: 6 }}
+                                      animate={{ opacity: 1, y: 0 }}
+                                      exit={{ opacity: 0, y: -6 }}
+                                      transition={{ duration: 0.15 }}
+                                      className="text-[10px] text-zinc-600 uppercase tracking-wider"
+                                    >
+                                      Max {getMaxSeats(plan)}
+                                    </motion.span>
+                                  )}
+                                </AnimatePresence>
+                              </div>
+                            </div>
+                          </div>
+                        )}
 
                         <div className="h-px bg-gradient-to-r from-white/[0.05] via-white/[0.1] to-white/[0.05]" />
 
