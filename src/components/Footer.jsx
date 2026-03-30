@@ -226,7 +226,7 @@ export default function Footer() {
               <ul className="space-y-3 text-sm text-zinc-400">
                 <li>
                   <a
-                    href="https://app.nexuscale.ai/university"
+                    href="https://app.nexuscale.ai/nexuscale-academy"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:text-white transition-colors"
