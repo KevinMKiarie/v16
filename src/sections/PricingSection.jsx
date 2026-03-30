@@ -361,7 +361,7 @@ export default function PricingSection() {
                 </span>
               </div>
 
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 tracking-tight">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white  mb-2 tracking-tight">
                 <VerticalCutReveal
                   splitBy="words"
                   staggerDuration={0.15}
@@ -375,10 +375,11 @@ export default function PricingSection() {
                     delay: 0,
                   }}
                 >
-                  Enterprise Power.
+                  Replace $665/mo of Tools
                 </VerticalCutReveal>
-                <br className="hidden sm:block" />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">
+                <br className=" sm:block" />
+
+                <span className=" bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400 ">
                   <VerticalCutReveal
                     splitBy="words"
                     staggerDuration={0.15}
@@ -392,7 +393,7 @@ export default function PricingSection() {
                       delay: 0.3,
                     }}
                   >
-                    Total Flexibility.
+                    With One Autopilot
                   </VerticalCutReveal>
                 </span>
               </h2>

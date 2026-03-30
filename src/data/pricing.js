@@ -117,7 +117,7 @@ export const pricingPlansData = [
       contactUploads: "Unlimited",
       support: "Unlimited Chat",
       linkedinSeats: "2",
-      linkedinSub: "+$39/mo (Max 2)",
+      linkedinSub: "+$19/mo (Max 2)",
     },
     features: [
       { text: "Everything in Free", included: true, isBadge: true },
@@ -224,7 +224,7 @@ export const pricingPlansData = [
       {
         text: "Multi-Channel LinkedIn Outreach (Add-on)",
         tooltip:
-          "Automatically send connection requests and personalized DMs on LinkedIn. Up to 2 seats at $39/mo each.",
+          "Automatically send connection requests and personalized DMs on LinkedIn. Up to 2 seats at $19/mo each.",
         included: true,
       },
       {
@@ -277,7 +277,7 @@ export const pricingPlansData = [
       contactUploads: "Unlimited",
       support: "Premium Chat/Email",
       linkedinSeats: "10",
-      linkedinSub: "+$39/mo (Max 10)",
+      linkedinSub: "+$19/mo (Max 10)",
     },
     features: [
       { text: "Everything in Start Up", included: true, isBadge: true },
@@ -350,7 +350,7 @@ export const pricingPlansData = [
       {
         text: "Up to 10 LinkedIn Sender Seats (Add-on)",
         tooltip:
-          "Scale LinkedIn outreach across up to 10 senders. Each seat is $39/month.",
+          "Scale LinkedIn outreach across up to 10 senders. Each seat is $19/month.",
         included: true,
       },
       {
@@ -399,7 +399,7 @@ export const pricingPlansData = [
       contactUploads: "Unlimited",
       support: "Premium Chat/Email",
       linkedinSeats: "∞",
-      linkedinSub: "Add-ons ($39/mo ea)",
+      linkedinSub: "Add-ons ($19/mo ea)",
     },
     features: [
       { text: "Everything in Growth", included: true, isBadge: true },
@@ -430,7 +430,7 @@ export const pricingPlansData = [
       {
         text: "Unlimited LinkedIn Sender Seats (Add-on)",
         tooltip:
-          "Run massive, multi-account LinkedIn campaigns without seat limits. Each seat is $39/month.",
+          "Run massive, multi-account LinkedIn campaigns without seat limits. Each seat is $19/month.",
         included: true,
       },
     ],
@@ -628,9 +628,9 @@ export const platformEcosystemData = [
 
 export const faqData = [
   {
-    question: "How exactly does the $39 per LinkedIn account billing work?",
+    question: "How exactly does the $19 per LinkedIn account billing work?",
     answer:
-      "Your base subscription includes a set number of LinkedIn accounts (1 on Founder, 3 on Scale Up, 15 on Agency). If you need more capacity, you can add extra LinkedIn accounts a la carte for just $39/month per account directly inside your dashboard. You only pay for what you use, and you can scale up or down at any time.",
+      "Your base subscription includes a set number of LinkedIn accounts (1 on Founder, 3 on Scale Up, 15 on Agency). If you need more capacity, you can add extra LinkedIn accounts a la carte for just $19/month per account directly inside your dashboard. You only pay for what you use, and you can scale up or down at any time.",
   },
   {
     question: "What counts as a 'Credit'?",
