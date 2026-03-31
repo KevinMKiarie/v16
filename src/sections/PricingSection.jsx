@@ -1462,8 +1462,8 @@ export default function PricingSection() {
                 </p>
               </div>
 
-              <div className="w-full mx-auto overflow-x-auto rounded-2xl border border-white/[0.07] bg-[#0A0A0C]/60 backdrop-blur-xl shadow-[0_8px_60px_rgba(0,0,0,0.5)]">
-                <div className="min-w-[600px] max-w-none sm:max-w-[700px] md:max-w-6xl w-full mx-auto">
+              <div className="w-full overflow-x-auto rounded-2xl border border-white/[0.07] bg-[#0A0A0C]/60 backdrop-blur-xl shadow-[0_8px_60px_rgba(0,0,0,0.5)]">
+                <div className="min-w-[600px] max-w-none sm:max-w-[700px] md:max-w-full w-full mx-auto">
                   <div className="grid grid-cols-[2.2fr_1fr_1fr_1fr] sm:grid-cols-[2fr_1fr_1fr_1fr] gap-0">
                     {/* Header row */}
                     <div className="px-4 py-6 sm:px-6 sm:py-8 flex items-end">
@@ -1523,7 +1523,7 @@ export default function PricingSection() {
                         className="w-full grid grid-cols-[2.2fr_1fr_1fr_1fr] sm:grid-cols-[2fr_1fr_1fr_1fr] border-t border-white/[0.06] hover:bg-white/[0.04] transition-colors duration-150 text-left"
                       >
                         <div className="col-span-4 px-4 py-3 sm:px-8 sm:py-3 bg-white/[0.025] flex items-center justify-between">
-                          <span className="text-[9px] sm:text-lg font-black uppercase tracking-[0.12em] sm:tracking-[0.15em] text-white">
+                          <span className="text-[9px] sm:text-md font-black uppercase tracking-[0.12em] sm:tracking-[0.15em] text-white">
                             {section.category}
                           </span>
                           <ChevronDown
