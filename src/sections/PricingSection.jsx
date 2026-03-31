@@ -718,7 +718,6 @@ export default function PricingSection() {
               </p>
               <ComparisonStack />
 
-              {/* Pricing Toggle */}
               <div className="flex flex-col items-center gap-3">
                 <div className="relative z-10 mx-auto flex w-fit rounded-full bg-neutral-900 border border-gray-700 p-1">
                   <button
@@ -776,7 +775,6 @@ export default function PricingSection() {
             </div>
           </ScrollReveal>
 
-          {/* Not ready to commit */}
           <div className="text-center mb-6">
             <span className="text-sm text-zinc-500">
               Not ready to commit?{" "}
@@ -789,7 +787,6 @@ export default function PricingSection() {
             </span>
           </div>
 
-          {/* Pricing Cards */}
           <motion.div
             className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 max-w-[90%] mx-auto mb-16 items-start"
             variants={containerVariants}
@@ -1364,7 +1361,6 @@ export default function PricingSection() {
 
                         <CardFeatureList plan={plan} s={s} />
 
-                        {/* CTA Section */}
                         <div className="pt-2 mt-auto">
                           <Button
                             text={plan.cta}
@@ -1406,7 +1402,6 @@ export default function PricingSection() {
               })}
           </motion.div>
 
-          {/* Agency Section */}
           <div className="relative mt-16 max-w-4xl mx-auto px-4">
             <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-indigo-600/20 blur-[120px] rounded-full animate-pulse pointer-events-none" />
 
@@ -1458,7 +1453,6 @@ export default function PricingSection() {
 
           <ScrollReveal delay={100}>
             <div className="my-20 w-full max-w-6xl mx-auto">
-              {/* Section heading */}
               <div className="text-center mb-12">
                 <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 mb-4 font-black text-5xl md:text-6xl lg:text-7xl">
                   Compare Plans
@@ -1471,7 +1465,6 @@ export default function PricingSection() {
               <div className="overflow-x-auto rounded-2xl border border-white/[0.07] bg-[#0A0A0C]/60 backdrop-blur-xl shadow-[0_8px_60px_rgba(0,0,0,0.5)]">
                 <div className="max-w-6xl w-full mx-auto">
                   <div className="grid grid-cols-[2.2fr_1fr_1fr_1fr]">
-                    {/* Empty label col */}
                     <div className="px-8 py-8 flex items-end">
                       <span className="text-[10px] font-black uppercase tracking-widest text-zinc-600">
                         Feature
@@ -1493,16 +1486,10 @@ export default function PricingSection() {
                       </div>
                     </div>
 
-                    {/* Growth — highlighted */}
                     <div className="px-4 py-8 flex flex-col items-center gap-3 relative border-l border-indigo-500/20">
-                      {/* Column highlight bg */}
                       <div className="absolute inset-0 bg-gradient-to-b from-indigo-500/[0.08] to-indigo-500/[0.03] pointer-events-none" />
                       <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-indigo-500 to-violet-500" />
-                      {/* Most Popular badge */}
                       <div className="relative z-10 -mt-1 mb-1 flex justify-center">
-                        <span className="bg-gradient-to-r from-indigo-500 to-violet-500 text-white text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-md">
-                          Most Popular
-                        </span>
                       </div>
                       <div className="relative z-10 w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-xl shadow-indigo-600/30 ring-1 ring-indigo-400/30">
                         <LucideSparkles
@@ -1518,6 +1505,9 @@ export default function PricingSection() {
                           from $83/mo
                         </div>
                       </div>
+                        <span className="bg-gradient-to-r from-indigo-500 to-violet-500 text-white text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-md">
+                          Most Popular
+                        </span>
                     </div>
 
                     {/* Scale Up */}
