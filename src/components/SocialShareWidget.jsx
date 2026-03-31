@@ -36,48 +36,88 @@ export default function SocialShareWidget() {
   const currentUrl = "https://nexuscale.ai";
 
   const shareTexts = {
-    linkedin: `Nexuscale AI simplifies your entire sales workflow in an instant.
+    linkedin: `Most sales teams are paying $4,000/yr to stitch together 6 tools that barely talk to each other.
 
-One platform. One AI agent. Replaces Apollo, Clay & Instantly.
+Apollo for data. Clay for enrichment. Instantly for sending. A CRM bolted on top. A writer. An inbox manager.
 
-✅ 24/7 autonomous lead prospecting
-✅ Hyper-personalized outreach in 50+ languages
-✅ AI that auto-books meetings for you
-✅ Built-in CRM, inbox & LinkedIn automation
+That's not a stack. That's a liability.
 
-From $59/mo. Your competitors are already automating.`,
+NexusScale replaces all of it — one AI platform with database, writer, and sending infrastructure built together from day one.
 
-    twitter: `Nexuscale AI simplifies your sales workflow in an instant.
+Here's what that looks like in practice:
 
-One agent replaces Apollo + Clay + Instantly:
-→ 24/7 lead prospecting
-→ Personalized outreach in 50+ languages
-→ Auto-books meetings
+✅ 24/7 autonomous lead prospecting — no manual list-building
+✅ Hyper-personalized outreach in 50+ languages — written by AI, not templates
+✅ Meetings auto-booked directly into your calendar
+✅ Built-in CRM, inbox rotation & LinkedIn automation
+
+And it starts at $59/mo.
+
+"Got 3 signups from 13 emails on day one." — Peter Poulos, Founder, Photostudio.io
+"The personalization is miles ahead of anything else I've tested." — Francis Rozange, CEO, La Factory
+
+If you're still duct-taping your outbound stack together, this is your sign to stop.
+
+👉 https://nexuscale.ai`,
+
+    twitter: `Most sales teams spend $4,000/yr on 6 tools that barely talk to each other.
+
+Apollo. Clay. Instantly. A CRM. A writer. An inbox manager.
+
+NexusScale replaces all of it — one AI platform, built together.
+
+→ 24/7 autonomous prospecting
+→ AI outreach in 50+ languages
+→ Auto-books meetings for you
 → Built-in CRM & LinkedIn automation
 
-From $59/mo 👇`,
+From $59/mo. Your competitors are already switching 👇`,
 
-    whatsapp: `Hey! Check out Nexuscale AI — it simplifies your entire sales process in an instant.
+    whatsapp: `Hey — quick share because this is genuinely impressive.
 
-One AI agent that prospects leads, writes personalised outreach in 50+ languages, and even books meetings automatically. Replaces Apollo, Clay & Instantly from just $59/mo.
+Most outbound teams are paying $4,000+/yr running Apollo, Clay, Instantly and a CRM separately. NexusScale replaces all of it with one AI platform — database, writer, and sending infra built together.
 
-Worth a look 👉 https://nexuscale.ai`,
+Real results: "Got 3 signups from 13 emails on day one." — Peter Poulos, Founder at Photostudio.io
 
-    facebook: `Nexuscale AI simplifies your sales workflow in an instant — one platform that replaces Apollo, Clay & Instantly.
+It starts at $59/mo and there's no duct-taping tools together. Worth 2 minutes of your time 👉 https://nexuscale.ai`,
 
-AI agents prospect 24/7, write personalised outreach in 50+ languages, and auto-book meetings for you. Built-in CRM and LinkedIn automation included.
+    facebook: `If your sales team is still paying separately for Apollo, Clay, Instantly, and a CRM — you're overpaying by thousands every year.
 
-From $59/mo 👇`,
+NexusScale is a single AI platform that does it all: lead database, AI writer, and sending infrastructure — built together, not bolted on.
 
-    instagram: `Nexuscale AI simplifies your sales workflow in an instant ⚡ One AI agent replaces Apollo, Clay & Instantly — 24/7 prospecting, personalised outreach in 50+ languages, auto-books meetings. From $59/mo. Link copied — check it out! 🔗`,
+The results speak for themselves:
 
-    slack: `📣 *Nexuscale AI* simplifies your sales workflow in an instant.
+⭐ "Got 3 signups from 13 emails on day one." — Peter Poulos, Founder, Photostudio.io
+⭐ "The personalization is miles ahead of anything else I've tested." — Francis Rozange, CEO, La Factory
 
-One platform replaces Apollo + Clay + Instantly:
-• 24/7 AI lead prospecting
-• Personalised outreach in 50+ languages
-• AI that auto-books meetings
-• Built-in CRM, inbox & LinkedIn automation
+One platform. From $59/mo. No $4,000/yr duct-tape bill.
+
+See it for yourself 👇 https://nexuscale.ai`,
+
+    instagram: `Your outbound stack has 6 tools. NexusScale has one. ⚡
+
+Database. AI Writer. Sending Infrastructure. CRM. LinkedIn Automation. All built together — from $59/mo.
+
+No Apollo. No Clay. No Instantly. No $4K/yr duct-tape bill. 🚫💸
+
+"Got 3 signups from 13 emails on day one." 🔥
+
+Link copied to clipboard — go check it out! 🔗 nexuscale.ai`,
+
+    slack: `📣 *Stop paying $4,000/yr to stitch together 6 tools.*
+
+*NexusScale* replaces your entire outbound stack — database, AI writer, and sending infrastructure, built together as one platform.
+
+No Apollo. No Clay. No Instantly. No duct-tape.
+
+What you get instead:
+• 🔍 24/7 autonomous lead prospecting
+• ✍️ AI-personalized outreach in 50+ languages
+• 📅 Meetings auto-booked to your calendar
+• 📥 Built-in CRM, inbox rotation & LinkedIn automation
+
+_"Got 3 signups from 13 emails on day one."_ — Peter Poulos, Founder, Photostudio.io
+_"The personalization is miles ahead of anything else I've tested."_ — Francis Rozange, CEO, La Factory
 
 From $59/mo → https://nexuscale.ai`,
   };

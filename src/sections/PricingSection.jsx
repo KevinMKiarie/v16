@@ -15,6 +15,8 @@ import {
   Lock,
   FileCheck,
   Info,
+  Rocket,
+  TrendingUp,
 } from "lucide-react";
 import {
   pricingPlansData,
@@ -236,9 +238,17 @@ const PriceTicker = ({ value, gradClass }) => {
     <AnimatePresence mode="wait">
       <motion.span
         key={value}
-        initial={{ y: dir === 0 ? -16 : dir > 0 ? -22 : 22, opacity: 0, scale: 0.94 }}
+        initial={{
+          y: dir === 0 ? -16 : dir > 0 ? -22 : 22,
+          opacity: 0,
+          scale: 0.94,
+        }}
         animate={{ y: 0, opacity: 1, scale: 1 }}
-        exit={{ y: dir === 0 ? 16 : dir > 0 ? 22 : -22, opacity: 0, scale: 0.94 }}
+        exit={{
+          y: dir === 0 ? 16 : dir > 0 ? 22 : -22,
+          opacity: 0,
+          scale: 0.94,
+        }}
         transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
         className={
           gradClass
@@ -257,6 +267,224 @@ const PriceTicker = ({ value, gradClass }) => {
     <span className="text-white">{inner}</span>
   );
 };
+
+// --- COMPARE PLANS CELL VALUE ---
+const CellValue = ({ value, highlight }) => {
+  if (value === true) {
+    return (
+      <CheckCircle2
+        className={`w-5 h-5 ${highlight ? "text-indigo-400 drop-shadow-[0_0_10px_rgba(99,102,241,0.7)]" : "text-indigo-500/60"}`}
+      />
+    );
+  }
+  if (value === false) {
+    return (
+      <span className="text-zinc-700 text-xl leading-none font-light select-none">
+        ×
+      </span>
+    );
+  }
+  return (
+    <span
+      className={`text-sm font-semibold leading-snug text-center ${highlight ? "text-white" : "text-zinc-300"}`}
+    >
+      {value}
+    </span>
+  );
+};
+
+const comparePlanData = [
+  {
+    category: "AI & Automation",
+    rows: [
+      {
+        feature: "AI Agents",
+        tooltip: "Parallel AI agents running outreach 24/7",
+        startup: "2",
+        growth: "10",
+        scale: "50",
+      },
+      {
+        feature: "Agent Type",
+        startup: "Research",
+        growth: "Deep AI",
+        scale: "Deep AI",
+      },
+      {
+        feature: "Workspaces",
+        tooltip: "Isolated campaign environments",
+        startup: "1",
+        growth: "3",
+        scale: "10",
+      },
+      {
+        feature: "Credits / Month",
+        tooltip: "Used for prospecting & enrichment actions",
+        startup: "2,500",
+        growth: "4,000",
+        scale: "15,000",
+      },
+      {
+        feature: "Customizable Agents & AI Replies",
+        startup: false,
+        growth: true,
+        scale: true,
+      },
+      {
+        feature: "AI Meeting Agent",
+        tooltip: "AI automatically books meetings when prospects show interest",
+        startup: false,
+        growth: true,
+        scale: true,
+      },
+    ],
+  },
+  {
+    category: "Email Outreach",
+    rows: [
+      {
+        feature: "Email Sending",
+        startup: "Unlimited",
+        growth: "Unlimited",
+        scale: "Unlimited",
+      },
+      {
+        feature: "Email Warmup",
+        startup: "Unlimited",
+        growth: "Unlimited",
+        scale: "Unlimited",
+      },
+      {
+        feature: "External Inboxes (Google / Outlook)",
+        startup: "3",
+        growth: "4",
+        scale: "12",
+      },
+      {
+        feature: "Mailbox Rotation & ESP Match",
+        startup: true,
+        growth: true,
+        scale: true,
+      },
+      {
+        feature: "Email Verification",
+        tooltip: "Real-time verification — 1 credit per email",
+        startup: true,
+        growth: true,
+        scale: true,
+      },
+      {
+        feature: "Premium Deliverability Routing",
+        tooltip: "Dedicated IPs engineered for maximum inbox placement",
+        startup: false,
+        growth: true,
+        scale: true,
+      },
+    ],
+  },
+  {
+    category: "Lead Intelligence",
+    rows: [
+      {
+        feature: "B2B Database Access",
+        startup: "Standard",
+        growth: "Premium",
+        scale: "Premium",
+      },
+      {
+        feature: "Contact Storage",
+        startup: "10,000",
+        growth: "25,000",
+        scale: "50,000",
+      },
+      {
+        feature: "Contact Uploads",
+        startup: "Unlimited",
+        growth: "Unlimited",
+        scale: "Unlimited",
+      },
+      {
+        feature: "Lead Scoring",
+        startup: "Basic",
+        growth: "Advanced",
+        scale: "Advanced",
+      },
+      {
+        feature: "Funding & Hiring Signals",
+        tooltip:
+          "Identify companies actively raising or hiring — prime buying signals",
+        startup: true,
+        growth: true,
+        scale: true,
+      },
+      {
+        feature: "AI Lead Search & Scrape",
+        startup: true,
+        growth: true,
+        scale: true,
+      },
+    ],
+  },
+  {
+    category: "LinkedIn Outreach",
+    rows: [
+      {
+        feature: "LinkedIn Sender Seats",
+        tooltip: "+$19/mo per additional seat",
+        startup: "Add-on (max 2)",
+        growth: "Add-on (max 10)",
+        scale: "Unlimited",
+      },
+      {
+        feature: "Connection Requests & DMs",
+        startup: true,
+        growth: true,
+        scale: true,
+      },
+    ],
+  },
+  {
+    category: "Platform & Support",
+    rows: [
+      {
+        feature: "Team Seats",
+        startup: "2",
+        growth: "10",
+        scale: "50",
+      },
+      {
+        feature: "Native CRM Integrations",
+        startup: true,
+        growth: true,
+        scale: true,
+      },
+      {
+        feature: "A/Z Testing",
+        startup: true,
+        growth: true,
+        scale: true,
+      },
+      {
+        feature: "Smart Inbox & Inbuilt CRM",
+        startup: true,
+        growth: true,
+        scale: true,
+      },
+      {
+        feature: "Multi-Language Outreach (50+)",
+        startup: true,
+        growth: true,
+        scale: true,
+      },
+      {
+        feature: "Support",
+        startup: "Live Chat",
+        growth: "Priority",
+        scale: "Priority",
+      },
+    ],
+  },
+];
 
 // --- MAIN SECTION COMPONENT ---
 
@@ -436,42 +664,35 @@ export default function PricingSection() {
                 </span>
               </div>
 
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white  mb-2 tracking-tight">
-                <VerticalCutReveal
-                  splitBy="words"
-                  staggerDuration={0.15}
-                  staggerFrom="first"
-                  reverse={true}
-                  containerClassName="justify-center"
-                  transition={{
-                    type: "spring",
-                    stiffness: 250,
-                    damping: 40,
-                    delay: 0,
-                  }}
-                >
-                  Replace $665/mo of Tools
-                </VerticalCutReveal>
-                <br className=" sm:block" />
+              <h1 className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 font-black text-4xl md:text-5xl lg:text-6xl mb-1 tracking-tight flex flex-wrap justify-center gap-x-[0.3em]">
+                {["Replace", "$665/mo", "of", "Tools"].map((word, i) => (
+                  <span key={i} className="overflow-hidden inline-block">
+                    <motion.span
+                      className="inline-block"
+                      initial={{ y: "-110%" }}
+                      animate={{ y: 0 }}
+                      transition={{ type: "spring", stiffness: 250, damping: 40, delay: i * 0.15 }}
+                    >
+                      {word}
+                    </motion.span>
+                  </span>
+                ))}
+              </h1>
 
-                <span className=" bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400 ">
-                  <VerticalCutReveal
-                    splitBy="words"
-                    staggerDuration={0.15}
-                    staggerFrom="first"
-                    reverse={true}
-                    containerClassName="justify-center"
-                    transition={{
-                      type: "spring",
-                      stiffness: 250,
-                      damping: 40,
-                      delay: 0.3,
-                    }}
-                  >
-                    With One Autopilot
-                  </VerticalCutReveal>
-                </span>
-              </h2>
+              <h1 className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-400 font-black text-4xl md:text-5xl lg:text-6xl mb-2 tracking-tight flex flex-wrap justify-center gap-x-[0.3em]">
+                {["With", "One", "Autopilot"].map((word, i) => (
+                  <span key={i} className="overflow-hidden inline-block">
+                    <motion.span
+                      className="inline-block"
+                      initial={{ y: "-110%" }}
+                      animate={{ y: 0 }}
+                      transition={{ type: "spring", stiffness: 250, damping: 40, delay: 0.3 + i * 0.15 }}
+                    >
+                      {word}
+                    </motion.span>
+                  </span>
+                ))}
+              </h1>
               <p className="text-zinc-400 text-base max-w-xl mx-auto mb-10 leading-relaxed">
                 Every plan includes the full Autonomous OS, unlimited seats, and
                 all core AI capabilities to scale your pipeline.
@@ -855,10 +1076,19 @@ export default function PricingSection() {
                           </div>
                           {/* Add-on breakdown */}
                           <AnimatePresence>
-                            {(getLinkedinSeats(plan.name) > 0 || getMailboxes(plan.name) > 0) && (
+                            {(getLinkedinSeats(plan.name) > 0 ||
+                              getMailboxes(plan.name) > 0) && (
                               <motion.div
-                                initial={{ opacity: 0, height: 0, marginTop: 0 }}
-                                animate={{ opacity: 1, height: "auto", marginTop: 6 }}
+                                initial={{
+                                  opacity: 0,
+                                  height: 0,
+                                  marginTop: 0,
+                                }}
+                                animate={{
+                                  opacity: 1,
+                                  height: "auto",
+                                  marginTop: 6,
+                                }}
                                 exit={{ opacity: 0, height: 0, marginTop: 0 }}
                                 transition={{ duration: 0.2 }}
                                 className="flex items-center gap-1.5 flex-wrap overflow-hidden"
@@ -868,15 +1098,20 @@ export default function PricingSection() {
                                 </span>
                                 {getLinkedinSeats(plan.name) > 0 && (
                                   <>
-                                    <span className="text-[10px] text-zinc-600">+</span>
+                                    <span className="text-[10px] text-zinc-600">
+                                      +
+                                    </span>
                                     <span className="text-[10px] font-bold text-[#4fa3d4]">
-                                      ${getLinkedinSeats(plan.name) * 19} LinkedIn
+                                      ${getLinkedinSeats(plan.name) * 19}{" "}
+                                      LinkedIn
                                     </span>
                                   </>
                                 )}
                                 {getMailboxes(plan.name) > 0 && (
                                   <>
-                                    <span className="text-[10px] text-zinc-600">+</span>
+                                    <span className="text-[10px] text-zinc-600">
+                                      +
+                                    </span>
                                     <span className="text-[10px] font-bold text-emerald-400">
                                       ${getMailboxes(plan.name) * 3} Mailboxes
                                     </span>
@@ -906,12 +1141,12 @@ export default function PricingSection() {
                             label="Credits /mo"
                             sublabel="Engine Credits"
                           />
-                          <StatChip
+                          {/* <StatChip
                             value={`${plan.credits.linkedinSeats}`}
                             label="LinkedIn Add-ons"
                             sublabel={plan.credits.linkedinSub}
                             dim={plan.name === "Free"}
-                          />
+                          /> */}
                           <StatChip
                             value={plan.credits.agents}
                             label="AI Agents"
@@ -924,11 +1159,11 @@ export default function PricingSection() {
                             sublabel="Collaborators"
                           />
 
-                          <StatChip
+                          {/* <StatChip
                             value={plan.credits.mailboxes}
                             label="Mailboxes"
                             sublabel={`${plan.credits.mailboxSub}`}
-                          />
+                          /> */}
                           <StatChip
                             value={plan.credits.emails}
                             label="Emails"
@@ -1037,9 +1272,23 @@ export default function PricingSection() {
                           <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/[0.06] p-3.5 space-y-2.5">
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-2">
-                                <svg className="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                  <rect x="2" y="4" width="20" height="16" rx="2"/>
-                                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                                <svg
+                                  className="w-3.5 h-3.5 text-emerald-400"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                >
+                                  <rect
+                                    x="2"
+                                    y="4"
+                                    width="20"
+                                    height="16"
+                                    rx="2"
+                                  />
+                                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
                                 </svg>
                                 <span className="text-xs font-bold text-zinc-300">
                                   Native Mailboxes
@@ -1191,7 +1440,7 @@ export default function PricingSection() {
 
                 <div className="flex flex-col sm:flex-row items-center gap-4">
                   <a
-                    href="/contact"
+                    href="https://cal.com/kevin-nexuscale/15min"
                     className="relative inline-flex h-12 items-center justify-center rounded-full bg-white px-8 text-sm font-bold text-black transition-all hover:bg-zinc-200 hover:scale-105 active:scale-95"
                   >
                     Book a call
@@ -1199,95 +1448,192 @@ export default function PricingSection() {
                 </div>
               </div>
 
-              {/* Bottom Corner Accent */}
               <div className="absolute -bottom-12 -right-12 w-32 h-32 bg-indigo-500/10 blur-3xl rounded-full" />
             </motion.div>
           </div>
 
-          {/* Compare Plans Table */}
-          <div className="my-20">
-            <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 mb-8 font-black text-center text-7xl">
-              Compare plans
-            </h3>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b font-semibold border-white/10">
-                    <th className="text-left py-4 px-4 text-zinc-400 font-bold uppercase tracking-wider text-xs ">
-                      Feature
-                    </th>
-                    <th className="text-center py-4 px-4 text-zinc-400 font-bold uppercase tracking-wider text-xs">
-                      Start Up
-                    </th>
-                    <th className="text-center py-4 px-4 text-zinc-400 font-bold uppercase tracking-wider text-xs">
-                      Growth
-                    </th>
-                    <th className="text-center py-4 px-4 text-zinc-400 font-bold uppercase tracking-wider text-xs">
-                      Scale Up
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/5">
-                  {[
-                    {
-                      feature: "AI Agents",
-                      startup: "2",
-                      growth: "10",
-                      scale: "50",
-                    },
-                    {
-                      feature: "Workspaces",
-                      startup: "1",
-                      growth: "3",
-                      scale: "10",
-                    },
-                    {
-                      feature: "Credits/mo",
-                      startup: "2,500",
-                      growth: "4,000",
-                      scale: "15,000",
-                    },
-                    {
-                      feature: "LinkedIn seats",
-                      startup: "Add-on (max 2)",
-                      growth: "Add-on (max 10)",
-                      scale: "Unlimited",
-                    },
-                    {
-                      feature: "Lead scoring",
-                      startup: "Basic",
-                      growth: "Advanced",
-                      scale: "Advanced",
-                    },
-                    {
-                      feature: "Support",
-                      startup: "Live chat",
-                      growth: "Priority",
-                      scale: "Priority",
-                    },
-                  ].map((row) => (
-                    <tr
-                      key={row.feature}
-                      className="hover:bg-white/[0.02] transition-colors"
-                    >
-                      <td className="py-4 px-4 text-white font-medium">
-                        {row.feature}
-                      </td>
-                      <td className="py-4 px-4 text-zinc-400 text-center">
-                        {row.startup}
-                      </td>
-                      <td className="py-4 px-4 text-zinc-400 text-center">
-                        {row.growth}
-                      </td>
-                      <td className="py-4 px-4 text-zinc-400 text-center">
-                        {row.scale}
-                      </td>
-                    </tr>
+          <ScrollReveal delay={100}>
+            <div className="my-20 w-full max-w-6xl mx-auto">
+              {/* Section heading */}
+              <div className="text-center mb-12">
+                <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 mb-4 font-black text-5xl md:text-6xl lg:text-7xl">
+                  Compare Plans
+                </h3>
+                <p className="text-zinc-400 text-base max-w-lg mx-auto">
+                  Every feature, side by side — so you can pick with confidence.
+                </p>
+              </div>
+
+              <div className="overflow-x-auto rounded-2xl border border-white/[0.07] bg-[#0A0A0C]/60 backdrop-blur-xl shadow-[0_8px_60px_rgba(0,0,0,0.5)]">
+                <div className="max-w-6xl w-full mx-auto">
+                  <div className="grid grid-cols-[2.2fr_1fr_1fr_1fr]">
+                    {/* Empty label col */}
+                    <div className="px-8 py-8 flex items-end">
+                      <span className="text-[10px] font-black uppercase tracking-widest text-zinc-600">
+                        Feature
+                      </span>
+                    </div>
+
+                    {/* Start Up */}
+                    <div className="px-4 py-8 flex flex-col items-center gap-3 border-l border-white/[0.05]">
+                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-700 flex items-center justify-center shadow-lg shadow-blue-600/20 ring-1 ring-white/10">
+                        <Zap className="w-6 h-6 text-white" strokeWidth={2.5} />
+                      </div>
+                      <div className="text-center">
+                        <div className="text-white font-bold text-sm tracking-wide">
+                          Start Up
+                        </div>
+                        <div className="text-zinc-500 text-xs mt-0.5 font-medium">
+                          from $49/mo
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Growth — highlighted */}
+                    <div className="px-4 py-8 flex flex-col items-center gap-3 relative border-l border-indigo-500/20">
+                      {/* Column highlight bg */}
+                      <div className="absolute inset-0 bg-gradient-to-b from-indigo-500/[0.08] to-indigo-500/[0.03] pointer-events-none" />
+                      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-indigo-500 to-violet-500" />
+                      {/* Most Popular badge */}
+                      <div className="relative z-10 -mt-1 mb-1 flex justify-center">
+                        <span className="bg-gradient-to-r from-indigo-500 to-violet-500 text-white text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-md">
+                          Most Popular
+                        </span>
+                      </div>
+                      <div className="relative z-10 w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-xl shadow-indigo-600/30 ring-1 ring-indigo-400/30">
+                        <LucideSparkles
+                          className="w-6 h-6 text-white"
+                          strokeWidth={2.5}
+                        />
+                      </div>
+                      <div className="relative z-10 text-center">
+                        <div className="text-white font-bold text-sm tracking-wide">
+                          Growth
+                        </div>
+                        <div className="text-indigo-300/70 text-xs mt-0.5 font-medium">
+                          from $83/mo
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Scale Up */}
+                    <div className="px-4 py-8 flex flex-col items-center gap-3 border-l border-white/[0.05]">
+                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-600 to-purple-900 flex items-center justify-center shadow-lg shadow-violet-600/20 ring-1 ring-white/10">
+                        <Rocket
+                          className="w-6 h-6 text-white"
+                          strokeWidth={2.5}
+                        />
+                      </div>
+                      <div className="text-center">
+                        <div className="text-white font-bold text-sm tracking-wide">
+                          Scale Up
+                        </div>
+                        <div className="text-zinc-500 text-xs mt-0.5 font-medium">
+                          from $249/mo
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Category + Feature rows */}
+                  {comparePlanData.map((section, si) => (
+                    <div key={si}>
+                      {/* Category header */}
+                      <div className="grid grid-cols-[2.2fr_1fr_1fr_1fr] border-t border-white/[0.06]">
+                        <div className="col-span-4 px-8 py-3 bg-white/[0.025]">
+                          <span className="text-[10px] font-black uppercase tracking-[0.15em] text-zinc-400">
+                            {section.category}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Feature rows */}
+                      {section.rows.map((row, ri) => {
+                        const isLast =
+                          ri === section.rows.length - 1 &&
+                          si === comparePlanData.length - 1;
+                        return (
+                          <div
+                            key={ri}
+                            className={`grid grid-cols-[2.2fr_1fr_1fr_1fr] border-t border-white/[0.04] hover:bg-white/[0.025] transition-colors duration-150 ${isLast ? "" : ""}`}
+                          >
+                            {/* Feature label */}
+                            <div className="px-8 py-4 flex items-center gap-2">
+                              <span className="text-sm text-zinc-300 font-medium leading-snug">
+                                {row.feature}
+                              </span>
+                              {row.tooltip && (
+                                <FeatureTooltip text={row.tooltip} />
+                              )}
+                            </div>
+
+                            {/* Start Up value */}
+                            <div className="px-4 py-4 flex items-center justify-center border-l border-white/[0.04]">
+                              <CellValue value={row.startup} />
+                            </div>
+
+                            {/* Growth value — highlighted column */}
+                            <div className="px-4 py-4 flex items-center justify-center relative border-l border-indigo-500/10">
+                              <div className="absolute inset-0 bg-indigo-500/[0.04] pointer-events-none" />
+                              <div className="relative z-10">
+                                <CellValue value={row.growth} highlight />
+                              </div>
+                            </div>
+
+                            {/* Scale Up value */}
+                            <div className="px-4 py-4 flex items-center justify-center border-l border-white/[0.04]">
+                              <CellValue value={row.scale} />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   ))}
-                </tbody>
-              </table>
+
+                  {/* CTA Footer Row */}
+                  <div className="grid grid-cols-[2.2fr_1fr_1fr_1fr] border-t border-white/[0.08]">
+                    <div className="px-8 py-6" />
+
+                    {/* Start Up CTA */}
+                    <div className="px-4 py-6 flex items-center justify-center border-l border-white/[0.05]">
+                      <a
+                        href="https://app.nexuscale.ai/users/register"
+                        className="text-xs font-bold text-zinc-300 hover:text-white border border-white/[0.1] hover:border-white/[0.25] px-4 py-2.5 rounded-xl transition-all duration-200 whitespace-nowrap bg-white/[0.03] hover:bg-white/[0.07]"
+                      >
+                        Get Started
+                      </a>
+                    </div>
+
+                    {/* Growth CTA */}
+                    <div className="px-4 py-6 flex items-center justify-center relative border-l border-indigo-500/20">
+                      <div className="absolute inset-0 bg-indigo-500/[0.06] pointer-events-none" />
+                      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-indigo-500 to-violet-500" />
+                      <a
+                        href="https://buy.stripe.com/dRmbJ14Xh9J2gwkc4Vb7y0c"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="relative z-10 text-xs font-black text-white bg-gradient-to-r from-indigo-500 to-violet-500 hover:from-indigo-400 hover:to-violet-400 px-4 py-2.5 rounded-xl transition-all duration-200 whitespace-nowrap shadow-lg shadow-indigo-600/30 hover:shadow-indigo-500/40"
+                      >
+                        Get Started
+                      </a>
+                    </div>
+
+                    {/* Scale Up CTA */}
+                    <div className="px-4 py-6 flex items-center justify-center border-l border-white/[0.05]">
+                      <a
+                        href="https://buy.stripe.com/eVq6oH9dx3kE4NCc4Vb7y04"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs font-bold text-zinc-300 hover:text-white border border-white/[0.1] hover:border-violet-500/50 px-4 py-2.5 rounded-xl transition-all duration-200 whitespace-nowrap bg-white/[0.03] hover:bg-violet-500/[0.08]"
+                      >
+                        Get Started
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Enterprise Trust & ROI Section */}
           <ScrollReveal delay={100}>

@@ -10,9 +10,9 @@ export default function PricingPage() {
   return (
     <div className="animate-in fade-in slide-in-from-bottom-8 duration-400">
       <IntercomWidget />
+      <ComparisonStack />
       <PricingSection />
       {/* <BoosterPacks /> */}
-      <ComparisonStack />
       <ROICalculator />
       <FAQSection />
       <CTASection />

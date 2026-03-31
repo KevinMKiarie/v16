@@ -11,10 +11,7 @@ export default function ComparisonStack() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/20 via-[#030304] to-[#030304] opacity-50" />
       <div className="max-w-4xl mx-auto relative z-10">
         <ScrollReveal>
-          <div className="text-center mb-16">
-            <h3 className="text-4xl md:text-7xl font-black text-white mb-2">
-              Replace $665/mo of Tools With One Autopilot
-            </h3>
+          <div className="text-center mb-8">
             <p className="text-zinc-400 text-base">
               The choice is clear. Command more. Spend less.
             </p>
