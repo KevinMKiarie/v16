@@ -669,7 +669,7 @@ export default function PricingSection() {
                 </span>
               </div>
 
-              <h1 className="font-black text-4xl md:text-5xl lg:text-6xl mb-1 tracking-tight flex flex-wrap justify-center gap-x-[0.3em]">
+              <h1 className="font-bold text-4xl md:text-5xl lg:text-7xl mb-1 tracking-tight flex flex-wrap justify-center gap-x-[0.3em] font-spline">
                 {["Replace", "$665/mo", "of", "Tools"].map((word, i) => (
                   <span key={i} className="overflow-hidden inline-block">
                     <motion.span
@@ -693,7 +693,7 @@ export default function PricingSection() {
                 ))}
               </h1>
 
-              <h1 className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-400 font-black text-4xl md:text-5xl lg:text-6xl mb-2 tracking-tight flex flex-wrap justify-center gap-x-[0.3em]">
+              <h1 className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-400  text-4xl md:text-5xl lg:text-7xl mb-2 tracking-tight flex flex-wrap justify-center gap-x-[0.3em]">
                 {["With", "One", "Autopilot"].map((word, i) => (
                   <span key={i} className="overflow-hidden inline-block">
                     <motion.span
@@ -1473,13 +1473,7 @@ export default function PricingSection() {
                     </div>
 
                     {/* Start Up */}
-                    <div className="px-3 py-6 sm:px-4 sm:py-8 flex flex-col items-center gap-2 border-l border-white/[0.05]">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-700 flex items-center justify-center shadow-lg shadow-blue-600/20 ring-1 ring-white/10">
-                        <Zap
-                          className="w-4 sm:w-5 h-4 sm:h-5 text-white"
-                          strokeWidth={2.5}
-                        />
-                      </div>
+                    <div className="px-3 py-6 sm:px-4 flex flex-col items-center gap-2 border-l border-white/[0.05]">
                       <div className="text-center">
                         <div className="text-white font-bold text-xs sm:text-sm tracking-wide">
                           Start Up
@@ -1491,16 +1485,11 @@ export default function PricingSection() {
                     </div>
 
                     {/* Growth */}
-                    <div className="px-3 py-6 sm:px-4 sm:py-8 flex flex-col items-center gap-2 relative border-l border-indigo-500/20">
+                    <div className="px-3 py-6 sm:px-4  flex flex-col items-center gap-2 relative border-l border-indigo-500/20">
                       <div className="absolute inset-0 bg-gradient-to-b from-indigo-500/[0.08] to-indigo-500/[0.03] pointer-events-none" />
                       <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-indigo-500 to-violet-500" />
                       <div className="relative z-10 -mt-1 mb-1 flex justify-center" />
-                      <div className="relative z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-xl shadow-indigo-600/30 ring-1 ring-indigo-400/30">
-                        <LucideSparkles
-                          className="w-4 sm:w-5 h-4 sm:h-5 text-white"
-                          strokeWidth={2.5}
-                        />
-                      </div>
+
                       <div className="relative z-10 text-center">
                         <div className="text-white font-bold text-xs sm:text-sm tracking-wide">
                           Growth
@@ -1515,13 +1504,7 @@ export default function PricingSection() {
                     </div>
 
                     {/* Scale Up */}
-                    <div className="px-3 py-6 sm:px-4 sm:py-8 flex flex-col items-center gap-2 border-l border-white/[0.05]">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-br from-violet-600 to-purple-900 flex items-center justify-center shadow-lg shadow-violet-600/20 ring-1 ring-white/10">
-                        <Rocket
-                          className="w-4 sm:w-5 h-4 sm:h-5 text-white"
-                          strokeWidth={2.5}
-                        />
-                      </div>
+                    <div className="px-3 py-6 sm:px-4  flex flex-col items-center gap-2 border-l border-white/[0.05]">
                       <div className="text-center">
                         <div className="text-white font-bold text-xs sm:text-sm tracking-wide">
                           Scale Up
@@ -1533,7 +1516,6 @@ export default function PricingSection() {
                     </div>
                   </div>
 
-                  {/* Feature rows */}
                   {comparePlanData.map((section, si) => (
                     <div key={si}>
                       <button
@@ -1541,7 +1523,7 @@ export default function PricingSection() {
                         className="w-full grid grid-cols-[2.2fr_1fr_1fr_1fr] sm:grid-cols-[2fr_1fr_1fr_1fr] border-t border-white/[0.06] hover:bg-white/[0.04] transition-colors duration-150 text-left"
                       >
                         <div className="col-span-4 px-4 py-3 sm:px-8 sm:py-3 bg-white/[0.025] flex items-center justify-between">
-                          <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.12em] sm:tracking-[0.15em] text-zinc-400">
+                          <span className="text-[9px] sm:text-lg font-black uppercase tracking-[0.12em] sm:tracking-[0.15em] text-white">
                             {section.category}
                           </span>
                           <ChevronDown
