@@ -669,7 +669,7 @@ export default function PricingSection() {
                 </span>
               </div>
 
-              <h1 className="font-bold text-4xl md:text-5xl lg:text-7xl mb-1 tracking-tight flex flex-wrap justify-center gap-x-[0.3em] font-spline">
+              <h1 className="font-bold  text-4xl md:text-5xl lg:text-7xl mb-1 tracking-tight flex flex-wrap justify-center gap-x-[0.3em] font-spline">
                 {["Replace", "$665/mo", "of", "Tools"].map((word, i) => (
                   <span key={i} className="overflow-hidden inline-block">
                     <motion.span
@@ -693,7 +693,7 @@ export default function PricingSection() {
                 ))}
               </h1>
 
-              <h1 className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-400  text-4xl md:text-5xl lg:text-7xl mb-2 tracking-tight flex flex-wrap justify-center gap-x-[0.3em]">
+              <h1 className="font-bold font-spline text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-400  text-4xl md:text-5xl lg:text-7xl mb-2 tracking-tight flex flex-wrap justify-center gap-x-[0.3em]">
                 {["With", "One", "Autopilot"].map((word, i) => (
                   <span key={i} className="overflow-hidden inline-block">
                     <motion.span
@@ -1413,7 +1413,6 @@ export default function PricingSection() {
               viewport={{ once: true }}
               className="relative group overflow-hidden rounded-[2.5rem] bg-zinc-900/40 backdrop-blur-2xl p-8 md:p-12 shadow-2xl"
             >
-              {/* Top Highlight "Beam" */}
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
 
               <div className="flex flex-col items-center text-center">
@@ -1454,7 +1453,7 @@ export default function PricingSection() {
           <ScrollReveal delay={100}>
             <div className="my-16 w-full md:max-w-7xl mx-auto px-4 sm:px-6">
               <div className="text-center mb-10">
-                <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 mb-4 font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
+                <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 mb-4 font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-spline">
                   Compare Plans
                 </h3>
                 <p className="text-zinc-400 text-sm sm:text-base max-w-lg mx-auto">
@@ -1523,7 +1522,7 @@ export default function PricingSection() {
                         className="w-full grid grid-cols-[2.2fr_1fr_1fr_1fr] sm:grid-cols-[2fr_1fr_1fr_1fr] border-t border-white/[0.06] hover:bg-white/[0.04] transition-colors duration-150 text-left relative overflow-hidden group"
                       >
                         <div className="col-span-4 px-4 py-3 sm:px-8 sm:py-3 bg-white/[0.025] flex items-center justify-between relative z-10">
-                          <span className="text-[9px] sm:text-md font-black uppercase tracking-[0.12em] sm:tracking-[0.15em] text-white">
+                          <span className="text-[9px] sm:text-lg font-semibold uppercase tracking-[0.12em] sm:tracking-[0.15em] text-white">
                             {section.category}
                           </span>
                           <ChevronDown
@@ -1532,7 +1531,7 @@ export default function PricingSection() {
                             }`}
                           />
                         </div>
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-55 animate-shimmer -skew-x-12 origin-center group-hover:opacity-100 transition-opacity duration-300" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-900/80 to-transparent opacity-85 animate-shimmer -skew-x-12 origin-center group-hover:opacity-100 transition-opacity duration-700" />
                       </button>
 
                       {openCategories[si] &&
@@ -1569,7 +1568,6 @@ export default function PricingSection() {
                     </div>
                   ))}
 
-                  {/* CTA row */}
                   <div className="grid grid-cols-[2.2fr_1fr_1fr_1fr] sm:grid-cols-[2fr_1fr_1fr_1fr] border-t border-white/[0.08]">
                     <div className="px-4 py-4 sm:px-8 sm:py-6" />
 
