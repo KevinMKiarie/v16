@@ -1520,9 +1520,9 @@ export default function PricingSection() {
                     <div key={si}>
                       <button
                         onClick={() => toggleCategory(si)}
-                        className="w-full grid grid-cols-[2.2fr_1fr_1fr_1fr] sm:grid-cols-[2fr_1fr_1fr_1fr] border-t border-white/[0.06] hover:bg-white/[0.04] transition-colors duration-150 text-left"
+                        className="w-full grid grid-cols-[2.2fr_1fr_1fr_1fr] sm:grid-cols-[2fr_1fr_1fr_1fr] border-t border-white/[0.06] hover:bg-white/[0.04] transition-colors duration-150 text-left relative overflow-hidden group"
                       >
-                        <div className="col-span-4 px-4 py-3 sm:px-8 sm:py-3 bg-white/[0.025] flex items-center justify-between">
+                        <div className="col-span-4 px-4 py-3 sm:px-8 sm:py-3 bg-white/[0.025] flex items-center justify-between relative z-10">
                           <span className="text-[9px] sm:text-md font-black uppercase tracking-[0.12em] sm:tracking-[0.15em] text-white">
                             {section.category}
                           </span>
@@ -1532,6 +1532,7 @@ export default function PricingSection() {
                             }`}
                           />
                         </div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-55 animate-shimmer -skew-x-12 origin-center group-hover:opacity-100 transition-opacity duration-300" />
                       </button>
 
                       {openCategories[si] &&
