@@ -53,7 +53,6 @@ export default function ComparisonStack() {
                     </div>
                   </button>
 
-                  {/* Collapsible sub-items */}
                   <div
                     className={`transition-all duration-300 ease-in-out overflow-hidden ${
                       openIndex === i ? "max-h-60 opacity-100" : "max-h-0 opacity-0"
@@ -77,7 +76,6 @@ export default function ComparisonStack() {
                 </div>
               ))}
 
-              {/* Total row */}
               <div className="flex justify-between items-center p-4 rounded-xl bg-red-500/5 border border-red-500/20 mt-4">
                 <span className="font-bold text-red-400">Total Monthly Cost</span>
                 <span className="font-mono font-bold text-red-400 line-through">$665/mo</span>

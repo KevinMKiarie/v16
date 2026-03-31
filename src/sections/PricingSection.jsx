@@ -669,11 +669,15 @@ export default function PricingSection() {
                 </span>
               </div>
 
-              <h1 className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 font-black text-4xl md:text-5xl lg:text-6xl mb-1 tracking-tight flex flex-wrap justify-center gap-x-[0.3em]">
+              <h1 className="font-black text-4xl md:text-5xl lg:text-6xl mb-1 tracking-tight flex flex-wrap justify-center gap-x-[0.3em]">
                 {["Replace", "$665/mo", "of", "Tools"].map((word, i) => (
                   <span key={i} className="overflow-hidden inline-block">
                     <motion.span
-                      className="inline-block"
+                      className={`inline-block ${
+                        word === "$665/mo"
+                          ? "text-white"
+                          : "text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300"
+                      }`}
                       initial={{ y: "-110%" }}
                       animate={{ y: 0 }}
                       transition={{
@@ -825,19 +829,15 @@ export default function PricingSection() {
                       className={`absolute -top-16 -right-16 w-48 h-48 rounded-full blur-3xl ${s.orb} opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`}
                     />
 
-                    {/* Top accent bar */}
                     <div
                       className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${s.accent} origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500`}
                     />
 
                     {isLastAlone ? (
-                      /* Agency Plan — horizontal layout */
                       <div
                         className={`relative z-10 p-6 flex flex-col md:flex-row flex-1 gap-6 md:gap-8 ${isPopular ? "pt-10" : "pt-8"}`}
                       >
-                        {/* Left: header + pricing + CTA */}
                         <div className="flex flex-col gap-5 md:w-[280px] md:shrink-0 md:border-r md:border-white/[0.06] md:pr-8">
-                          {/* Header */}
                           <div>
                             <div
                               className={`text-[10px] font-black uppercase tracking-widest ${s.label} mb-1.5`}
@@ -852,7 +852,6 @@ export default function PricingSection() {
                             </div>
                           </div>
 
-                          {/* Pricing */}
                           <div>
                             <div className="flex items-baseline gap-1.5 flex-wrap">
                               {s.priceGrad ? (
@@ -914,7 +913,6 @@ export default function PricingSection() {
                             )}
                           </div>
 
-                          {/* CTA */}
                           <div className="mt-auto pt-2">
                             <Button
                               text={plan.cta}
@@ -951,11 +949,9 @@ export default function PricingSection() {
                           </div>
                         </div>
 
-                        {/* Right: stat chips + features */}
                         <div className="flex flex-col gap-5 flex-1 min-w-0">
                           <div className="h-px md:hidden bg-gradient-to-r from-white/[0.05] via-white/[0.1] to-white/[0.05]" />
 
-                          {/* Hard Limits Grid */}
                           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                             <StatChip
                               value={plan.credits.contacts}
@@ -1006,7 +1002,6 @@ export default function PricingSection() {
 
                           <div className="h-px bg-gradient-to-r from-white/[0.05] via-white/[0.1] to-white/[0.05]" />
 
-                          {/* Features List */}
                           <div className="relative flex-1 mb-2">
                             <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-[#0A0A0C]/95 to-transparent z-10 pointer-events-none" />
                             <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3.5 overflow-y-auto max-h-[320px] pr-2 custom-scrollbar pb-6">
@@ -1053,7 +1048,6 @@ export default function PricingSection() {
                       <div
                         className={`relative z-10 p-6 flex flex-col flex-1 gap-5 ${isPopular ? "pt-10" : "pt-8"}`}
                       >
-                        {/* Header */}
                         <div>
                           <div
                             className={`text-[10px] font-black uppercase tracking-widest ${s.label} mb-1.5`}
@@ -1068,7 +1062,6 @@ export default function PricingSection() {
                           </div>
                         </div>
 
-                        {/* Pricing */}
                         <div>
                           <div className="flex items-baseline gap-1.5 flex-wrap">
                             <span className="text-5xl font-black tracking-tight leading-none">
@@ -1090,7 +1083,6 @@ export default function PricingSection() {
                               </>
                             )}
                           </div>
-                          {/* Add-on breakdown */}
                           <AnimatePresence>
                             {(getLinkedinSeats(plan.name) > 0 ||
                               getMailboxes(plan.name) > 0) && (
@@ -1150,7 +1142,6 @@ export default function PricingSection() {
 
                         <div className="h-px bg-gradient-to-r from-white/[0.05] via-white/[0.1] to-white/[0.05]" />
 
-                        {/* Hard Limits Grid */}
                         <div className="grid grid-cols-2 gap-2">
                           <StatChip
                             value={plan.credits.contacts}
@@ -1201,7 +1192,6 @@ export default function PricingSection() {
                           />
                         </div>
 
-                        {/* LinkedIn Add-on Calculator */}
                         {getMaxSeats(plan) > 0 && (
                           <div className="rounded-xl border border-[#0077b5]/25 bg-[#0077b5]/[0.07] p-3.5 space-y-2.5">
                             <div className="flex items-center justify-between">
@@ -1283,7 +1273,6 @@ export default function PricingSection() {
                           </div>
                         )}
 
-                        {/* Mailbox Add-on Calculator */}
                         {plan.price !== "0" && (
                           <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/[0.06] p-3.5 space-y-2.5">
                             <div className="flex items-center justify-between">
@@ -1373,7 +1362,6 @@ export default function PricingSection() {
 
                         <div className="h-px bg-gradient-to-r from-white/[0.05] via-white/[0.1] to-white/[0.05]" />
 
-                        {/* Features List */}
                         <CardFeatureList plan={plan} s={s} />
 
                         {/* CTA Section */}
@@ -1572,40 +1560,41 @@ export default function PricingSection() {
                       </button>
 
                       {/* Feature rows — hidden by default */}
-                      {openCategories[si] && section.rows.map((row, ri) => (
-                        <div
-                          key={ri}
-                          className="grid grid-cols-[2.2fr_1fr_1fr_1fr] border-t border-white/[0.04] hover:bg-white/[0.025] transition-colors duration-150"
-                        >
-                          {/* Feature label */}
-                          <div className="px-8 py-4 flex items-center gap-2">
-                            <span className="text-sm text-zinc-300 font-medium leading-snug">
-                              {row.feature}
-                            </span>
-                            {row.tooltip && (
-                              <FeatureTooltip text={row.tooltip} />
-                            )}
-                          </div>
+                      {openCategories[si] &&
+                        section.rows.map((row, ri) => (
+                          <div
+                            key={ri}
+                            className="grid grid-cols-[2.2fr_1fr_1fr_1fr] border-t border-white/[0.04] hover:bg-white/[0.025] transition-colors duration-150"
+                          >
+                            {/* Feature label */}
+                            <div className="px-8 py-4 flex items-center gap-2">
+                              <span className="text-sm text-zinc-300 font-medium leading-snug">
+                                {row.feature}
+                              </span>
+                              {row.tooltip && (
+                                <FeatureTooltip text={row.tooltip} />
+                              )}
+                            </div>
 
-                          {/* Start Up value */}
-                          <div className="px-4 py-4 flex items-center justify-center border-l border-white/[0.04]">
-                            <CellValue value={row.startup} />
-                          </div>
+                            {/* Start Up value */}
+                            <div className="px-4 py-4 flex items-center justify-center border-l border-white/[0.04]">
+                              <CellValue value={row.startup} />
+                            </div>
 
-                          {/* Growth value — highlighted column */}
-                          <div className="px-4 py-4 flex items-center justify-center relative border-l border-indigo-500/10">
-                            <div className="absolute inset-0 bg-indigo-500/[0.04] pointer-events-none" />
-                            <div className="relative z-10">
-                              <CellValue value={row.growth} highlight />
+                            {/* Growth value — highlighted column */}
+                            <div className="px-4 py-4 flex items-center justify-center relative border-l border-indigo-500/10">
+                              <div className="absolute inset-0 bg-indigo-500/[0.04] pointer-events-none" />
+                              <div className="relative z-10">
+                                <CellValue value={row.growth} highlight />
+                              </div>
+                            </div>
+
+                            {/* Scale Up value */}
+                            <div className="px-4 py-4 flex items-center justify-center border-l border-white/[0.04]">
+                              <CellValue value={row.scale} />
                             </div>
                           </div>
-
-                          {/* Scale Up value */}
-                          <div className="px-4 py-4 flex items-center justify-center border-l border-white/[0.04]">
-                            <CellValue value={row.scale} />
-                          </div>
-                        </div>
-                      ))}
+                        ))}
                     </div>
                   ))}
 
