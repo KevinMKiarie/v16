@@ -1510,7 +1510,6 @@ export default function PricingSection() {
                         </span>
                     </div>
 
-                    {/* Scale Up */}
                     <div className="px-4 py-8 flex flex-col items-center gap-3 border-l border-white/[0.05]">
                       <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-600 to-purple-900 flex items-center justify-center shadow-lg shadow-violet-600/20 ring-1 ring-white/10">
                         <Rocket
@@ -1529,10 +1528,8 @@ export default function PricingSection() {
                     </div>
                   </div>
 
-                  {/* Category + Feature rows */}
                   {comparePlanData.map((section, si) => (
                     <div key={si}>
-                      {/* Category header — clickable, collapsed by default */}
                       <button
                         onClick={() => toggleCategory(si)}
                         className="w-full grid grid-cols-[2.2fr_1fr_1fr_1fr] border-t border-white/[0.06] hover:bg-white/[0.04] transition-colors duration-150"
@@ -1549,14 +1546,12 @@ export default function PricingSection() {
                         </div>
                       </button>
 
-                      {/* Feature rows — hidden by default */}
                       {openCategories[si] &&
                         section.rows.map((row, ri) => (
                           <div
                             key={ri}
                             className="grid grid-cols-[2.2fr_1fr_1fr_1fr] border-t border-white/[0.04] hover:bg-white/[0.025] transition-colors duration-150"
                           >
-                            {/* Feature label */}
                             <div className="px-8 py-4 flex items-center gap-2">
                               <span className="text-sm text-zinc-300 font-medium leading-snug">
                                 {row.feature}
@@ -1566,12 +1561,10 @@ export default function PricingSection() {
                               )}
                             </div>
 
-                            {/* Start Up value */}
                             <div className="px-4 py-4 flex items-center justify-center border-l border-white/[0.04]">
                               <CellValue value={row.startup} />
                             </div>
 
-                            {/* Growth value — highlighted column */}
                             <div className="px-4 py-4 flex items-center justify-center relative border-l border-indigo-500/10">
                               <div className="absolute inset-0 bg-indigo-500/[0.04] pointer-events-none" />
                               <div className="relative z-10">
@@ -1579,7 +1572,6 @@ export default function PricingSection() {
                               </div>
                             </div>
 
-                            {/* Scale Up value */}
                             <div className="px-4 py-4 flex items-center justify-center border-l border-white/[0.04]">
                               <CellValue value={row.scale} />
                             </div>
@@ -1588,11 +1580,9 @@ export default function PricingSection() {
                     </div>
                   ))}
 
-                  {/* CTA Footer Row */}
                   <div className="grid grid-cols-[2.2fr_1fr_1fr_1fr] border-t border-white/[0.08]">
                     <div className="px-8 py-6" />
 
-                    {/* Start Up CTA */}
                     <div className="px-4 py-6 flex items-center justify-center border-l border-white/[0.05]">
                       <a
                         href="https://app.nexuscale.ai/users/register"
@@ -1601,8 +1591,6 @@ export default function PricingSection() {
                         Get Started
                       </a>
                     </div>
-
-                    {/* Growth CTA */}
                     <div className="px-4 py-6 flex items-center justify-center relative border-l border-indigo-500/20">
                       <div className="absolute inset-0 bg-indigo-500/[0.06] pointer-events-none" />
                       <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-indigo-500 to-violet-500" />
@@ -1616,7 +1604,6 @@ export default function PricingSection() {
                       </a>
                     </div>
 
-                    {/* Scale Up CTA */}
                     <div className="px-4 py-6 flex items-center justify-center border-l border-white/[0.05]">
                       <a
                         href="https://buy.stripe.com/eVq6oH9dx3kE4NCc4Vb7y04"
@@ -1633,12 +1620,9 @@ export default function PricingSection() {
             </div>
           </ScrollReveal>
 
-          {/* Enterprise Trust & ROI Section */}
           <ScrollReveal delay={100}>
             <div className="max-w-7xl mx-auto mb-32 grid lg:grid-cols-12 gap-6">
-              {/* Epic ROI Testimonial */}
               <div className="lg:col-span-8 relative rounded-[2.5rem] bg-[#0A0A0C] border border-white/[0.06] overflow-hidden p-8 md:p-12 group hover:border-white/[0.1] transition-all duration-500 hover:shadow-[0_0_50px_rgba(99,102,241,0.05)]">
-                {/* Ambient Background Glows */}
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none opacity-40 group-hover:opacity-100 transition-opacity duration-700" />
                 <div className="absolute -bottom-24 -left-24 w-[300px] h-[300px] bg-purple-500/10 rounded-full blur-[100px] pointer-events-none opacity-40 group-hover:opacity-100 transition-opacity duration-700" />
 
@@ -1683,7 +1667,6 @@ export default function PricingSection() {
                 </div>
               </div>
 
-              {/* Security Vault */}
               <div className="lg:col-span-4 relative rounded-[2.5rem] bg-[#0A0A0C] border border-white/[0.06] overflow-hidden p-8 group hover:border-white/[0.1] transition-all duration-500 hover:shadow-[0_0_50px_rgba(16,185,129,0.05)]">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.05),transparent_50%)] pointer-events-none" />
 
@@ -1741,7 +1724,6 @@ export default function PricingSection() {
             </div>
           </ScrollReveal>
 
-          {/* Feature Deep Dive Ecosystem */}
           <ScrollReveal delay={200}>
             <div className="max-w-7xl mx-auto mb-32">
               <div className="text-center mb-16">
@@ -1769,22 +1751,18 @@ export default function PricingSection() {
                     transition={{ type: "spring", stiffness: 320, damping: 25 }}
                     className="relative group bg-[#0A0A0C] border border-white/[0.06] hover:border-white/[0.15] rounded-[2rem] p-8 transition-all duration-500 overflow-hidden hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)] cursor-default"
                   >
-                    {/* Top accent bar */}
                     <div
                       className={`absolute top-0 left-0 right-0 h-[2px] ${module.bg} origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500`}
                     />
 
-                    {/* Ambient Inner Glow */}
                     <div
                       className={`absolute inset-0 bg-gradient-to-br ${module.bg}/[0.02] pointer-events-none`}
                     />
 
-                    {/* Orb */}
                     <div
                       className={`absolute -top-8 -right-8 w-32 h-32 ${module.bg} blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-700 rounded-full pointer-events-none`}
                     />
 
-                    {/* Shimmer sweep */}
                     <div className="absolute inset-0 overflow-hidden pointer-events-none">
                       <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/[0.05] to-transparent transition-transform duration-[900ms] ease-in-out" />
                     </div>
