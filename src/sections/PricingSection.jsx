@@ -26,6 +26,7 @@ import {
 } from "../data/pricing";
 import { VerticalCutReveal } from "../components/ui/vertical-cut-reveal";
 import { TimelineContent } from "../components/ui/timeline-animation";
+import ComparisonStack from "./ComparisonStack";
 
 const ScrollReveal = ({ children, delay = 0 }) => (
   <motion.div
@@ -671,7 +672,12 @@ export default function PricingSection() {
                       className="inline-block"
                       initial={{ y: "-110%" }}
                       animate={{ y: 0 }}
-                      transition={{ type: "spring", stiffness: 250, damping: 40, delay: i * 0.15 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 250,
+                        damping: 40,
+                        delay: i * 0.15,
+                      }}
                     >
                       {word}
                     </motion.span>
@@ -686,7 +692,12 @@ export default function PricingSection() {
                       className="inline-block"
                       initial={{ y: "-110%" }}
                       animate={{ y: 0 }}
-                      transition={{ type: "spring", stiffness: 250, damping: 40, delay: 0.3 + i * 0.15 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 250,
+                        damping: 40,
+                        delay: 0.3 + i * 0.15,
+                      }}
                     >
                       {word}
                     </motion.span>
@@ -697,6 +708,7 @@ export default function PricingSection() {
                 Every plan includes the full Autonomous OS, unlimited seats, and
                 all core AI capabilities to scale your pipeline.
               </p>
+              <ComparisonStack />
 
               {/* Pricing Toggle */}
               <div className="flex flex-col items-center gap-3">

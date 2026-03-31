@@ -6,7 +6,7 @@ import { comparisonStackData } from "../data/pricing";
 export default function ComparisonStack() {
   return (
     <section
-      className={`py-32 px-6 mx-6 mb-24 rounded-[3rem] border border-white/10 relative overflow-hidden ${neu.inset}`}
+      className={`py-12 px-6 mx-6 rounded-[3rem] border border-white/10 relative overflow-hidden ${neu.inset}`}
     >
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/20 via-[#030304] to-[#030304] opacity-50" />
       <div className="max-w-4xl mx-auto relative z-10">
