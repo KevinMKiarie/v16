@@ -508,6 +508,10 @@ export default function PricingSection() {
   const [annual, setAnnual] = useState(true);
   const [linkedinSeatsByPlan, setLinkedinSeatsByPlan] = useState({});
   const [mailboxesByPlan, setMailboxesByPlan] = useState({});
+  const [openCategories, setOpenCategories] = useState({});
+
+  const toggleCategory = (i) =>
+    setOpenCategories((prev) => ({ ...prev, [i]: !prev[i] }));
 
   const getLinkedinSeats = (planName) => linkedinSeatsByPlan[planName] ?? 0;
   const getMailboxes = (planName) => mailboxesByPlan[planName] ?? 0;
@@ -783,7 +787,7 @@ export default function PricingSection() {
 
           {/* Pricing Cards */}
           <motion.div
-            class="grid md:grid-cols-2 lg:grid-cols-3 gap-3 max-w-[95%] mx-auto mb-16 justify-center place-items-center"
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 max-w-[90%] mx-auto mb-16 items-start"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -1550,55 +1554,58 @@ export default function PricingSection() {
                   {/* Category + Feature rows */}
                   {comparePlanData.map((section, si) => (
                     <div key={si}>
-                      {/* Category header */}
-                      <div className="grid grid-cols-[2.2fr_1fr_1fr_1fr] border-t border-white/[0.06]">
-                        <div className="col-span-4 px-8 py-3 bg-white/[0.025]">
+                      {/* Category header — clickable, collapsed by default */}
+                      <button
+                        onClick={() => toggleCategory(si)}
+                        className="w-full grid grid-cols-[2.2fr_1fr_1fr_1fr] border-t border-white/[0.06] hover:bg-white/[0.04] transition-colors duration-150"
+                      >
+                        <div className="col-span-4 px-8 py-3 bg-white/[0.025] flex items-center justify-between">
                           <span className="text-[10px] font-black uppercase tracking-[0.15em] text-zinc-400">
                             {section.category}
                           </span>
+                          <ChevronDown
+                            className={`w-3.5 h-3.5 text-zinc-500 transition-transform duration-300 mr-1 ${
+                              openCategories[si] ? "rotate-180" : ""
+                            }`}
+                          />
                         </div>
-                      </div>
+                      </button>
 
-                      {/* Feature rows */}
-                      {section.rows.map((row, ri) => {
-                        const isLast =
-                          ri === section.rows.length - 1 &&
-                          si === comparePlanData.length - 1;
-                        return (
-                          <div
-                            key={ri}
-                            className={`grid grid-cols-[2.2fr_1fr_1fr_1fr] border-t border-white/[0.04] hover:bg-white/[0.025] transition-colors duration-150 ${isLast ? "" : ""}`}
-                          >
-                            {/* Feature label */}
-                            <div className="px-8 py-4 flex items-center gap-2">
-                              <span className="text-sm text-zinc-300 font-medium leading-snug">
-                                {row.feature}
-                              </span>
-                              {row.tooltip && (
-                                <FeatureTooltip text={row.tooltip} />
-                              )}
-                            </div>
+                      {/* Feature rows — hidden by default */}
+                      {openCategories[si] && section.rows.map((row, ri) => (
+                        <div
+                          key={ri}
+                          className="grid grid-cols-[2.2fr_1fr_1fr_1fr] border-t border-white/[0.04] hover:bg-white/[0.025] transition-colors duration-150"
+                        >
+                          {/* Feature label */}
+                          <div className="px-8 py-4 flex items-center gap-2">
+                            <span className="text-sm text-zinc-300 font-medium leading-snug">
+                              {row.feature}
+                            </span>
+                            {row.tooltip && (
+                              <FeatureTooltip text={row.tooltip} />
+                            )}
+                          </div>
 
-                            {/* Start Up value */}
-                            <div className="px-4 py-4 flex items-center justify-center border-l border-white/[0.04]">
-                              <CellValue value={row.startup} />
-                            </div>
+                          {/* Start Up value */}
+                          <div className="px-4 py-4 flex items-center justify-center border-l border-white/[0.04]">
+                            <CellValue value={row.startup} />
+                          </div>
 
-                            {/* Growth value — highlighted column */}
-                            <div className="px-4 py-4 flex items-center justify-center relative border-l border-indigo-500/10">
-                              <div className="absolute inset-0 bg-indigo-500/[0.04] pointer-events-none" />
-                              <div className="relative z-10">
-                                <CellValue value={row.growth} highlight />
-                              </div>
-                            </div>
-
-                            {/* Scale Up value */}
-                            <div className="px-4 py-4 flex items-center justify-center border-l border-white/[0.04]">
-                              <CellValue value={row.scale} />
+                          {/* Growth value — highlighted column */}
+                          <div className="px-4 py-4 flex items-center justify-center relative border-l border-indigo-500/10">
+                            <div className="absolute inset-0 bg-indigo-500/[0.04] pointer-events-none" />
+                            <div className="relative z-10">
+                              <CellValue value={row.growth} highlight />
                             </div>
                           </div>
-                        );
-                      })}
+
+                          {/* Scale Up value */}
+                          <div className="px-4 py-4 flex items-center justify-center border-l border-white/[0.04]">
+                            <CellValue value={row.scale} />
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   ))}
 

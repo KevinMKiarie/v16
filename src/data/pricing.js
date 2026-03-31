@@ -764,10 +764,28 @@ export const boosterPacksData = [
 ];
 
 export const comparisonStackData = [
-  { name: "Clay", price: 149 },
-  { name: "Apollo", price: 399 },
-  { name: "Instantly", price: 97 },
-  { name: "ChatGPT API", price: 20 },
+  {
+    category: "Lead Generation",
+    totalPrice: 548,
+    items: [
+      { name: "Clay", price: 149, description: "Data enrichment & lead research" },
+      { name: "Apollo", price: 399, description: "Lead database & prospecting" },
+    ],
+  },
+  {
+    category: "Email Outreach",
+    totalPrice: 97,
+    items: [
+      { name: "Instantly", price: 97, description: "Cold email automation & sequencing" },
+    ],
+  },
+  {
+    category: "AI Automation",
+    totalPrice: 20,
+    items: [
+      { name: "ChatGPT API", price: 20, description: "AI-powered messaging & personalization" },
+    ],
+  },
 ];
 
 export const customerLogos = [
