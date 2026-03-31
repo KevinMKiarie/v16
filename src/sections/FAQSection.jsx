@@ -45,7 +45,7 @@ export default function FAQSection() {
           <ScrollReveal delay={400}>
             <div className="max-w-3xl mx-auto mt-10">
               <div className="text-center mb-8">
-                <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white">
+                <h2 className="text-4xl md:text-7xl font-bold tracking-tight text-white">
                   Frequently Asked Questions
                 </h2>
                 <p className="text-base text-zinc-400 mt-3">

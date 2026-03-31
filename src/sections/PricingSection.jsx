@@ -1727,7 +1727,7 @@ export default function PricingSection() {
           <ScrollReveal delay={200}>
             <div className="max-w-7xl mx-auto mb-32">
               <div className="text-center mb-16">
-                <h3 className="text-3xl md:text-4xl font-black text-white mb-4 tracking-tight">
+                <h3 className="text-3xl md:text-7xl font-black text-white mb-4 tracking-tight">
                   The Full Platform Ecosystem
                 </h3>
                 <p className="text-base text-zinc-400 max-w-2xl mx-auto">
