@@ -1452,94 +1452,100 @@ export default function PricingSection() {
           </div>
 
           <ScrollReveal delay={100}>
-            <div className="my-20 w-full max-w-6xl mx-auto">
-              <div className="text-center mb-12">
-                <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 mb-4 font-black text-5xl md:text-6xl lg:text-7xl">
+            <div className="my-16 w-full md:max-w-7xl mx-auto px-4 sm:px-6">
+              <div className="text-center mb-10">
+                <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 mb-4 font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
                   Compare Plans
                 </h3>
-                <p className="text-zinc-400 text-base max-w-lg mx-auto">
+                <p className="text-zinc-400 text-sm sm:text-base max-w-lg mx-auto">
                   Every feature, side by side — so you can pick with confidence.
                 </p>
               </div>
 
-              <div className="overflow-x-auto rounded-2xl border border-white/[0.07] bg-[#0A0A0C]/60 backdrop-blur-xl shadow-[0_8px_60px_rgba(0,0,0,0.5)]">
-                <div className="max-w-6xl w-full mx-auto">
-                  <div className="grid grid-cols-[2.2fr_1fr_1fr_1fr]">
-                    <div className="px-8 py-8 flex items-end">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-zinc-600">
+              <div className="w-full mx-auto overflow-x-auto rounded-2xl border border-white/[0.07] bg-[#0A0A0C]/60 backdrop-blur-xl shadow-[0_8px_60px_rgba(0,0,0,0.5)]">
+                <div className="min-w-[600px] max-w-none sm:max-w-[700px] md:max-w-6xl w-full mx-auto">
+                  <div className="grid grid-cols-[2.2fr_1fr_1fr_1fr] sm:grid-cols-[2fr_1fr_1fr_1fr] gap-0">
+                    {/* Header row */}
+                    <div className="px-4 py-6 sm:px-6 sm:py-8 flex items-end">
+                      <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-zinc-600">
                         Feature
                       </span>
                     </div>
 
                     {/* Start Up */}
-                    <div className="px-4 py-8 flex flex-col items-center gap-3 border-l border-white/[0.05]">
-                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-700 flex items-center justify-center shadow-lg shadow-blue-600/20 ring-1 ring-white/10">
-                        <Zap className="w-6 h-6 text-white" strokeWidth={2.5} />
+                    <div className="px-3 py-6 sm:px-4 sm:py-8 flex flex-col items-center gap-2 border-l border-white/[0.05]">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-700 flex items-center justify-center shadow-lg shadow-blue-600/20 ring-1 ring-white/10">
+                        <Zap
+                          className="w-4 sm:w-5 h-4 sm:h-5 text-white"
+                          strokeWidth={2.5}
+                        />
                       </div>
                       <div className="text-center">
-                        <div className="text-white font-bold text-sm tracking-wide">
+                        <div className="text-white font-bold text-xs sm:text-sm tracking-wide">
                           Start Up
                         </div>
-                        <div className="text-zinc-500 text-xs mt-0.5 font-medium">
+                        <div className="text-zinc-500 text-[10px] sm:text-xs mt-0.5 font-medium">
                           from $49/mo
                         </div>
                       </div>
                     </div>
 
-                    <div className="px-4 py-8 flex flex-col items-center gap-3 relative border-l border-indigo-500/20">
+                    {/* Growth */}
+                    <div className="px-3 py-6 sm:px-4 sm:py-8 flex flex-col items-center gap-2 relative border-l border-indigo-500/20">
                       <div className="absolute inset-0 bg-gradient-to-b from-indigo-500/[0.08] to-indigo-500/[0.03] pointer-events-none" />
                       <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-indigo-500 to-violet-500" />
-                      <div className="relative z-10 -mt-1 mb-1 flex justify-center">
-                      </div>
-                      <div className="relative z-10 w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-xl shadow-indigo-600/30 ring-1 ring-indigo-400/30">
+                      <div className="relative z-10 -mt-1 mb-1 flex justify-center" />
+                      <div className="relative z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-xl shadow-indigo-600/30 ring-1 ring-indigo-400/30">
                         <LucideSparkles
-                          className="w-6 h-6 text-white"
+                          className="w-4 sm:w-5 h-4 sm:h-5 text-white"
                           strokeWidth={2.5}
                         />
                       </div>
                       <div className="relative z-10 text-center">
-                        <div className="text-white font-bold text-sm tracking-wide">
+                        <div className="text-white font-bold text-xs sm:text-sm tracking-wide">
                           Growth
                         </div>
-                        <div className="text-indigo-300/70 text-xs mt-0.5 font-medium">
+                        <div className="text-indigo-300/70 text-[10px] sm:text-xs mt-0.5 font-medium">
                           from $83/mo
                         </div>
                       </div>
-                        <span className="bg-gradient-to-r from-indigo-500 to-violet-500 text-white text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-md">
-                          Most Popular
-                        </span>
+                      <span className="bg-gradient-to-r from-indigo-500 to-violet-500 text-white text-[8px] sm:text-[9px] font-black uppercase tracking-widest px-2 py-0.5 sm:px-3 sm:py-1 rounded-full shadow-md">
+                        Most Popular
+                      </span>
                     </div>
 
-                    <div className="px-4 py-8 flex flex-col items-center gap-3 border-l border-white/[0.05]">
-                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-600 to-purple-900 flex items-center justify-center shadow-lg shadow-violet-600/20 ring-1 ring-white/10">
+                    {/* Scale Up */}
+                    <div className="px-3 py-6 sm:px-4 sm:py-8 flex flex-col items-center gap-2 border-l border-white/[0.05]">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-br from-violet-600 to-purple-900 flex items-center justify-center shadow-lg shadow-violet-600/20 ring-1 ring-white/10">
                         <Rocket
-                          className="w-6 h-6 text-white"
+                          className="w-4 sm:w-5 h-4 sm:h-5 text-white"
                           strokeWidth={2.5}
                         />
                       </div>
                       <div className="text-center">
-                        <div className="text-white font-bold text-sm tracking-wide">
+                        <div className="text-white font-bold text-xs sm:text-sm tracking-wide">
                           Scale Up
                         </div>
-                        <div className="text-zinc-500 text-xs mt-0.5 font-medium">
+                        <div className="text-zinc-500 text-[10px] sm:text-xs mt-0.5 font-medium">
                           from $249/mo
                         </div>
                       </div>
                     </div>
                   </div>
 
+                  {/* Feature rows */}
                   {comparePlanData.map((section, si) => (
                     <div key={si}>
                       <button
                         onClick={() => toggleCategory(si)}
-                        className="w-full grid grid-cols-[2.2fr_1fr_1fr_1fr] border-t border-white/[0.06] hover:bg-white/[0.04] transition-colors duration-150"
+                        className="w-full grid grid-cols-[2.2fr_1fr_1fr_1fr] sm:grid-cols-[2fr_1fr_1fr_1fr] border-t border-white/[0.06] hover:bg-white/[0.04] transition-colors duration-150 text-left"
                       >
-                        <div className="col-span-4 px-8 py-3 bg-white/[0.025] flex items-center justify-between">
-                          <span className="text-[10px] font-black uppercase tracking-[0.15em] text-zinc-400">
+                        <div className="col-span-4 px-4 py-3 sm:px-8 sm:py-3 bg-white/[0.025] flex items-center justify-between">
+                          <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.12em] sm:tracking-[0.15em] text-zinc-400">
                             {section.category}
                           </span>
                           <ChevronDown
-                            className={`w-3.5 h-3.5 text-zinc-500 transition-transform duration-300 mr-1 ${
+                            className={`w-3 sm:w-3.5 h-3 sm:h-3.5 text-zinc-500 transition-transform duration-300 mr-1 ${
                               openCategories[si] ? "rotate-180" : ""
                             }`}
                           />
@@ -1550,10 +1556,10 @@ export default function PricingSection() {
                         section.rows.map((row, ri) => (
                           <div
                             key={ri}
-                            className="grid grid-cols-[2.2fr_1fr_1fr_1fr] border-t border-white/[0.04] hover:bg-white/[0.025] transition-colors duration-150"
+                            className="grid grid-cols-[2.2fr_1fr_1fr_1fr] sm:grid-cols-[2fr_1fr_1fr_1fr] border-t border-white/[0.04] hover:bg-white/[0.025] transition-colors duration-150"
                           >
-                            <div className="px-8 py-4 flex items-center gap-2">
-                              <span className="text-sm text-zinc-300 font-medium leading-snug">
+                            <div className="px-4 py-3 sm:px-8 sm:py-4 flex items-center gap-2">
+                              <span className="text-xs sm:text-sm text-zinc-300 font-medium leading-snug">
                                 {row.feature}
                               </span>
                               {row.tooltip && (
@@ -1561,18 +1567,18 @@ export default function PricingSection() {
                               )}
                             </div>
 
-                            <div className="px-4 py-4 flex items-center justify-center border-l border-white/[0.04]">
+                            <div className="px-3 py-3 sm:px-4 sm:py-4 flex items-center justify-center border-l border-white/[0.04]">
                               <CellValue value={row.startup} />
                             </div>
 
-                            <div className="px-4 py-4 flex items-center justify-center relative border-l border-indigo-500/10">
+                            <div className="px-3 py-3 sm:px-4 sm:py-4 flex items-center justify-center relative border-l border-indigo-500/10">
                               <div className="absolute inset-0 bg-indigo-500/[0.04] pointer-events-none" />
                               <div className="relative z-10">
                                 <CellValue value={row.growth} highlight />
                               </div>
                             </div>
 
-                            <div className="px-4 py-4 flex items-center justify-center border-l border-white/[0.04]">
+                            <div className="px-3 py-3 sm:px-4 sm:py-4 flex items-center justify-center border-l border-white/[0.04]">
                               <CellValue value={row.scale} />
                             </div>
                           </div>
@@ -1580,36 +1586,38 @@ export default function PricingSection() {
                     </div>
                   ))}
 
-                  <div className="grid grid-cols-[2.2fr_1fr_1fr_1fr] border-t border-white/[0.08]">
-                    <div className="px-8 py-6" />
+                  {/* CTA row */}
+                  <div className="grid grid-cols-[2.2fr_1fr_1fr_1fr] sm:grid-cols-[2fr_1fr_1fr_1fr] border-t border-white/[0.08]">
+                    <div className="px-4 py-4 sm:px-8 sm:py-6" />
 
-                    <div className="px-4 py-6 flex items-center justify-center border-l border-white/[0.05]">
+                    <div className="px-3 py-4 sm:px-4 sm:py-6 flex items-center justify-center border-l border-white/[0.05]">
                       <a
                         href="https://app.nexuscale.ai/users/register"
-                        className="text-xs font-bold text-zinc-300 hover:text-white border border-white/[0.1] hover:border-white/[0.25] px-4 py-2.5 rounded-xl transition-all duration-200 whitespace-nowrap bg-white/[0.03] hover:bg-white/[0.07]"
+                        className="text-[11px] sm:text-xs font-bold text-zinc-300 hover:text-white border border-white/[0.1] hover:border-white/[0.25] px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl transition-all duration-200 whitespace-nowrap bg-white/[0.03] hover:bg-white/[0.07]"
                       >
                         Get Started
                       </a>
                     </div>
-                    <div className="px-4 py-6 flex items-center justify-center relative border-l border-indigo-500/20">
+
+                    <div className="px-3 py-4 sm:px-4 sm:py-6 flex items-center justify-center relative border-l border-indigo-500/20">
                       <div className="absolute inset-0 bg-indigo-500/[0.06] pointer-events-none" />
                       <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-indigo-500 to-violet-500" />
                       <a
                         href="https://buy.stripe.com/dRmbJ14Xh9J2gwkc4Vb7y0c"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="relative z-10 text-xs font-black text-white bg-gradient-to-r from-indigo-500 to-violet-500 hover:from-indigo-400 hover:to-violet-400 px-4 py-2.5 rounded-xl transition-all duration-200 whitespace-nowrap shadow-lg shadow-indigo-600/30 hover:shadow-indigo-500/40"
+                        className="relative z-10 text-[11px] sm:text-xs font-black text-white bg-gradient-to-r from-indigo-500 to-violet-500 hover:from-indigo-400 hover:to-violet-400 px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl transition-all duration-200 whitespace-nowrap shadow-lg shadow-indigo-600/30 hover:shadow-indigo-500/40"
                       >
                         Get Started
                       </a>
                     </div>
 
-                    <div className="px-4 py-6 flex items-center justify-center border-l border-white/[0.05]">
+                    <div className="px-3 py-4 sm:px-4 sm:py-6 flex items-center justify-center border-l border-white/[0.05]">
                       <a
                         href="https://buy.stripe.com/eVq6oH9dx3kE4NCc4Vb7y04"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs font-bold text-zinc-300 hover:text-white border border-white/[0.1] hover:border-violet-500/50 px-4 py-2.5 rounded-xl transition-all duration-200 whitespace-nowrap bg-white/[0.03] hover:bg-violet-500/[0.08]"
+                        className="text-[11px] sm:text-xs font-bold text-zinc-300 hover:text-white border border-white/[0.1] hover:border-violet-500/50 px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl transition-all duration-200 whitespace-nowrap bg-white/[0.03] hover:bg-violet-500/[0.08]"
                       >
                         Get Started
                       </a>
