@@ -229,7 +229,7 @@ const InsightBand = ({ plan, annual }) => {
   const basePrice = annual && plan.annualPrice ? Number(plan.annualPrice) : Number(plan.price);
 
   if (plan.name === "Start Up") {
-    const total = basePrice + (includeLinkedIn ? 19 : 0);
+    const total = basePrice + (includeLinkedIn ? 29 : 0);
     const growthPrice = annual ? 83 : 99;
     const diff = growthPrice - total;
 
@@ -275,7 +275,7 @@ const InsightBand = ({ plan, annual }) => {
               >
                 <div className="flex justify-between items-center text-xs text-zinc-500 pb-1.5">
                   <span>+ LinkedIn seat (add-on)</span>
-                  <span className="font-mono text-[#4fa3d4]">+$19</span>
+                  <span className="font-mono text-[#4fa3d4]">+$29</span>
                 </div>
               </motion.div>
             )}
@@ -322,7 +322,7 @@ const InsightBand = ({ plan, annual }) => {
 
   if (plan.name === "Growth") {
     const startUpBase = annual ? 49 : 59;
-    const withLinkedIn = startUpBase + 19;
+    const withLinkedIn = startUpBase + 29;
     const diff = basePrice - withLinkedIn;
 
     return (
@@ -728,7 +728,7 @@ const comparePlanData = [
     rows: [
       {
         feature: "LinkedIn Sender Seats",
-        tooltip: "+$19/mo per additional seat",
+        tooltip: "+$29/mo per additional seat",
         startup: "Add-on (max 2)",
         growth: "Add-on (max 10)",
         scale: "Unlimited",
@@ -1025,7 +1025,7 @@ export default function PricingSection() {
     const base = Number(getPrice(plan));
     const seats = getLinkedinSeats(plan.name);
     const mailboxes = getMailboxes(plan.name);
-    return base + seats * 19 + mailboxes * 3;
+    return base + seats * 29 + mailboxes * 5;
   };
 
   return (
@@ -1383,12 +1383,12 @@ export default function PricingSection() {
                               </span>
                               {linkedinSeats > 0 && (
                                 <span className="text-[10px] font-bold text-[#4fa3d4]">
-                                  +${linkedinSeats * 19} LinkedIn
+                                  +${linkedinSeats * 29} LinkedIn
                                 </span>
                               )}
                               {mailboxCount > 0 && (
                                 <span className="text-[10px] font-bold text-emerald-400">
-                                  +${mailboxCount * 3} Mailboxes
+                                  +${mailboxCount * 5} Mailboxes
                                 </span>
                               )}
                             </motion.div>
@@ -1449,7 +1449,7 @@ export default function PricingSection() {
                               </span>
                             </div>
                             <div className="text-[9px] font-bold text-[#4fa3d4] uppercase tracking-widest">
-                              $19 / seat
+                              $29 / seat
                             </div>
                             <div className="flex items-center justify-between gap-1 bg-white/[0.05] rounded-lg p-1">
                               <button
@@ -1497,7 +1497,7 @@ export default function PricingSection() {
                               </span>
                             </div>
                             <div className="text-[9px] font-bold text-emerald-400 uppercase tracking-widest">
-                              $3/mo each
+                              $5/mo each
                             </div>
                             <div className="flex items-center justify-between gap-1 bg-white/[0.05] rounded-lg p-1">
                               <button
