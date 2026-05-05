@@ -1432,11 +1432,14 @@ export default function PricingSection() {
 
           <ScrollReveal delay={100}>
             <div className="my-16 w-full md:max-w-7xl mx-auto px-4 sm:px-6">
-              <div className="text-center mb-10">
-                <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 mb-4 font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-spline">
-                  Compare Plans
+              <div className="text-start mb-10">
+                <h3 className=" mb-4 font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-spline gap-2">
+                  Compare  
+                  <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">
+                  Plans
+                  </span>
                 </h3>
-                <p className="text-zinc-400 text-sm sm:text-base max-w-lg mx-auto">
+                <p className="text-zinc-400 text-sm sm:text-base ">
                   Every feature, side by side so you can pick with confidence.
                 </p>
               </div>
@@ -1589,13 +1592,13 @@ export default function PricingSection() {
             </div>
           </ScrollReveal>
 
-          <ScrollReveal delay={100}>
-            <div className="max-w-7xl mx-auto mb-32 grid lg:grid-cols-12 gap-6">
+          <ScrollReveal delay={100} className="hidden">
+            <div className="max-w-7xl mx-auto mb-32 grid lg:grid-cols-12 gap-6 hidden">
               <div className="lg:col-span-8 relative rounded-[2.5rem] bg-[#0A0A0C] border border-white/[0.06] overflow-hidden p-8 md:p-12 group hover:border-white/[0.1] transition-all duration-500 hover:shadow-[0_0_50px_rgba(99,102,241,0.05)]">
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none opacity-40 group-hover:opacity-100 transition-opacity duration-700" />
                 <div className="absolute -bottom-24 -left-24 w-[300px] h-[300px] bg-purple-500/10 rounded-full blur-[100px] pointer-events-none opacity-40 group-hover:opacity-100 transition-opacity duration-700" />
 
-                <div className="relative z-10 flex flex-col h-full justify-between">
+                <div className=" relative z-10 flex flex-col h-full justify-between">
                   <div>
                     <Quote className="w-12 h-12 text-indigo-500/30 mb-8 drop-shadow-lg" />
                     <p className="text-xl md:text-2xl lg:text-3xl font-medium text-zinc-400 leading-snug mb-10 max-w-3xl">

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ChevronDown, Plus } from "lucide-react";
 import { ScrollReveal } from "../components/ScrollReveal";
 import { faqData } from "../data/pricing";
-import { AnimatePresence,motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function FAQSection() {
   const FAQItem = ({ question, answer }) => {
@@ -40,13 +40,16 @@ export default function FAQSection() {
 
   return (
     <section className="py-32 px-6">
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <div className="space-y-4">
           <ScrollReveal delay={400}>
-            <div className="max-w-3xl mx-auto mt-10">
-              <div className="text-center mb-8">
+            <div className="max-w-7xl mx-auto mt-10">
+              <div className="text-start mb-8">
                 <h2 className="text-4xl md:text-7xl font-bold tracking-tight text-white">
-                  Frequently Asked Questions
+                  Common{" "}
+                  <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">
+                    Questions{" "}
+                  </span>
                 </h2>
                 <p className="text-base text-zinc-400 mt-3">
                   Everything you need to know about billing and limits.
