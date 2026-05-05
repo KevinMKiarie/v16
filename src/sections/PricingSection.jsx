@@ -219,7 +219,8 @@ const CardFeatureList = ({ plan, s }) => {
 
 const InsightBand = ({ plan, annual }) => {
   const [includeLinkedIn, setIncludeLinkedIn] = useState(false);
-  const basePrice = annual && plan.annualPrice ? Number(plan.annualPrice) : Number(plan.price);
+  const basePrice =
+    annual && plan.annualPrice ? Number(plan.annualPrice) : Number(plan.price);
 
   if (plan.name === "Start Up") {
     const total = basePrice + (includeLinkedIn ? 29 : 0);
@@ -254,7 +255,9 @@ const InsightBand = ({ plan, annual }) => {
         <div className="space-y-1.5">
           <div className="flex justify-between items-center text-xs">
             <span className="text-zinc-400">Start Up plan</span>
-            <span className="font-mono font-bold text-zinc-200">${basePrice}</span>
+            <span className="font-mono font-bold text-zinc-200">
+              ${basePrice}
+            </span>
           </div>
           <AnimatePresence>
             {includeLinkedIn && (
@@ -274,7 +277,9 @@ const InsightBand = ({ plan, annual }) => {
             )}
           </AnimatePresence>
           <div className="flex justify-between items-center pt-1.5 border-t border-white/[0.07]">
-            <span className="text-xs font-bold text-zinc-300">Your monthly cost</span>
+            <span className="text-xs font-bold text-zinc-300">
+              Your monthly cost
+            </span>
             <AnimatePresence mode="wait">
               <motion.span
                 key={total}
@@ -297,14 +302,21 @@ const InsightBand = ({ plan, annual }) => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.28, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
+              transition={{
+                duration: 0.28,
+                delay: 0.06,
+                ease: [0.22, 1, 0.36, 1],
+              }}
               className="overflow-hidden"
             >
               <div className="text-[11px] text-indigo-300/90 bg-indigo-500/[0.08] rounded-xl px-3 py-2 border border-indigo-500/15 leading-relaxed">
                 Growth at ${growthPrice}/mo adds{" "}
                 <span className="text-white font-bold">3× AI agents</span> +{" "}
-                <span className="text-white font-bold">AI Meeting Agent</span> for only{" "}
-                <span className="text-indigo-300 font-black">+${diff}/mo more</span>
+                <span className="text-white font-bold">AI Meeting Agent</span>{" "}
+                for only{" "}
+                <span className="text-indigo-300 font-black">
+                  +${diff}/mo more
+                </span>
               </div>
             </motion.div>
           )}
@@ -326,11 +338,15 @@ const InsightBand = ({ plan, annual }) => {
         <div className="flex items-start justify-between gap-3">
           <div className="space-y-1.5">
             <div className="flex items-center gap-2 text-xs">
-              <span className="text-zinc-600 line-through font-mono">${withLinkedIn}/mo</span>
+              <span className="text-zinc-600 line-through font-mono">
+                ${withLinkedIn}/mo
+              </span>
               <span className="text-zinc-600">Start Up configured</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-indigo-300 font-black text-base font-mono">${basePrice}/mo</span>
+              <span className="text-indigo-300 font-black text-base font-mono">
+                ${basePrice}/mo
+              </span>
               <span className="text-[10px] text-zinc-500">this plan</span>
             </div>
           </div>
@@ -347,7 +363,8 @@ const InsightBand = ({ plan, annual }) => {
           </div>
         </div>
         <p className="text-[11px] text-zinc-400 leading-relaxed border-t border-indigo-500/10 pt-2.5">
-          5 agents · 3 workspaces · Advanced scoring · Premium deliverability — fully unlocked.
+          5 agents · 3 workspaces · Advanced scoring · Premium deliverability —
+          fully unlocked.
         </p>
       </div>
     );
@@ -365,7 +382,12 @@ const InsightBand = ({ plan, annual }) => {
           <span className="text-white font-bold">10 isolated workspaces</span>.
         </p>
         <div className="flex flex-wrap gap-1.5 pt-0.5">
-          {["10 Workspaces", "50 Seats", "10 AI Agents", "Unlimited LinkedIn"].map((tag, i) => (
+          {[
+            "10 Workspaces",
+            "50 Seats",
+            "10 AI Agents",
+            "Unlimited LinkedIn",
+          ].map((tag, i) => (
             <span
               key={i}
               className="text-[9px] font-bold text-violet-400/80 bg-violet-500/[0.09] border border-violet-500/20 px-2 py-0.5 rounded-full"
@@ -399,11 +421,13 @@ const PlanFeatureList = ({ plan, prevPlanName }) => {
     plan.name === "Start Up"
       ? "text-blue-400 drop-shadow-[0_0_6px_rgba(59,130,246,0.5)]"
       : plan.name === "Growth"
-      ? "text-indigo-400 drop-shadow-[0_0_6px_rgba(99,102,241,0.5)]"
-      : "text-violet-400 drop-shadow-[0_0_6px_rgba(139,92,246,0.5)]";
+        ? "text-indigo-400 drop-shadow-[0_0_6px_rgba(99,102,241,0.5)]"
+        : "text-violet-400 drop-shadow-[0_0_6px_rgba(139,92,246,0.5)]";
 
   const plusIconColor =
-    plan.name === "Growth" ? "bg-indigo-500/20 text-indigo-400" : "bg-violet-500/20 text-violet-400";
+    plan.name === "Growth"
+      ? "bg-indigo-500/20 text-indigo-400"
+      : "bg-violet-500/20 text-violet-400";
 
   return (
     <div className="flex-1 flex flex-col min-h-0">
@@ -467,7 +491,11 @@ const PlanFeatureList = ({ plan, prevPlanName }) => {
                   <div
                     className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${plusIconColor}`}
                   >
-                    <svg className="w-2.5 h-2.5" viewBox="0 0 10 10" fill="none">
+                    <svg
+                      className="w-2.5 h-2.5"
+                      viewBox="0 0 10 10"
+                      fill="none"
+                    >
                       <path
                         d="M5 2v6M2 5h6"
                         stroke="currentColor"
@@ -476,7 +504,9 @@ const PlanFeatureList = ({ plan, prevPlanName }) => {
                       />
                     </svg>
                   </div>
-                  <span className="text-xs font-medium text-zinc-200 leading-tight">{f}</span>
+                  <span className="text-xs font-medium text-zinc-200 leading-tight">
+                    {f}
+                  </span>
                 </div>
               ))}
             </>
@@ -489,7 +519,9 @@ const PlanFeatureList = ({ plan, prevPlanName }) => {
                 }`}
               >
                 {f.included ? (
-                  <CheckCircle2 className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${checkColor}`} />
+                  <CheckCircle2
+                    className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${checkColor}`}
+                  />
                 ) : (
                   <MinusCircle className="w-3.5 h-3.5 shrink-0 mt-0.5 text-zinc-700" />
                 )}
@@ -500,8 +532,12 @@ const PlanFeatureList = ({ plan, prevPlanName }) => {
           ) : (
             keyFeatures.map((f, i) => (
               <div key={i} className="flex items-center gap-2.5">
-                <CheckCircle2 className={`w-3.5 h-3.5 shrink-0 ${checkColor}`} />
-                <span className="text-xs font-medium text-zinc-200 leading-tight">{f}</span>
+                <CheckCircle2
+                  className={`w-3.5 h-3.5 shrink-0 ${checkColor}`}
+                />
+                <span className="text-xs font-medium text-zinc-200 leading-tight">
+                  {f}
+                </span>
               </div>
             ))
           )}
@@ -952,9 +988,12 @@ const containerVariants = {
 
 const cardVariants = {
   hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+  },
 };
-
 
 export default function PricingSection() {
   const [annual, setAnnual] = useState(true);
@@ -963,7 +1002,9 @@ export default function PricingSection() {
   const toggleCategory = (i) =>
     setOpenCategories((prev) => ({ ...prev, [i]: !prev[i] }));
 
-  const displayPlans = pricingPlansData.filter((p) => p.name !== "Free" && p.name !== "Agency");
+  const displayPlans = pricingPlansData.filter(
+    (p) => p.name !== "Free" && p.name !== "Agency",
+  );
 
   return (
     <div className="min-h-screen bg-[#050505] selection:bg-indigo-500/30 text-zinc-200">
@@ -977,12 +1018,12 @@ export default function PricingSection() {
       `}</style>
 
       <section className="py-24 relative px-4 md:px-6 overflow-hidden">
-
         {/* Ruled vertical lines */}
         <div
           className="absolute inset-0 pointer-events-none [mask-image:radial-gradient(65%_55%_at_50%_0%,white,transparent)]"
           style={{
-            backgroundImage: "linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px)",
+            backgroundImage:
+              "linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px)",
             backgroundSize: "96px 100%",
           }}
         />
@@ -991,11 +1032,19 @@ export default function PricingSection() {
         <div className="absolute left-0 top-[-114px] w-full h-[113.625vh] overflow-hidden pointer-events-none z-0">
           <div
             className="absolute left-[-568px] right-[-568px] top-0 h-[2053px] rounded-full"
-            style={{ border: "200px solid #3131f5", filter: "blur(92px)", animation: "aurora 20s ease-in-out infinite" }}
+            style={{
+              border: "200px solid #3131f5",
+              filter: "blur(92px)",
+              animation: "aurora 20s ease-in-out infinite",
+            }}
           />
           <div
             className="absolute left-[-568px] right-[-568px] top-0 h-[2053px] rounded-full"
-            style={{ border: "200px solid #3131f5", filter: "blur(92px)", animation: "aurora 20s ease-in-out infinite reverse" }}
+            style={{
+              border: "200px solid #3131f5",
+              filter: "blur(92px)",
+              animation: "aurora 20s ease-in-out infinite reverse",
+            }}
           />
         </div>
 
@@ -1005,22 +1054,23 @@ export default function PricingSection() {
               {/* Pricing label */}
               <div className="mb-10 flex items-center gap-3 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-zinc-500">
                 <span className="h-px w-7 shrink-0 bg-gradient-to-r from-indigo-500 to-transparent" />
-                Pricing · Effective May 2026
+                Pricing
               </div>
 
               {/* Headline + $575 side panel */}
               <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-16 pb-12 mb-10 border-b border-white/[0.06]">
                 <div>
                   <h1 className="text-[clamp(3.5rem,9vw,7.5rem)] font-bold leading-[0.94] tracking-[-0.035em] text-zinc-50">
-                    Run outbound,<br />
+                    Run outbound,
+                    <br />
                     <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">
                       not infrastructure.
                     </span>
                   </h1>
                   <p className="mt-6 max-w-xl text-base md:text-lg leading-8 text-zinc-400">
-                    Email and LinkedIn, fully provisioned in one platform. Pick a plan,
-                    connect your accounts, send today. No stitched-together stack, no
-                    infrastructure tax.
+                    Email and LinkedIn, fully provisioned in one platform. Pick
+                    a plan, connect your accounts, send today. No
+                    stitched-together stack, no infrastructure tax.
                   </p>
                 </div>
 
@@ -1029,7 +1079,8 @@ export default function PricingSection() {
                     $575
                   </div>
                   <p className="mt-4 font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-zinc-500 max-w-[18ch] lg:ml-auto">
-                    Replaced monthly. Apollo + HeyReach + Instantly, in one bill.
+                    Replaced monthly. Apollo + HeyReach + Instantly, in one
+                    bill.
                   </p>
                 </aside>
               </div>
@@ -1116,64 +1167,116 @@ export default function PricingSection() {
           >
             {displayPlans.map((plan, i) => {
               const isFeatured = plan.name === "Growth";
-              const price = annual && plan.annualPrice ? plan.annualPrice : plan.price;
+              const price =
+                annual && plan.annualPrice ? plan.annualPrice : plan.price;
 
-              const accentFrom = isFeatured ? "#6366f1" : plan.name === "Start Up" ? "#3b82f6" : "#8b5cf6";
-              const accentTo   = isFeatured ? "#8b5cf6" : plan.name === "Start Up" ? "#06b6d4" : "#6366f1";
+              const accentFrom = isFeatured
+                ? "#6366f1"
+                : plan.name === "Start Up"
+                  ? "#3b82f6"
+                  : "#8b5cf6";
+              const accentTo = isFeatured
+                ? "#8b5cf6"
+                : plan.name === "Start Up"
+                  ? "#06b6d4"
+                  : "#6366f1";
 
-              const cardShape =
-                isFeatured
-                  ? "rounded-3xl border border-indigo-500/40"
-                  : "rounded-3xl border border-white/[0.08]";
+              const cardShape = isFeatured
+                ? "rounded-3xl border border-indigo-500/40"
+                : "rounded-3xl border border-white/[0.08]";
 
               const cardElevation = isFeatured
                 ? "lg:-translate-y-4 lg:scale-[1.025] z-10 shadow-[0_30px_80px_-20px_rgba(99,102,241,0.35)] ring-1 ring-indigo-500/30"
                 : "z-0";
 
               const tierMeta = {
-                "Start Up": { num: "01", tag: "Bring your own",       displayName: "Starter",      featLabel: "Includes" },
-                "Growth":   { num: "02", tag: "For serious outbound", displayName: "Omnichannel",  featLabel: "Everything in Starter, plus provisioned" },
-                "Scale Up": { num: "03", tag: "Teams & agencies",     displayName: "Scale-Up",     featLabel: "Everything in Omnichannel, plus" },
+                "Start Up": {
+                  num: "01",
+                  tag: "Bring your own",
+                  displayName: "Starter",
+                  featLabel: "Includes",
+                },
+                Growth: {
+                  num: "02",
+                  tag: "For serious outbound",
+                  displayName: "Omnichannel",
+                  featLabel: "Everything in Starter, plus provisioned",
+                },
+                "Scale Up": {
+                  num: "03",
+                  tag: "Teams & agencies",
+                  displayName: "Scale-Up",
+                  featLabel: "Everything in Omnichannel, plus",
+                },
               }[plan.name];
 
-              const keyFeats = {
-                "Start Up": [
-                  { text: "2,500 credits / month",           included: true },
-                  { text: "2 AI agents, 2 seats",            included: true },
-                  { text: "Unlimited sending and warmup",    included: true },
-                  { text: "Mailboxes",  meta: "from $5/mo",  included: false },
-                  { text: "LinkedIn seats", meta: "$29/seat", included: false },
-                  { text: "Domain",     meta: "bring your own", included: false },
-                ],
-                "Growth": [
-                  { text: "3 native mailboxes",                         meta: "included",         included: true },
-                  { text: "1 sending domain",                           meta: "year one on us",   included: true },
-                  { text: "1 LinkedIn seat",                            meta: "swappable",        included: true },
-                  { text: "DNS, DKIM, SPF, DMARC configured for you",  included: true },
-                  { text: "Dedicated proxy per LinkedIn account",       included: true },
-                  { text: "Stack more mailboxes from $3/mo",            included: true },
-                ],
-                "Scale Up": [
-                  { text: "15,000 credits / month",                included: true },
-                  { text: "10 agents, 50 seats, 10 workspaces",    included: true },
-                  { text: "Advanced lead scoring",                  included: true },
-                  { text: "AI Meeting Agent",                       included: true },
-                  { text: "Premium deliverability routing",         included: true },
-                  { text: "Priority support, dedicated CSM",        included: true },
-                ],
-              }[plan.name] || [];
+              const keyFeats =
+                {
+                  "Start Up": [
+                    { text: "2,500 credits / month", included: true },
+                    { text: "2 AI agents, 2 seats", included: true },
+                    { text: "Unlimited sending and warmup", included: true },
+                    { text: "Mailboxes", meta: "from $5/mo", included: false },
+                    {
+                      text: "LinkedIn seats",
+                      meta: "$29/seat",
+                      included: false,
+                    },
+                    { text: "Domain", meta: "bring your own", included: false },
+                  ],
+                  Growth: [
+                    {
+                      text: "3 native mailboxes",
+                      meta: "included",
+                      included: true,
+                    },
+                    {
+                      text: "1 sending domain",
+                      meta: "year one on us",
+                      included: true,
+                    },
+                    {
+                      text: "1 LinkedIn seat",
+                      meta: "swappable",
+                      included: true,
+                    },
+                    {
+                      text: "DNS, DKIM, SPF, DMARC configured for you",
+                      included: true,
+                    },
+                    {
+                      text: "Dedicated proxy per LinkedIn account",
+                      included: true,
+                    },
+                    { text: "Stack more mailboxes from $3/mo", included: true },
+                  ],
+                  "Scale Up": [
+                    { text: "15,000 credits / month", included: true },
+                    {
+                      text: "10 agents, 50 seats, 10 workspaces",
+                      included: true,
+                    },
+                    { text: "Advanced lead scoring", included: true },
+                    { text: "AI Meeting Agent", included: true },
+                    { text: "Premium deliverability routing", included: true },
+                    { text: "Priority support, dedicated CSM", included: true },
+                  ],
+                }[plan.name] || [];
 
               return (
                 <motion.div
                   key={plan.name}
                   variants={cardVariants}
-                  className={`relative flex flex-col bg-[#0A0A0C] overflow-hidden transition-all duration-500 ${cardShape} ${cardElevation}`}
+                  className={`relative w-full flex flex-col bg-[#0A0A0C] overflow-hidden transition-all duration-500 ${cardShape} ${cardElevation}`}
                 >
                   {/* Featured radial glow */}
                   {isFeatured && (
                     <div
                       className="absolute inset-0 pointer-events-none"
-                      style={{ background: "radial-gradient(600px 350px at 50% 0%, rgba(99,102,241,0.16) 0%, transparent 70%)" }}
+                      style={{
+                        background:
+                          "radial-gradient(600px 350px at 50% 0%, rgba(99,102,241,0.16) 0%, transparent 70%)",
+                      }}
                     />
                   )}
 
@@ -1192,18 +1295,21 @@ export default function PricingSection() {
                     </div>
                   )}
 
-                  <div className={`relative z-10 flex flex-col gap-7 p-7 md:p-9 ${isFeatured ? "pt-14" : "pt-8"}`}>
-
+                  <div
+                    className={`relative z-10 flex flex-col gap-7 p-7 md:p-9 ${isFeatured ? "pt-14" : "pt-8"}`}
+                  >
                     {/* ── Tier Meta ── */}
                     <div className="flex justify-between items-baseline">
                       <span className="font-mono text-[11px] text-zinc-500 tracking-[0.1em] font-semibold uppercase">
                         {tierMeta.num} · {tierMeta.displayName}
                       </span>
-                      <span className={`font-mono text-[10px] uppercase tracking-[0.12em] px-2.5 py-1 rounded-full font-bold border ${
-                        isFeatured
-                          ? "text-indigo-300 bg-indigo-500/[0.2] border-indigo-500/40"
-                          : "text-indigo-300 bg-indigo-500/[0.12] border-indigo-500/[0.18]"
-                      }`}>
+                      <span
+                        className={`font-mono text-[10px] uppercase tracking-[0.12em] px-2.5 py-1 rounded-full font-bold border ${
+                          isFeatured
+                            ? "text-indigo-300 bg-indigo-500/[0.2] border-indigo-500/40"
+                            : "text-indigo-300 bg-indigo-500/[0.12] border-indigo-500/[0.18]"
+                        }`}
+                      >
                         {tierMeta.tag}
                       </span>
                     </div>
@@ -1221,11 +1327,15 @@ export default function PricingSection() {
                     {/* ── Price Block ── */}
                     <div>
                       <div className="flex items-baseline gap-1 mb-1.5">
-                        <span className="text-3xl font-semibold text-zinc-400 leading-none">$</span>
+                        <span className="text-3xl font-semibold text-zinc-400 leading-none">
+                          $
+                        </span>
                         <span className="text-[76px] font-bold leading-[0.9] tracking-[-0.04em] text-white">
                           {price}
                         </span>
-                        <span className="text-sm text-zinc-400 font-medium ml-2">/ mo</span>
+                        <span className="text-sm text-zinc-400 font-medium ml-2">
+                          / mo
+                        </span>
                       </div>
                       <span className="font-mono text-[11px] text-zinc-400 uppercase tracking-[0.08em] font-medium">
                         {annual ? "Billed yearly" : "Billed monthly"}
@@ -1239,18 +1349,26 @@ export default function PricingSection() {
                         </span>
                         <div className="flex justify-between items-center text-xs py-2 border-b border-dashed border-white/[0.07]">
                           <span className="text-zinc-400">Starter plan</span>
-                          <span className="font-mono font-semibold text-zinc-200">${price}</span>
+                          <span className="font-mono font-semibold text-zinc-200">
+                            ${price}
+                          </span>
                         </div>
                         <div className="flex justify-between items-center text-xs py-2 border-b border-dashed border-white/[0.07]">
                           <span className="text-zinc-400">+ 3 mailboxes</span>
-                          <span className="font-mono font-semibold text-zinc-200">$15</span>
+                          <span className="font-mono font-semibold text-zinc-200">
+                            $15
+                          </span>
                         </div>
                         <div className="flex justify-between items-center text-xs py-2">
                           <span className="text-zinc-400">+ LinkedIn seat</span>
-                          <span className="font-mono font-semibold text-zinc-200">$29</span>
+                          <span className="font-mono font-semibold text-zinc-200">
+                            $29
+                          </span>
                         </div>
                         <div className="flex justify-between items-baseline pt-3 mt-1 border-t-2 border-zinc-700/50">
-                          <span className="text-sm font-semibold text-zinc-200 uppercase tracking-[0.06em]">Real cost</span>
+                          <span className="text-sm font-semibold text-zinc-200 uppercase tracking-[0.06em]">
+                            Real cost
+                          </span>
                           <span className="text-3xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-violet-300">
                             ${Number(price) + 44}
                           </span>
@@ -1261,21 +1379,34 @@ export default function PricingSection() {
                     {plan.name === "Growth" && (
                       <div
                         className="p-4 rounded-2xl border border-indigo-500/30 relative overflow-hidden"
-                        style={{ background: "linear-gradient(135deg, rgba(99,102,241,0.14) 0%, rgba(139,92,246,0.10) 100%)" }}
+                        style={{
+                          background:
+                            "linear-gradient(135deg, rgba(99,102,241,0.14) 0%, rgba(139,92,246,0.10) 100%)",
+                        }}
                       >
-                        <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(circle at 80% 20%, rgba(139,92,246,0.25), transparent 70%)" }} />
+                        <div
+                          className="absolute inset-0 pointer-events-none"
+                          style={{
+                            background:
+                              "radial-gradient(circle at 80% 20%, rgba(139,92,246,0.25), transparent 70%)",
+                          }}
+                        />
                         <div className="relative z-10 space-y-1.5 mb-3">
                           <div className="flex justify-between items-baseline">
                             <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-indigo-300 font-bold">
                               vs DIY Starter + add-ons
                             </span>
-                            <span className="font-mono text-[13px] text-zinc-400 line-through font-medium">$93/mo</span>
+                            <span className="font-mono text-[13px] text-zinc-400 line-through font-medium">
+                              $93/mo
+                            </span>
                           </div>
                           <div className="flex justify-between items-baseline">
                             <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-indigo-300 font-bold">
                               vs Clay + Apollo + Instantly
                             </span>
-                            <span className="font-mono text-[13px] text-zinc-400 line-through font-medium">$645/mo</span>
+                            <span className="font-mono text-[13px] text-zinc-400 line-through font-medium">
+                              $645/mo
+                            </span>
                           </div>
                         </div>
                         <div className="relative z-10 text-xl font-bold text-white tracking-tight leading-snug">
@@ -1290,13 +1421,18 @@ export default function PricingSection() {
                     {plan.name === "Scale Up" && (
                       <div
                         className="p-4 rounded-2xl border border-violet-500/25 relative overflow-hidden"
-                        style={{ background: "linear-gradient(135deg, rgba(139,92,246,0.10) 0%, rgba(99,102,241,0.07) 100%)" }}
+                        style={{
+                          background:
+                            "linear-gradient(135deg, rgba(139,92,246,0.10) 0%, rgba(99,102,241,0.07) 100%)",
+                        }}
                       >
                         <div className="flex justify-between items-baseline mb-3">
                           <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-400 font-bold">
                             vs stitched outbound stack
                           </span>
-                          <span className="font-mono text-[13px] text-zinc-400 line-through font-medium">$1,500+/mo</span>
+                          <span className="font-mono text-[13px] text-zinc-400 line-through font-medium">
+                            $1,500+/mo
+                          </span>
                         </div>
                         <div className="text-xl font-bold text-white tracking-tight leading-snug">
                           <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-indigo-300">
@@ -1311,9 +1447,15 @@ export default function PricingSection() {
                     <div>
                       <button
                         onClick={() => {
-                          if (annual && plan.stripeAnnualUrl) window.open(plan.stripeAnnualUrl, "_blank");
-                          else if (!annual && plan.stripeMonthlyUrl) window.open(plan.stripeMonthlyUrl, "_blank");
-                          else window.open("https://app.nexuscale.ai/users/register", "_blank");
+                          if (annual && plan.stripeAnnualUrl)
+                            window.open(plan.stripeAnnualUrl, "_blank");
+                          else if (!annual && plan.stripeMonthlyUrl)
+                            window.open(plan.stripeMonthlyUrl, "_blank");
+                          else
+                            window.open(
+                              "https://app.nexuscale.ai/users/register",
+                              "_blank",
+                            );
                         }}
                         className={`relative w-full py-4 rounded-xl font-bold text-sm overflow-hidden group transition-all duration-300 flex items-center justify-center gap-2 ${
                           isFeatured
@@ -1329,7 +1471,9 @@ export default function PricingSection() {
                           <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/[0.18] to-transparent transition-transform duration-700 ease-in-out skew-x-12" />
                         )}
                       </button>
-                      <p className={`text-center mt-2.5 text-[10px] font-semibold uppercase tracking-wider ${isFeatured ? "text-indigo-400" : "text-zinc-600"}`}>
+                      <p
+                        className={`text-center mt-2.5 text-[10px] font-semibold uppercase tracking-wider ${isFeatured ? "text-indigo-400" : "text-zinc-600"}`}
+                      >
                         {plan.microcopy}
                       </p>
                     </div>
@@ -1343,20 +1487,53 @@ export default function PricingSection() {
                       </div>
                       <ul className="space-y-3.5">
                         {keyFeats.map((f, fi) => (
-                          <li key={fi} className="flex items-start gap-3 text-sm leading-snug">
+                          <li
+                            key={fi}
+                            className="flex items-start gap-3 text-sm leading-snug"
+                          >
                             {f.included ? (
-                              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0 mt-0.5 drop-shadow-[0_0_6px_rgba(99,102,241,0.5)]">
-                                <path d="M2 7.5L5.5 11L12 3.5" stroke="#818CF8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                              <svg
+                                width="14"
+                                height="14"
+                                viewBox="0 0 14 14"
+                                fill="none"
+                                className="shrink-0 mt-0.5 drop-shadow-[0_0_6px_rgba(99,102,241,0.5)]"
+                              >
+                                <path
+                                  d="M2 7.5L5.5 11L12 3.5"
+                                  stroke="#818CF8"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
                               </svg>
                             ) : (
-                              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0 mt-0.5">
-                                <circle cx="7" cy="7" r="5" stroke="#3F3F46" strokeWidth="1.5" />
+                              <svg
+                                width="14"
+                                height="14"
+                                viewBox="0 0 14 14"
+                                fill="none"
+                                className="shrink-0 mt-0.5"
+                              >
+                                <circle
+                                  cx="7"
+                                  cy="7"
+                                  r="5"
+                                  stroke="#3F3F46"
+                                  strokeWidth="1.5"
+                                />
                               </svg>
                             )}
-                            <span className={f.included ? "text-zinc-300" : "text-zinc-400"}>
+                            <span
+                              className={
+                                f.included ? "text-zinc-300" : "text-zinc-400"
+                              }
+                            >
                               {f.text}
                               {f.meta && (
-                                <span className="font-mono text-[11px] text-zinc-500 ml-1.5">{f.meta}</span>
+                                <span className="font-mono text-[11px] text-zinc-500 ml-1.5">
+                                  {f.meta}
+                                </span>
                               )}
                             </span>
                           </li>
@@ -1375,7 +1552,6 @@ export default function PricingSection() {
                         sublabel="Isolation"
                       />
                     </div> */}
-
                   </div>
                 </motion.div>
               );
@@ -1433,10 +1609,10 @@ export default function PricingSection() {
           <ScrollReveal delay={100}>
             <div className="my-16 w-full md:max-w-7xl mx-auto px-4 sm:px-6">
               <div className="text-start mb-10">
-                <h3 className=" mb-4 font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-spline gap-2">
-                  Compare  
+                <h3 className="flex  mb-4 font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-spline space-x-2">
+                  Compare
                   <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">
-                  Plans
+                    Plans
                   </span>
                 </h3>
                 <p className="text-zinc-400 text-sm sm:text-base ">
@@ -1697,7 +1873,7 @@ export default function PricingSection() {
           </ScrollReveal>
 
           <ScrollReveal delay={200}>
-            <div className="max-w-7xl mx-auto mb-32">
+            <div className="max-w-7xl mx-auto my-32">
               <div className="grid gap-10 lg:grid-cols-2 lg:gap-20">
                 {/* Left: heading + description */}
                 <div>
@@ -1710,7 +1886,8 @@ export default function PricingSection() {
                   <p className="mt-6 max-w-xl text-lg leading-8 text-zinc-400">
                     Most teams running outbound today pay Apollo for data,
                     HeyReach for LinkedIn, and Instantly for cold email. Three
-                    subscriptions, three logins, three places where things break.
+                    subscriptions, three logins, three places where things
+                    break.
                   </p>
                   <p className="mt-4 max-w-xl text-lg leading-8 text-zinc-400">
                     Omnichannel absorbs the entire stack at less than 15% of the
@@ -1729,27 +1906,54 @@ export default function PricingSection() {
                   </div>
 
                   {[
-                    { name: "Apollo", role: "B2B data + sequencing", price: "$399.00" },
-                    { name: "HeyReach", role: "LinkedIn outreach automation", price: "$79.00" },
-                    { name: "Instantly", role: "Cold email sending + warmup", price: "$97.00" },
+                    {
+                      name: "Apollo",
+                      role: "B2B data + sequencing",
+                      price: "$399.00",
+                    },
+                    {
+                      name: "HeyReach",
+                      role: "LinkedIn outreach automation",
+                      price: "$79.00",
+                    },
+                    {
+                      name: "Instantly",
+                      role: "Cold email sending + warmup",
+                      price: "$97.00",
+                    },
                   ].map(({ name, role, price: p }) => (
-                    <div key={name} className="flex justify-between gap-4 py-2.5">
+                    <div
+                      key={name}
+                      className="flex justify-between gap-4 py-2.5"
+                    >
                       <div className="flex flex-col gap-1">
-                        <span className="font-sans text-sm font-bold tracking-tight text-zinc-50">{name}</span>
-                        <span className="text-[10px] font-medium uppercase tracking-wide text-zinc-500">{role}</span>
+                        <span className="font-sans text-sm font-bold tracking-tight text-zinc-50">
+                          {name}
+                        </span>
+                        <span className="text-[10px] font-medium uppercase tracking-wide text-zinc-500">
+                          {role}
+                        </span>
                       </div>
-                      <span className="self-center font-semibold text-zinc-300">{p}</span>
+                      <span className="self-center font-semibold text-zinc-300">
+                        {p}
+                      </span>
                     </div>
                   ))}
 
                   <div className="mt-3 flex items-baseline justify-between border-t-2 border-zinc-600 pt-4">
-                    <span className="font-sans text-sm font-semibold uppercase tracking-wide text-zinc-300">Stitched stack total</span>
-                    <span className="font-sans text-3xl font-bold tracking-tight text-zinc-50">$575</span>
+                    <span className="font-sans text-sm font-semibold uppercase tracking-wide text-zinc-300">
+                      Stitched stack total
+                    </span>
+                    <span className="font-sans text-3xl font-bold tracking-tight text-zinc-50">
+                      $575
+                    </span>
                   </div>
 
                   <div className="my-6 flex items-center gap-4">
                     <div className="h-px flex-1 bg-white/[0.12]" />
-                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500">vs</span>
+                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500">
+                      vs
+                    </span>
                     <div className="h-px flex-1 bg-white/[0.12]" />
                   </div>
 
@@ -1768,7 +1972,9 @@ export default function PricingSection() {
                   </div>
 
                   <div className="mt-3 flex items-baseline justify-between border-t-2 border-zinc-600 pt-4">
-                    <span className="font-sans text-sm font-semibold uppercase tracking-wide text-zinc-300">Nexuscale, all in</span>
+                    <span className="font-sans text-sm font-semibold uppercase tracking-wide text-zinc-300">
+                      Nexuscale, all in
+                    </span>
                     <span className="font-sans text-3xl font-bold tracking-tight bg-gradient-to-r from-indigo-300 to-violet-300 bg-clip-text text-transparent">
                       $83
                     </span>
@@ -1779,7 +1985,8 @@ export default function PricingSection() {
                       $492 saved every month.
                     </strong>{" "}
                     That's $5,904/year back to your bottom line, plus mailbox
-                    infrastructure included with no tool in the stack above to match it.
+                    infrastructure included with no tool in the stack above to
+                    match it.
                   </div>
                 </div>
               </div>
