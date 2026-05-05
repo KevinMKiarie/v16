@@ -21,11 +21,7 @@ import {
 import {
   pricingPlansData,
   platformEcosystemData,
-  faqData,
-  planStyles,
 } from "../data/pricing";
-import { VerticalCutReveal } from "../components/ui/vertical-cut-reveal";
-import { TimelineContent } from "../components/ui/timeline-animation";
 import ComparisonStack from "./ComparisonStack";
 
 const ScrollReveal = ({ children, delay = 0 }) => (
@@ -391,7 +387,7 @@ const InsightBand = ({ plan, annual }) => {
 // --- PLAN FEATURE LIST ---
 // Feature list with "Overview / +vs Prev / All N" view-mode tabs
 
-const PlanFeatureList = ({ plan, s, prevPlanName }) => {
+const PlanFeatureList = ({ plan, prevPlanName }) => {
   const [viewMode, setViewMode] = useState("key"); // 'key' | 'diff' | 'all'
 
   const keyFeatures = plan.keyFeatures || [];
@@ -954,149 +950,61 @@ const PlanDecorativePattern = ({ name }) => {
 
 const containerVariants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
+  visible: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 30, scale: 0.95 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-  },
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
 };
+
 
 export default function PricingSection() {
   const [annual, setAnnual] = useState(true);
-  const [linkedinSeatsByPlan, setLinkedinSeatsByPlan] = useState({});
-  const [mailboxesByPlan, setMailboxesByPlan] = useState({});
   const [openCategories, setOpenCategories] = useState({});
 
   const toggleCategory = (i) =>
     setOpenCategories((prev) => ({ ...prev, [i]: !prev[i] }));
 
-  const getLinkedinSeats = (planName) => linkedinSeatsByPlan[planName] ?? 0;
-  const getMailboxes = (planName) => mailboxesByPlan[planName] ?? 0;
-
-  const updateLinkedinSeats = (planName, delta, max) => {
-    setLinkedinSeatsByPlan((prev) => {
-      const current = prev[planName] ?? 0;
-      const next = Math.min(Math.max(0, current + delta), max);
-      return { ...prev, [planName]: next };
-    });
-  };
-
-  const updateMailboxes = (planName, delta) => {
-    setMailboxesByPlan((prev) => {
-      const current = prev[planName] ?? 0;
-      const next = Math.max(0, current + delta);
-      return { ...prev, [planName]: next };
-    });
-  };
-
-  const getMaxSeats = (plan) => {
-    const seats = plan.credits.linkedinSeats;
-    if (seats === "∞") return 20;
-    const n = parseInt(seats, 10);
-    return isNaN(n) ? 0 : n;
-  };
-
-  const revealVariants = {
-    visible: (i) => ({
-      y: 0,
-      opacity: 1,
-      filter: "blur(0px)",
-      transition: { delay: i * 0.4, duration: 0.5 },
-    }),
-    hidden: { filter: "blur(10px)", y: -20, opacity: 0 },
-  };
-
-  const savingsHighlight = annual
-    ? "opacity-100 translate-y-0"
-    : "opacity-0 -translate-y-1 pointer-events-none";
-
-  const getPrice = (plan) => {
-    if (plan.price === "0") return "0";
-    return annual && plan.annualPrice ? plan.annualPrice : plan.price;
-  };
-
-  const getTotalPrice = (plan) => {
-    const base = Number(getPrice(plan));
-    const seats = getLinkedinSeats(plan.name);
-    const mailboxes = getMailboxes(plan.name);
-    return base + seats * 29 + mailboxes * 5;
-  };
+  const displayPlans = pricingPlansData.filter((p) => p.name !== "Free" && p.name !== "Agency");
 
   return (
-    <div className="min-h-screen bg-[#050505]  selection:bg-indigo-500/30 text-zinc-200">
+    <div className="min-h-screen bg-[#050505] selection:bg-indigo-500/30 text-zinc-200">
       <style>{`
-        @keyframes shimmer {
-          100% { transform: translateX(100%); }
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: rgba(255, 255, 255, 0.1);
-          border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: rgba(255, 255, 255, 0.2);
-        }
-        .marquee-container {
-          overflow: hidden;
-          white-space: nowrap;
-          position: relative;
-        }
-        .marquee-content {
-          display: inline-block;
-          animation: marquee 30s linear infinite;
-        }
-        @keyframes marquee {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-50%); }
+        @keyframes shimmer { 100% { transform: translateX(100%); } }
+        @keyframes aurora {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          33%       { transform: translate(40px, -25px) scale(1.05); }
+          66%       { transform: translate(-20px, 15px) scale(0.95); }
         }
       `}</style>
 
-      <section className="py-24 relative px-2 md:px-6 overflow-hidden">
-        <TimelineContent
-          animationNum={4}
-          customVariants={revealVariants}
-          className="absolute top-0 h-96 w-full overflow-hidden pointer-events-none [mask-image:radial-gradient(50%_50%,white,transparent)]"
-        >
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff2c_1px,transparent_1px),linear-gradient(to_bottom,#3a3a3a01_1px,transparent_1px)] bg-[size:70px_80px]" />
-        </TimelineContent>
+      <section className="py-24 relative px-4 md:px-6 overflow-hidden">
 
-        <TimelineContent
-          animationNum={5}
-          customVariants={revealVariants}
-          className="absolute left-0 top-[-114px] w-full h-[113.625vh] overflow-hidden pointer-events-none z-0"
-        >
+        {/* Ruled vertical lines */}
+        <div
+          className="absolute inset-0 pointer-events-none [mask-image:radial-gradient(65%_55%_at_50%_0%,white,transparent)]"
+          style={{
+            backgroundImage: "linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px)",
+            backgroundSize: "96px 100%",
+          }}
+        />
+
+        {/* Aurora animated blobs */}
+        <div className="absolute left-0 top-[-114px] w-full h-[113.625vh] overflow-hidden pointer-events-none z-0">
           <div
             className="absolute left-[-568px] right-[-568px] top-0 h-[2053px] rounded-full"
-            style={{
-              border: "200px solid #3131f5",
-              filter: "blur(92px)",
-              WebkitFilter: "blur(92px)",
-            }}
+            style={{ border: "200px solid #3131f5", filter: "blur(92px)", animation: "aurora 20s ease-in-out infinite" }}
           />
           <div
             className="absolute left-[-568px] right-[-568px] top-0 h-[2053px] rounded-full"
-            style={{
-              border: "200px solid #3131f5",
-              filter: "blur(92px)",
-              WebkitFilter: "blur(92px)",
-            }}
+            style={{ border: "200px solid #3131f5", filter: "blur(92px)", animation: "aurora 20s ease-in-out infinite reverse" }}
           />
-        </TimelineContent>
+        </div>
 
-        <div className=" md:max-w-7xl mx-auto relative z-10 w-full">
+        <div className="md:max-w-7xl mx-auto relative z-10 w-full">
           <ScrollReveal>
-            <div className="text-center mb-10">
+            <div className="text-center mb-12">
               <div className="inline-flex flex-col sm:flex-row items-center gap-3 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] mb-6 backdrop-blur-sm">
                 <div className="flex items-center gap-1.5">
                   <div className="flex gap-0.5">
@@ -1208,17 +1116,19 @@ export default function PricingSection() {
                     </span>
                   </button>
                 </div>
-                <div className="flex items-center gap-4 mt-2">
-                  <div
-                    className={`text-emerald-400 text-xs font-bold tracking-widest uppercase transition-all duration-500 ${savingsHighlight}`}
-                  >
-                    <LucideSparkles className="w-3.5 h-3.5 inline-block mr-1.5 mb-0.5" />
-                    Save up to $2,397 a year
-                  </div>
-                  <div className="text-[10px] text-zinc-500 uppercase tracking-widest font-semibold">
-                    • Cancel Anytime
-                  </div>
-                </div>
+                <AnimatePresence>
+                  {annual && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      className="text-emerald-400 text-xs font-bold tracking-widest uppercase mt-2"
+                    >
+                      <LucideSparkles className="w-3.5 h-3.5 inline-block mr-1.5 mb-0.5" />
+                      Save up to $2,397 a year
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
           </ScrollReveal>
@@ -1235,337 +1145,281 @@ export default function PricingSection() {
             </span>
           </div>
 
-          {/* ── NEW CLEAN THREE-CARD HORIZONTAL LAYOUT ── */}
+          {/* ── Connected 3-Card Pricing Grid ── */}
           <motion.div
-            className="grid grid-cols-1 lg:grid-cols-3 gap-4 max-w-[95%] md:max-w-[88%] mx-auto mb-16"
+            className="grid grid-cols-1 lg:grid-cols-[1fr_1.08fr_1fr] gap-4 lg:gap-5 max-w-[98%] md:max-w-[94%] mx-auto mb-20"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-60px" }}
           >
-            {pricingPlansData
-              .filter((plan) => plan.name !== "Free" && plan.name !== "Agency")
-              .map((plan, i) => {
-                const isFeatured = plan.name === "Growth";
-                const s = planStyles[plan.name] || planStyles["Free"];
-                const linkedinSeats = getLinkedinSeats(plan.name);
-                const mailboxCount = getMailboxes(plan.name);
-                const maxSeats = getMaxSeats(plan);
-                const prevPlanName =
-                  plan.name === "Growth"
-                    ? "Start Up"
-                    : plan.name === "Scale Up"
-                    ? "Growth"
-                    : null;
+            {displayPlans.map((plan, i) => {
+              const isFeatured = plan.name === "Growth";
+              const price = annual && plan.annualPrice ? plan.annualPrice : plan.price;
 
-                /* Override visual treatment for featured Growth card */
-                const cardBorderClass = isFeatured
-                  ? "border-indigo-500/40"
-                  : s.border;
-                const cardGlowClass = isFeatured
-                  ? "ring-1 ring-indigo-500/25 shadow-[0_0_60px_rgba(99,102,241,0.13)]"
-                  : s.glow;
-                const accentGradient = isFeatured
-                  ? "from-indigo-500 to-violet-500"
-                  : s.accent;
-                const priceGradient = isFeatured
-                  ? "from-indigo-300 to-violet-400"
-                  : s.price;
-                const labelColor = isFeatured ? "text-indigo-400" : s.label;
+              const accentFrom = isFeatured ? "#6366f1" : plan.name === "Start Up" ? "#3b82f6" : "#8b5cf6";
+              const accentTo   = isFeatured ? "#8b5cf6" : plan.name === "Start Up" ? "#06b6d4" : "#6366f1";
 
-                return (
-                  <motion.div
-                    key={i}
-                    variants={cardVariants}
-                    whileHover={{
-                      y: isFeatured ? -10 : -6,
-                      transition: { type: "spring", stiffness: 400, damping: 25 },
-                    }}
-                    className={`relative group rounded-3xl border bg-[#0A0A0C]/80 backdrop-blur-xl overflow-hidden flex flex-col
-                      transition-shadow duration-500 ${cardBorderClass} ${cardGlowClass}
-                      ${isFeatured ? "lg:scale-[1.04] lg:-translate-y-2 z-10" : "z-0"}`}
-                  >
-                    {/* Most Popular ribbon */}
-                    {isFeatured && (
-                      <div className="absolute top-0 left-0 right-0 flex justify-center z-20 pointer-events-none">
-                        <div className="bg-gradient-to-r from-indigo-500 to-violet-500 text-white text-[10px] font-black px-5 py-1.5 rounded-b-2xl uppercase tracking-widest flex items-center gap-1.5 shadow-lg shadow-indigo-600/30">
-                          <Zap className="w-3 h-3 text-yellow-300 fill-yellow-300" />
-                          Most Popular
-                        </div>
-                      </div>
-                    )}
+              const cardShape =
+                isFeatured
+                  ? "rounded-3xl border border-indigo-500/40"
+                  : "rounded-3xl border border-white/[0.08]";
 
-                    {/* Top accent stripe */}
+              const cardElevation = isFeatured
+                ? "lg:-translate-y-4 lg:scale-[1.025] z-10 shadow-[0_30px_80px_-20px_rgba(99,102,241,0.35)] ring-1 ring-indigo-500/30"
+                : "z-0";
+
+              const tierMeta = {
+                "Start Up": { num: "01", tag: "Bring your own",       displayName: "Starter",      featLabel: "Includes" },
+                "Growth":   { num: "02", tag: "For serious outbound", displayName: "Omnichannel",  featLabel: "Everything in Starter, plus provisioned" },
+                "Scale Up": { num: "03", tag: "Teams & agencies",     displayName: "Scale-Up",     featLabel: "Everything in Omnichannel, plus" },
+              }[plan.name];
+
+              const keyFeats = {
+                "Start Up": [
+                  { text: "2,500 credits / month",           included: true },
+                  { text: "2 AI agents, 2 seats",            included: true },
+                  { text: "Unlimited sending and warmup",    included: true },
+                  { text: "Mailboxes",  meta: "from $5/mo",  included: false },
+                  { text: "LinkedIn seats", meta: "$29/seat", included: false },
+                  { text: "Domain",     meta: "bring your own", included: false },
+                ],
+                "Growth": [
+                  { text: "3 native mailboxes",                         meta: "included",         included: true },
+                  { text: "1 sending domain",                           meta: "year one on us",   included: true },
+                  { text: "1 LinkedIn seat",                            meta: "swappable",        included: true },
+                  { text: "DNS, DKIM, SPF, DMARC configured for you",  included: true },
+                  { text: "Dedicated proxy per LinkedIn account",       included: true },
+                  { text: "Stack more mailboxes from $3/mo",            included: true },
+                ],
+                "Scale Up": [
+                  { text: "15,000 credits / month",                included: true },
+                  { text: "10 agents, 50 seats, 10 workspaces",    included: true },
+                  { text: "Advanced lead scoring",                  included: true },
+                  { text: "AI Meeting Agent",                       included: true },
+                  { text: "Premium deliverability routing",         included: true },
+                  { text: "Priority support, dedicated CSM",        included: true },
+                ],
+              }[plan.name] || [];
+
+              return (
+                <motion.div
+                  key={plan.name}
+                  variants={cardVariants}
+                  className={`relative flex flex-col bg-[#0A0A0C] overflow-hidden transition-all duration-500 ${cardShape} ${cardElevation}`}
+                >
+                  {/* Featured radial glow */}
+                  {isFeatured && (
                     <div
-                      className={`h-[2px] bg-gradient-to-r ${accentGradient} transition-opacity duration-500 ${
-                        isFeatured
-                          ? "opacity-100"
-                          : "opacity-0 group-hover:opacity-100"
-                      }`}
+                      className="absolute inset-0 pointer-events-none"
+                      style={{ background: "radial-gradient(600px 350px at 50% 0%, rgba(99,102,241,0.16) 0%, transparent 70%)" }}
                     />
+                  )}
 
-                    {/* Ambient glow orb on hover */}
-                    <div
-                      className={`absolute -top-20 -right-20 w-60 h-60 rounded-full blur-3xl ${s.orb} opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`}
-                    />
+                  {/* Top accent line */}
+                  <div
+                    className="h-[2px] w-full shrink-0"
+                    style={{ background: `linear-gradient(to right, ${accentFrom}, ${accentTo})`, opacity: isFeatured ? 1 : 0.45 }}
+                  />
 
-                    {/* Featured indigo tint overlay */}
-                    {isFeatured && (
-                      <div className="absolute inset-0 bg-gradient-to-b from-indigo-900/10 via-transparent to-transparent pointer-events-none" />
-                    )}
-
-                    <div
-                      className={`relative z-10 p-5 md:p-6 flex flex-col flex-1 gap-4 ${
-                        isFeatured ? "pt-11" : "pt-6"
-                      }`}
-                    >
-                      {/* ── Header ── */}
-                      <div>
-                        <div className="flex items-start justify-between mb-1.5">
-                          <span
-                            className={`text-[10px] font-black uppercase tracking-[0.15em] ${labelColor}`}
-                          >
-                            {plan.name}
-                          </span>
-                          {plan.name === "Start Up" && (
-                            <span className="text-[9px] font-bold text-zinc-500 bg-white/[0.04] border border-white/[0.08] px-2 py-0.5 rounded-full uppercase tracking-wide">
-                              Solo & Founders
-                            </span>
-                          )}
-                          {plan.name === "Scale Up" && (
-                            <span className="text-[9px] font-bold text-violet-400/80 bg-violet-500/[0.07] border border-violet-500/20 px-2 py-0.5 rounded-full uppercase tracking-wide">
-                              Teams & Agencies
-                            </span>
-                          )}
-                        </div>
-                        <h3 className="text-xl font-black text-white leading-tight mb-1.5">
-                          {plan.tier}
-                        </h3>
-                        <p className="text-xs text-zinc-500 leading-relaxed min-h-[32px]">
-                          {plan.desc}
-                        </p>
-                      </div>
-
-                      {/* ── Price ── */}
-                      <div>
-                        <div className="flex items-baseline gap-1.5 flex-wrap">
-                          <span className="text-4xl md:text-5xl font-black tracking-tight leading-none overflow-hidden">
-                            <PriceTicker
-                              value={getTotalPrice(plan)}
-                              gradClass={s.priceGrad ? priceGradient : null}
-                            />
-                          </span>
-                          {plan.price !== "0" && (
-                            <>
-                              {annual && (
-                                <span className="text-[10px] text-emerald-400/80 font-bold uppercase tracking-wider">
-                                  Save 20%
-                                </span>
-                              )}
-                              <span className="text-sm text-zinc-500 font-bold">
-                                /mo
-                              </span>
-                            </>
-                          )}
-                        </div>
-
-                        <AnimatePresence>
-                          {(linkedinSeats > 0 || mailboxCount > 0) && (
-                            <motion.div
-                              initial={{ opacity: 0, height: 0, marginTop: 0 }}
-                              animate={{ opacity: 1, height: "auto", marginTop: 4 }}
-                              exit={{ opacity: 0, height: 0, marginTop: 0 }}
-                              transition={{ duration: 0.2 }}
-                              className="flex items-center gap-1.5 flex-wrap overflow-hidden"
-                            >
-                              <span className="text-[10px] text-zinc-600">
-                                Base ${getPrice(plan)}
-                              </span>
-                              {linkedinSeats > 0 && (
-                                <span className="text-[10px] font-bold text-[#4fa3d4]">
-                                  +${linkedinSeats * 29} LinkedIn
-                                </span>
-                              )}
-                              {mailboxCount > 0 && (
-                                <span className="text-[10px] font-bold text-emerald-400">
-                                  +${mailboxCount * 5} Mailboxes
-                                </span>
-                              )}
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-
-                        {plan.price !== "0" && annual && (
-                          <p className="text-[10px] text-emerald-500/70 mt-1.5 font-bold uppercase tracking-wider">
-                            Billed yearly
-                          </p>
-                        )}
-                      </div>
-
-                      {/* ── Insight Band ── */}
-                      <InsightBand plan={plan} annual={annual} />
-
-                      {/* ── Divider ── */}
-                      <div className="h-px bg-gradient-to-r from-white/[0.03] via-white/[0.1] to-white/[0.03]" />
-
-                      {/* ── Stats Grid 2 × 2 ── */}
-                      <div className="grid grid-cols-2 gap-2">
-                        <StatChip
-                          value={plan.credits.contacts}
-                          label="Credits /mo"
-                          sublabel="Engine Credits"
-                        />
-                        <StatChip
-                          value={plan.credits.agents}
-                          label="AI Agents"
-                          sublabel={plan.credits.agentsType || ""}
-                        />
-                        <StatChip
-                          value={plan.credits.teamSeats}
-                          label="Team Seats"
-                          sublabel="Collaborators"
-                        />
-                        <StatChip
-                          value={plan.credits.workspaces}
-                          label={
-                            plan.credits.workspaces === "1"
-                              ? "Workspace"
-                              : "Workspaces"
-                          }
-                          sublabel="Isolation"
-                        />
-                      </div>
-
-                      {/* ── Add-ons: LinkedIn & Mailboxes ── */}
-                      <div className="grid grid-cols-2 gap-2">
-                        {maxSeats > 0 && (
-                          <div className="rounded-xl border border-[#0077b5]/25 bg-[#0077b5]/[0.06] p-3 space-y-2">
-                            <div className="flex items-center gap-1.5">
-                              <span className="text-[8px] font-black text-white bg-[#0077b5] rounded px-1 py-[2px] tracking-wider leading-none">
-                                in
-                              </span>
-                              <span className="text-[10px] font-bold text-zinc-300">
-                                LinkedIn
-                              </span>
-                            </div>
-                            <div className="text-[9px] font-bold text-[#4fa3d4] uppercase tracking-widest">
-                              $29 / seat
-                            </div>
-                            <div className="flex items-center justify-between gap-1 bg-white/[0.05] rounded-lg p-1">
-                              <button
-                                onClick={() =>
-                                  updateLinkedinSeats(plan.name, -1, maxSeats)
-                                }
-                                disabled={linkedinSeats === 0}
-                                className="w-5 h-5 rounded-md bg-white/[0.07] hover:bg-white/[0.15] disabled:opacity-20 disabled:cursor-not-allowed flex items-center justify-center text-white font-bold text-sm transition-all active:scale-90 select-none"
-                              >
-                                −
-                              </button>
-                              <span className="text-xs font-black text-white tabular-nums select-none">
-                                {linkedinSeats}
-                              </span>
-                              <button
-                                onClick={() =>
-                                  updateLinkedinSeats(plan.name, 1, maxSeats)
-                                }
-                                disabled={linkedinSeats >= maxSeats}
-                                className="w-5 h-5 rounded-md bg-[#0077b5]/50 hover:bg-[#0077b5]/75 disabled:opacity-20 disabled:cursor-not-allowed flex items-center justify-center text-white font-bold text-sm transition-all active:scale-90 select-none"
-                              >
-                                +
-                              </button>
-                            </div>
-                          </div>
-                        )}
-
-                        {plan.price !== "0" && (
-                          <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/[0.05] p-3 space-y-2">
-                            <div className="flex items-center gap-1.5">
-                              <svg
-                                className="w-3 h-3 text-emerald-400"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              >
-                                <rect x="2" y="4" width="20" height="16" rx="2" />
-                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                              </svg>
-                              <span className="text-[10px] font-bold text-zinc-300">
-                                Mailboxes
-                              </span>
-                            </div>
-                            <div className="text-[9px] font-bold text-emerald-400 uppercase tracking-widest">
-                              $5/mo each
-                            </div>
-                            <div className="flex items-center justify-between gap-1 bg-white/[0.05] rounded-lg p-1">
-                              <button
-                                onClick={() => updateMailboxes(plan.name, -1)}
-                                disabled={mailboxCount === 0}
-                                className="w-5 h-5 rounded-md bg-white/[0.07] hover:bg-white/[0.15] disabled:opacity-20 disabled:cursor-not-allowed flex items-center justify-center text-white font-bold text-sm transition-all active:scale-90 select-none"
-                              >
-                                −
-                              </button>
-                              <span className="text-xs font-black text-white tabular-nums select-none">
-                                {mailboxCount}
-                              </span>
-                              <button
-                                onClick={() => updateMailboxes(plan.name, 1)}
-                                className="w-5 h-5 rounded-md bg-emerald-500/40 hover:bg-emerald-500/65 flex items-center justify-center text-white font-bold text-sm transition-all active:scale-90 select-none"
-                              >
-                                +
-                              </button>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* ── Divider ── */}
-                      <div className="h-px bg-gradient-to-r from-white/[0.03] via-white/[0.1] to-white/[0.03]" />
-
-                      {/* ── Feature List with view-mode tabs ── */}
-                      <PlanFeatureList plan={plan} s={s} prevPlanName={prevPlanName} />
-
-                      {/* ── CTA ── */}
-                      <div className="pt-1 mt-auto">
-                        <Button
-                          text={plan.cta}
-                          variant={isFeatured ? "brand" : "secondary"}
-                          className="w-full py-3.5 text-sm"
-                          onClick={() => {
-                            if (
-                              plan.cta.includes("Schedule Call") ||
-                              plan.cta.includes("Demo")
-                            ) {
-                              window.open(
-                                "https://cal.com/kevin-nexuscale/15min",
-                                "_blank",
-                              );
-                            } else if (annual && plan.stripeAnnualUrl) {
-                              window.open(plan.stripeAnnualUrl, "_blank");
-                            } else if (!annual && plan.stripeMonthlyUrl) {
-                              window.open(plan.stripeMonthlyUrl, "_blank");
-                            } else {
-                              window.open(
-                                "https://app.nexuscale.ai/users/register",
-                                "_blank",
-                              );
-                            }
-                          }}
-                        />
-                        <p
-                          className={`text-center mt-2.5 text-[10px] font-semibold uppercase tracking-wider ${
-                            isFeatured ? "text-indigo-400" : "text-zinc-500"
-                          }`}
-                        >
-                          {plan.microcopy}
-                        </p>
+                  {/* Featured ribbon */}
+                  {isFeatured && (
+                    <div className="absolute top-0 left-0 right-0 flex justify-center z-20 pointer-events-none">
+                      <div className="bg-gradient-to-r from-indigo-500 to-violet-500 text-white text-[10px] font-black px-5 py-1.5 rounded-b-2xl uppercase tracking-widest flex items-center gap-1.5 shadow-lg shadow-indigo-500/40">
+                        ★ Built for outbound
                       </div>
                     </div>
-                  </motion.div>
-                );
-              })}
+                  )}
+
+                  <div className={`relative z-10 flex flex-col gap-7 p-7 md:p-9 ${isFeatured ? "pt-14" : "pt-8"}`}>
+
+                    {/* ── Tier Meta ── */}
+                    <div className="flex justify-between items-baseline">
+                      <span className="font-mono text-[11px] text-zinc-500 tracking-[0.1em] font-semibold uppercase">
+                        {tierMeta.num} · {tierMeta.displayName}
+                      </span>
+                      <span className={`font-mono text-[10px] uppercase tracking-[0.12em] px-2.5 py-1 rounded-full font-bold border ${
+                        isFeatured
+                          ? "text-indigo-300 bg-indigo-500/[0.2] border-indigo-500/40"
+                          : "text-indigo-300 bg-indigo-500/[0.12] border-indigo-500/[0.18]"
+                      }`}>
+                        {tierMeta.tag}
+                      </span>
+                    </div>
+
+                    {/* ── Tier Name + Desc ── */}
+                    <div>
+                      <h3 className="text-[36px] font-bold tracking-tight leading-none text-white mb-2">
+                        {tierMeta.displayName}
+                      </h3>
+                      <p className="text-sm text-zinc-400 leading-snug min-h-[42px]">
+                        {plan.desc}
+                      </p>
+                    </div>
+
+                    {/* ── Price Block ── */}
+                    <div>
+                      <div className="flex items-baseline gap-1 mb-1.5">
+                        <span className="text-3xl font-semibold text-zinc-400 leading-none">$</span>
+                        <span className="text-[76px] font-bold leading-[0.9] tracking-[-0.04em] text-white">
+                          {price}
+                        </span>
+                        <span className="text-sm text-zinc-400 font-medium ml-2">/ mo</span>
+                      </div>
+                      <span className="font-mono text-[11px] text-zinc-400 uppercase tracking-[0.08em] font-medium">
+                        {annual ? "Billed yearly" : "Billed monthly"}
+                      </span>
+                    </div>
+
+                    {/* ── Value Panel ── */}
+                    {plan.name === "Start Up" && (
+                      <div className="p-4 bg-white/[0.025] rounded-2xl border border-white/[0.08] space-y-1">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-400 font-bold block mb-3">
+                          Real cost calculator
+                        </span>
+                        <div className="flex justify-between items-center text-xs py-2 border-b border-dashed border-white/[0.07]">
+                          <span className="text-zinc-400">Starter plan</span>
+                          <span className="font-mono font-semibold text-zinc-200">${price}</span>
+                        </div>
+                        <div className="flex justify-between items-center text-xs py-2 border-b border-dashed border-white/[0.07]">
+                          <span className="text-zinc-400">+ 3 mailboxes</span>
+                          <span className="font-mono font-semibold text-zinc-200">$15</span>
+                        </div>
+                        <div className="flex justify-between items-center text-xs py-2">
+                          <span className="text-zinc-400">+ LinkedIn seat</span>
+                          <span className="font-mono font-semibold text-zinc-200">$29</span>
+                        </div>
+                        <div className="flex justify-between items-baseline pt-3 mt-1 border-t-2 border-zinc-700/50">
+                          <span className="text-sm font-semibold text-zinc-200 uppercase tracking-[0.06em]">Real cost</span>
+                          <span className="text-3xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-violet-300">
+                            ${Number(price) + 44}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                    {plan.name === "Growth" && (
+                      <div
+                        className="p-4 rounded-2xl border border-indigo-500/30 relative overflow-hidden"
+                        style={{ background: "linear-gradient(135deg, rgba(99,102,241,0.14) 0%, rgba(139,92,246,0.10) 100%)" }}
+                      >
+                        <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(circle at 80% 20%, rgba(139,92,246,0.25), transparent 70%)" }} />
+                        <div className="relative z-10 space-y-1.5 mb-3">
+                          <div className="flex justify-between items-baseline">
+                            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-indigo-300 font-bold">
+                              vs DIY Starter + add-ons
+                            </span>
+                            <span className="font-mono text-[13px] text-zinc-400 line-through font-medium">$93/mo</span>
+                          </div>
+                          <div className="flex justify-between items-baseline">
+                            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-indigo-300 font-bold">
+                              vs Clay + Apollo + Instantly
+                            </span>
+                            <span className="font-mono text-[13px] text-zinc-400 line-through font-medium">$645/mo</span>
+                          </div>
+                        </div>
+                        <div className="relative z-10 text-xl font-bold text-white tracking-tight leading-snug">
+                          <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-violet-300">
+                            ${price} replaces both.
+                          </span>{" "}
+                          One bill, zero stitching.
+                        </div>
+                      </div>
+                    )}
+
+                    {plan.name === "Scale Up" && (
+                      <div
+                        className="p-4 rounded-2xl border border-violet-500/25 relative overflow-hidden"
+                        style={{ background: "linear-gradient(135deg, rgba(139,92,246,0.10) 0%, rgba(99,102,241,0.07) 100%)" }}
+                      >
+                        <div className="flex justify-between items-baseline mb-3">
+                          <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-400 font-bold">
+                            vs stitched outbound stack
+                          </span>
+                          <span className="font-mono text-[13px] text-zinc-400 line-through font-medium">$1,500+/mo</span>
+                        </div>
+                        <div className="text-xl font-bold text-white tracking-tight leading-snug">
+                          <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-indigo-300">
+                            ${price} covers all of it.
+                          </span>{" "}
+                          100k+ emails, 10 workspaces, one bill.
+                        </div>
+                      </div>
+                    )}
+
+                    {/* ── CTA ── */}
+                    <div>
+                      <button
+                        onClick={() => {
+                          if (annual && plan.stripeAnnualUrl) window.open(plan.stripeAnnualUrl, "_blank");
+                          else if (!annual && plan.stripeMonthlyUrl) window.open(plan.stripeMonthlyUrl, "_blank");
+                          else window.open("https://app.nexuscale.ai/users/register", "_blank");
+                        }}
+                        className={`relative w-full py-4 rounded-xl font-bold text-sm overflow-hidden group transition-all duration-300 flex items-center justify-center gap-2 ${
+                          isFeatured
+                            ? "bg-gradient-to-r from-indigo-500 to-violet-500 text-white border border-indigo-400/50 hover:shadow-[0_0_30px_rgba(99,102,241,0.45)] hover:-translate-y-px"
+                            : "bg-white/[0.05] text-white border border-white/[0.1] hover:bg-white/[0.09] hover:border-white/[0.18]"
+                        }`}
+                      >
+                        <span className="relative z-10 flex items-center gap-2">
+                          {plan.cta}
+                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </span>
+                        {isFeatured && (
+                          <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/[0.18] to-transparent transition-transform duration-700 ease-in-out skew-x-12" />
+                        )}
+                      </button>
+                      <p className={`text-center mt-2.5 text-[10px] font-semibold uppercase tracking-wider ${isFeatured ? "text-indigo-400" : "text-zinc-600"}`}>
+                        {plan.microcopy}
+                      </p>
+                    </div>
+
+                    {/* ── Features ── */}
+                    <div>
+                      <div className="pt-5 border-t border-white/[0.05] mb-5">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-500 font-bold">
+                          {tierMeta.featLabel}
+                        </span>
+                      </div>
+                      <ul className="space-y-3.5">
+                        {keyFeats.map((f, fi) => (
+                          <li key={fi} className="flex items-start gap-3 text-sm leading-snug">
+                            {f.included ? (
+                              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0 mt-0.5 drop-shadow-[0_0_6px_rgba(99,102,241,0.5)]">
+                                <path d="M2 7.5L5.5 11L12 3.5" stroke="#818CF8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                              </svg>
+                            ) : (
+                              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0 mt-0.5">
+                                <circle cx="7" cy="7" r="5" stroke="#3F3F46" strokeWidth="1.5" />
+                              </svg>
+                            )}
+                            <span className={f.included ? "text-zinc-300" : "text-zinc-400"}>
+                              {f.text}
+                              {f.meta && (
+                                <span className="font-mono text-[11px] text-zinc-500 ml-1.5">{f.meta}</span>
+                              )}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* ── Stat Chips (commented out) ── */}
+                    {/* <div className="grid grid-cols-2 gap-2">
+                      <StatChip value={creditsMap[plan.name]} label="Credits /mo" sublabel="Engine Credits" />
+                      <StatChip value={plan.credits.agents} label="AI Agents" sublabel={plan.credits.agentsType || ""} />
+                      <StatChip value={plan.credits.teamSeats} label="Team Seats" sublabel="Collaborators" />
+                      <StatChip
+                        value={plan.credits.workspaces}
+                        label={plan.credits.workspaces === "1" ? "Workspace" : "Workspaces"}
+                        sublabel="Isolation"
+                      />
+                    </div> */}
+
+                  </div>
+                </motion.div>
+              );
+            })}
           </motion.div>
 
           <div className="relative mt-16 max-w-4xl mx-auto px-4">
