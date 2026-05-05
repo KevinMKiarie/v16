@@ -38,6 +38,8 @@ import OutboundSolutionPage from "./pages/OutboundSolutionPage";
 import PricingPage from "./pages/PricingPage";
 import StartupProgramPage from "./pages/StartupProgramPage";
 import AgenciesPage from "./pages/AgenciesPage";
+import ManagedServicesPage from "./pages/ManagedServicesPage";
+import MailboxesPage from "./pages/MailboxesPage";
 
 function AppContent() {
   const location = useLocation();
@@ -170,6 +172,8 @@ function AppContent() {
           />
           <Route path="resources/start-up" element={<StartupProgramPage />} />
           <Route path="/agencies" element={<AgenciesPage />} />
+          <Route path="/managed-services" element={<ManagedServicesPage />} />
+          <Route path="/mailboxes" element={<MailboxesPage />} />
 
           {featuresList.map((feature) => (
             <Route

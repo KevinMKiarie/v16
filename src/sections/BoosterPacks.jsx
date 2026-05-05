@@ -112,7 +112,9 @@ function CardBanner({ meta, targetBadge }) {
                 ★
               </span>
             </div>
-            <span className={`text-[9px] font-semibold w-full items-center justify-center ${meta.sub2}`}>
+            <span
+              className={`text-[9px] font-semibold w-full items-center justify-center ${meta.sub2}`}
+            >
               {meta.sub}
             </span>
           </div>
@@ -124,7 +126,9 @@ function CardBanner({ meta, targetBadge }) {
   if (meta.type === "premium") {
     return (
       <>
-        <div className="flex items-center justify-center w-full">{targetBadge}</div>
+        <div className="flex items-center justify-center w-full">
+          {targetBadge}
+        </div>
         <div className={`${base} ${meta.wrap}`}>
           <div className="flex flex-col">
             <span
@@ -143,7 +147,9 @@ function CardBanner({ meta, targetBadge }) {
 
   return (
     <>
-      <div className="flex items-center justify-center w-full">{targetBadge}</div>
+      <div className="flex items-center justify-center w-full">
+        {targetBadge}
+      </div>
       <div className={`${base} ${meta.wrap}`}>
         <div className="flex flex-col">
           <span
@@ -181,7 +187,10 @@ export default function BoosterPacks() {
       <div className="max-w-6xl mx-auto">
         <ScrollReveal>
           <div className="text-center mb-16">
-            <TimelineContent animationNum={0} className="inline-flex items-center gap-2 bg-white/[0.04] border border-white/10 rounded-full px-4 py-1.5 mb-5">
+            <TimelineContent
+              animationNum={0}
+              className="inline-flex items-center gap-2 bg-white/[0.04] border border-white/10 rounded-full px-4 py-1.5 mb-5"
+            >
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
               <span className="text-xs font-semibold text-zinc-400 uppercase tracking-widest">
                 Add-ons
@@ -195,11 +204,15 @@ export default function BoosterPacks() {
                 staggerFrom="first"
                 reverse={true}
                 containerClassName="justify-center"
-                transition={{ type: "spring", stiffness: 250, damping: 40, delay: 0 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 250,
+                  damping: 40,
+                  delay: 0,
+                }}
               >
                 Need More
-              </VerticalCutReveal>
-              {" "}
+              </VerticalCutReveal>{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-400">
                 <VerticalCutReveal
                   splitBy="characters"
@@ -207,14 +220,22 @@ export default function BoosterPacks() {
                   staggerFrom="first"
                   reverse={true}
                   containerClassName="justify-center"
-                  transition={{ type: "spring", stiffness: 250, damping: 40, delay: 0.25 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 250,
+                    damping: 40,
+                    delay: 0.25,
+                  }}
                 >
                   Firepower?
                 </VerticalCutReveal>
               </span>
             </h3>
 
-            <TimelineContent animationNum={1} className="text-zinc-400 text-base">
+            <TimelineContent
+              animationNum={1}
+              className="text-zinc-400 text-base"
+            >
               Add a{" "}
               <span className="text-white font-semibold">"Booster Pack"</span>{" "}
               to your plan.
@@ -288,7 +309,9 @@ export default function BoosterPacks() {
                       <span
                         className={`text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r ${s.price} leading-none`}
                       >
-                        {pack.price === "Contact Us" ? pack.price : `$${pack.price}`}
+                        {pack.price === "Contact Us"
+                          ? pack.price
+                          : `$${pack.price}`}
                       </span>
                       {pack.price !== "Contact Us" && (
                         <span className="text-zinc-500 text-xs font-semibold">
@@ -330,7 +353,7 @@ export default function BoosterPacks() {
 
         <ScrollReveal delay={300}>
           <p className="text-center text-xs text-zinc-600 mt-10">
-            Booster packs are add-ons — stack multiples on any plan, anytime.
+            Booster packs are add-ons stack multiples on any plan, anytime.
           </p>
         </ScrollReveal>
       </div>

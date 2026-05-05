@@ -79,11 +79,11 @@ const StatChip = ({ value, label, sublabel, dim }) => {
       >
         {value}
       </div>
-      <div className="text-[10px] text-zinc-500 uppercase tracking-wider font-bold leading-tight">
+      <div className="text-[12px] text-zinc-500 uppercase tracking-wider font-bold leading-tight">
         {label}
       </div>
       {sublabel && (
-        <div className="text-[9px] text-zinc-600 font-semibold mt-1 leading-tight">
+        <div className="text-[11px] text-zinc-600 font-semibold mt-1 leading-tight">
           {sublabel}
         </div>
       )}
@@ -369,7 +369,7 @@ const comparePlanData = [
       },
       {
         feature: "Email Verification",
-        tooltip: "Real-time verification — 1 credit per email",
+        tooltip: "Real-time verification  1 credit per email",
         startup: true,
         growth: true,
         scale: true,
@@ -413,7 +413,7 @@ const comparePlanData = [
       {
         feature: "Funding & Hiring Signals",
         tooltip:
-          "Identify companies actively raising or hiring — prime buying signals",
+          "Identify companies actively raising or hiring  prime buying signals",
         startup: true,
         growth: true,
         scale: true,
@@ -486,6 +486,172 @@ const comparePlanData = [
     ],
   },
 ];
+
+// --- AWARD CARD HELPERS ---
+
+const PlanIcon = ({ name }) => {
+  switch (name) {
+    case "Start Up":
+      return <Rocket className="w-5 h-5 text-white" />;
+    case "Growth":
+      return <TrendingUp className="w-5 h-5 text-white" />;
+    case "Scale Up":
+      return <Zap className="w-5 h-5 text-white" />;
+    case "Agency":
+      return <Star className="w-5 h-5 text-white" />;
+    default:
+      return <LucideSparkles className="w-5 h-5 text-white" />;
+  }
+};
+
+const PlanDecorativePattern = ({ name }) => {
+  switch (name) {
+    case "Free":
+      return (
+        <svg
+          className="absolute bottom-0 right-0 w-36 h-36 opacity-10"
+          viewBox="0 0 144 144"
+          fill="none"
+        >
+          {[20, 36, 52, 68, 84, 100, 116].map((r, i) => (
+            <circle
+              key={i}
+              cx="144"
+              cy="144"
+              r={r}
+              stroke="#a1a1aa"
+              strokeWidth="1.2"
+            />
+          ))}
+        </svg>
+      );
+    case "Start Up":
+      return (
+        <svg
+          className="absolute bottom-0 right-0 w-40 h-40 opacity-20"
+          viewBox="0 0 160 160"
+          fill="none"
+        >
+          {[0, 12, 24, 36, 48, 60, 72].map((offset, i) => (
+            <path
+              key={i}
+              d={`M${160 - offset},160 Q${80 - offset / 2},${80 + offset} ${offset},${160 - offset}`}
+              stroke={`url(#blueGrad${i})`}
+              strokeWidth="1.5"
+              fill="none"
+            />
+          ))}
+          <defs>
+            {[0, 12, 24, 36, 48, 60, 72].map((_, i) => (
+              <linearGradient
+                key={i}
+                id={`blueGrad${i}`}
+                x1="0"
+                y1="0"
+                x2="1"
+                y2="0"
+              >
+                <stop offset="0%" stopColor="#06b6d4" />
+                <stop offset="100%" stopColor="#3b82f6" />
+              </linearGradient>
+            ))}
+          </defs>
+        </svg>
+      );
+    case "Growth":
+      return (
+        <svg
+          className="absolute bottom-0 right-0 w-40 h-40 opacity-20"
+          viewBox="0 0 160 160"
+          fill="none"
+        >
+          <path
+            d="M160,120 C120,100 100,60 80,80 C60,100 40,40 0,60"
+            stroke="#10b981"
+            strokeWidth="2"
+            fill="none"
+          />
+          <path
+            d="M160,100 C120,80 100,40 80,60 C60,80 40,20 0,40"
+            stroke="#14b8a6"
+            strokeWidth="1.5"
+            fill="none"
+            opacity="0.7"
+          />
+          <path
+            d="M160,140 C120,120 100,80 80,100 C60,120 40,60 0,80"
+            stroke="#6ee7b7"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.5"
+          />
+          {Array.from({ length: 12 }).map((_, i) => (
+            <circle
+              key={i}
+              cx={i * 14 + 4}
+              cy={160 - i * 8 - 10}
+              r="2.5"
+              fill="#10b981"
+              opacity={0.6 - i * 0.04}
+            />
+          ))}
+        </svg>
+      );
+    case "Scale Up":
+      return (
+        <svg
+          className="absolute bottom-0 right-0 w-40 h-40 opacity-15"
+          viewBox="0 0 160 160"
+          fill="none"
+        >
+          {Array.from({ length: 6 }).map((_, row) =>
+            Array.from({ length: 6 }).map((_, col) => (
+              <circle
+                key={`${row}-${col}`}
+                cx={col * 22 + 18 + row * 4}
+                cy={row * 22 + 18}
+                r="3"
+                fill="#818cf8"
+                opacity={0.8 - (row + col) * 0.06}
+              />
+            )),
+          )}
+          <path
+            d="M160,160 L80,80 L160,0"
+            stroke="#6366f1"
+            strokeWidth="1"
+            opacity="0.3"
+          />
+          <path
+            d="M160,160 L40,80 L160,0"
+            stroke="#8b5cf6"
+            strokeWidth="1"
+            opacity="0.2"
+          />
+        </svg>
+      );
+    case "Agency":
+      return (
+        <svg
+          className="absolute bottom-0 right-0 w-40 h-40 opacity-20"
+          viewBox="0 0 160 160"
+          fill="none"
+        >
+          {Array.from({ length: 8 }).map((_, i) => (
+            <path
+              key={i}
+              d={`M${160 - i * 18},160 L160,${160 - i * 18}`}
+              stroke={i % 2 === 0 ? "#a855f7" : "#ec4899"}
+              strokeWidth="10"
+              opacity={0.9 - i * 0.08}
+            />
+          ))}
+        </svg>
+      );
+    default:
+      return null;
+  }
+};
 
 // --- MAIN SECTION COMPONENT ---
 
@@ -566,7 +732,7 @@ export default function PricingSection() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] font-sans selection:bg-indigo-500/30 text-zinc-200">
+    <div className="min-h-screen bg-[#050505]  selection:bg-indigo-500/30 text-zinc-200">
       <style>{`
         @keyframes shimmer {
           100% { transform: translateX(100%); }
@@ -599,8 +765,7 @@ export default function PricingSection() {
         }
       `}</style>
 
-      <section className="py-24 relative px-6 overflow-hidden">
-        {/* Dot grid + glow reveal */}
+      <section className="py-24 relative px-2 md:px-6 overflow-hidden">
         <TimelineContent
           animationNum={4}
           customVariants={revealVariants}
@@ -609,7 +774,6 @@ export default function PricingSection() {
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff2c_1px,transparent_1px),linear-gradient(to_bottom,#3a3a3a01_1px,transparent_1px)] bg-[size:70px_80px]" />
         </TimelineContent>
 
-        {/* Animated dual-ellipse glow */}
         <TimelineContent
           animationNum={5}
           customVariants={revealVariants}
@@ -633,21 +797,9 @@ export default function PricingSection() {
           />
         </TimelineContent>
 
-        {/* Blue radial gradient overlay */}
-        <div
-          className="absolute top-0 left-[10%] w-[80%] h-full z-0 pointer-events-none"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at center, #206ce8 0%, transparent 70%)",
-            opacity: 0.15,
-            mixBlendMode: "screen",
-          }}
-        />
-
-        <div className="max-w-7xl mx-auto relative z-10 w-full">
+        <div className=" md:max-w-7xl mx-auto relative z-10 w-full">
           <ScrollReveal>
             <div className="text-center mb-10">
-              {/* Trust Badge - Social Proof */}
               <div className="inline-flex flex-col sm:flex-row items-center gap-3 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] mb-6 backdrop-blur-sm">
                 <div className="flex items-center gap-1.5">
                   <div className="flex gap-0.5">
@@ -713,8 +865,7 @@ export default function PricingSection() {
                 ))}
               </h1>
               <p className="text-zinc-400 text-base max-w-xl mx-auto mb-10 leading-relaxed">
-                Every plan includes the full Autonomous OS, unlimited seats, and
-                all core AI capabilities to scale your pipeline.
+                The choice is clear. Command more. Spend less.
               </p>
               <ComparisonStack />
 
@@ -788,7 +939,7 @@ export default function PricingSection() {
           </div>
 
           <motion.div
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 max-w-[90%] mx-auto mb-16 items-start"
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 max-w-[95%]  md:max-w-[90%] mx-auto mb-16 items-start"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -964,7 +1115,7 @@ export default function PricingSection() {
                             <StatChip
                               value={plan.credits.agents}
                               label="AI Agents"
-                              sublabel={plan.credits.agentsType}
+                              sublabel=""
                             />
                             <StatChip
                               value={plan.credits.teamSeats}
@@ -975,16 +1126,6 @@ export default function PricingSection() {
                               value={plan.credits.mailboxes}
                               label="Mailboxes"
                               sublabel={`${plan.credits.mailboxSub}`}
-                            />
-                            <StatChip
-                              value={plan.credits.emails}
-                              label="Emails"
-                              sublabel="Sending Limit"
-                            />
-                            <StatChip
-                              value={plan.credits.warmup}
-                              label="Email Warmup"
-                              sublabel="Deliverability"
                             />
                             <StatChip
                               value={plan.credits.workspaces}
@@ -1043,7 +1184,7 @@ export default function PricingSection() {
                       </div>
                     ) : (
                       <div
-                        className={`relative z-10 p-6 flex flex-col flex-1 gap-5 ${isPopular ? "pt-10" : "pt-8"}`}
+                        className={`relative z-10 p-3 md:p-4 flex flex-col flex-1 gap-3 md:gap-5 ${isPopular ? "pt-10" : "pt-8"}`}
                       >
                         <div>
                           <div
@@ -1168,16 +1309,20 @@ export default function PricingSection() {
                             label="Mailboxes"
                             sublabel={`${plan.credits.mailboxSub}`}
                           /> */}
-                          <StatChip
-                            value={plan.credits.emails}
-                            label="Emails"
-                            sublabel="Sending Limit"
-                          />
-                          <StatChip
-                            value={plan.credits.warmup}
-                            label="Email Warmup"
-                            sublabel="Deliverability"
-                          />
+                          {plan.name === "Start Up" && (
+                            <>
+                              <StatChip
+                                value={plan.credits.emails}
+                                label="Emails"
+                                sublabel="Sending Limit"
+                              />
+                              <StatChip
+                                value={plan.credits.warmup}
+                                label="Email Warmup"
+                                sublabel="Deliverability"
+                              />
+                            </>
+                          )}
                           <StatChip
                             value={plan.credits.workspaces}
                             label={
@@ -1189,173 +1334,174 @@ export default function PricingSection() {
                           />
                         </div>
 
-                        {getMaxSeats(plan) > 0 && (
-                          <div className="rounded-xl border border-[#0077b5]/25 bg-[#0077b5]/[0.07] p-3.5 space-y-2.5">
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <span className="text-[8px] font-black text-white bg-[#0077b5] rounded px-1.5 py-[3px] tracking-wider leading-none">
-                                  in
-                                </span>
-                                <span className="text-xs font-bold text-zinc-300">
-                                  LinkedIn Seats
+                        <div className="grid grid-cols-2 gap-2">
+                          {getMaxSeats(plan) > 0 && (
+                            <div className="rounded-xl border border-[#0077b5]/25 bg-[#0077b5]/[0.07] p-3.5 space-y-2.5">
+                              <div className="flex flex-col items-center justify-between">
+                                <div className="flex  items-center gap-2">
+                                  <span className="text-[8px] font-black text-white bg-[#0077b5] rounded px-1.5 py-[3px] tracking-wider leading-none">
+                                    in
+                                  </span>
+                                  <span className="text-xs font-bold text-zinc-300">
+                                    LinkedIn Seats
+                                  </span>
+                                </div>
+                                <span className="text-[10px] font-bold text-[#4fa3d4] uppercase tracking-widest">
+                                  $19 / seat
                                 </span>
                               </div>
-                              <span className="text-[10px] font-bold text-[#4fa3d4] uppercase tracking-widest">
-                                $19 / seat
-                              </span>
+                              <div className=" flex flex-col gap-2 items-center justify-between">
+                                <div className="flex w-full justify-between items-center gap-2 bg-white/[0.05] rounded-lg p-1">
+                                  <button
+                                    onClick={() =>
+                                      updateLinkedinSeats(
+                                        plan.name,
+                                        -1,
+                                        getMaxSeats(plan),
+                                      )
+                                    }
+                                    disabled={getLinkedinSeats(plan.name) === 0}
+                                    className="w-6 h-6 rounded-md bg-white/[0.08] hover:bg-white/[0.18] disabled:opacity-20 disabled:cursor-not-allowed flex items-center justify-center text-white font-bold text-base transition-all active:scale-90 select-none"
+                                  >
+                                    −
+                                  </button>
+                                  <span className="text-sm font-black text-white w-3 text-center tabular-nums select-none">
+                                    {getLinkedinSeats(plan.name)}
+                                  </span>
+                                  <button
+                                    onClick={() =>
+                                      updateLinkedinSeats(
+                                        plan.name,
+                                        1,
+                                        getMaxSeats(plan),
+                                      )
+                                    }
+                                    disabled={
+                                      getLinkedinSeats(plan.name) >=
+                                      getMaxSeats(plan)
+                                    }
+                                    className="w-6 h-6 rounded-md bg-[#0077b5]/50 hover:bg-[#0077b5]/75 disabled:opacity-20 disabled:cursor-not-allowed flex items-center justify-center text-white font-bold text-base transition-all active:scale-90 select-none"
+                                  >
+                                    +
+                                  </button>
+                                </div>
+                                <div className="text-right h-5 hidden items-center">
+                                  <AnimatePresence mode="wait">
+                                    {getLinkedinSeats(plan.name) > 0 ? (
+                                      <motion.span
+                                        key="cost"
+                                        initial={{ opacity: 0, y: -6 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: 6 }}
+                                        transition={{ duration: 0.15 }}
+                                        className="text-xs font-bold text-[#4fa3d4]"
+                                      >
+                                        +${getLinkedinSeats(plan.name) * 19}/mo
+                                      </motion.span>
+                                    ) : (
+                                      <motion.span
+                                        key="hint"
+                                        initial={{ opacity: 0, y: 6 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -6 }}
+                                        transition={{ duration: 0.15 }}
+                                        className="text-[10px] text-zinc-600 uppercase tracking-wider"
+                                      >
+                                        Max {getMaxSeats(plan)}
+                                      </motion.span>
+                                    )}
+                                  </AnimatePresence>
+                                </div>
+                              </div>
                             </div>
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2 bg-white/[0.05] rounded-lg p-1">
-                                <button
-                                  onClick={() =>
-                                    updateLinkedinSeats(
-                                      plan.name,
-                                      -1,
-                                      getMaxSeats(plan),
-                                    )
-                                  }
-                                  disabled={getLinkedinSeats(plan.name) === 0}
-                                  className="w-7 h-7 rounded-md bg-white/[0.08] hover:bg-white/[0.18] disabled:opacity-20 disabled:cursor-not-allowed flex items-center justify-center text-white font-bold text-base transition-all active:scale-90 select-none"
-                                >
-                                  −
-                                </button>
-                                <span className="text-sm font-black text-white w-6 text-center tabular-nums select-none">
-                                  {getLinkedinSeats(plan.name)}
-                                </span>
-                                <button
-                                  onClick={() =>
-                                    updateLinkedinSeats(
-                                      plan.name,
-                                      1,
-                                      getMaxSeats(plan),
-                                    )
-                                  }
-                                  disabled={
-                                    getLinkedinSeats(plan.name) >=
-                                    getMaxSeats(plan)
-                                  }
-                                  className="w-7 h-7 rounded-md bg-[#0077b5]/50 hover:bg-[#0077b5]/75 disabled:opacity-20 disabled:cursor-not-allowed flex items-center justify-center text-white font-bold text-base transition-all active:scale-90 select-none"
-                                >
-                                  +
-                                </button>
-                              </div>
-                              <div className="text-right h-5 flex items-center">
-                                <AnimatePresence mode="wait">
-                                  {getLinkedinSeats(plan.name) > 0 ? (
-                                    <motion.span
-                                      key="cost"
-                                      initial={{ opacity: 0, y: -6 }}
-                                      animate={{ opacity: 1, y: 0 }}
-                                      exit={{ opacity: 0, y: 6 }}
-                                      transition={{ duration: 0.15 }}
-                                      className="text-xs font-bold text-[#4fa3d4]"
-                                    >
-                                      +${getLinkedinSeats(plan.name) * 19}/mo
-                                    </motion.span>
-                                  ) : (
-                                    <motion.span
-                                      key="hint"
-                                      initial={{ opacity: 0, y: 6 }}
-                                      animate={{ opacity: 1, y: 0 }}
-                                      exit={{ opacity: 0, y: -6 }}
-                                      transition={{ duration: 0.15 }}
-                                      className="text-[10px] text-zinc-600 uppercase tracking-wider"
-                                    >
-                                      Max {getMaxSeats(plan)}
-                                    </motion.span>
-                                  )}
-                                </AnimatePresence>
-                              </div>
-                            </div>
-                          </div>
-                        )}
+                          )}
 
-                        {plan.price !== "0" && (
-                          <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/[0.06] p-3.5 space-y-2.5">
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <svg
-                                  className="w-3.5 h-3.5 text-emerald-400"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeWidth="2"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                >
-                                  <rect
-                                    x="2"
-                                    y="4"
-                                    width="20"
-                                    height="16"
-                                    rx="2"
-                                  />
-                                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                                </svg>
-                                <span className="text-xs font-bold text-zinc-300">
-                                  Native Mailboxes
-                                </span>
-                              </div>
-                              <div className="text-right">
+                          {plan.price !== "0" && (
+                            <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/[0.06] p-3.5 space-y-2.5">
+                              <div className="flex flex-col items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                  <svg
+                                    className="w-3.5 h-3.5 text-emerald-400"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  >
+                                    <rect
+                                      x="2"
+                                      y="4"
+                                      width="20"
+                                      height="16"
+                                      rx="2"
+                                    />
+                                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                                  </svg>
+                                  <span className="text-xs font-bold text-zinc-300">
+                                    Native Mailboxes
+                                  </span>
+                                </div>
                                 <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">
-                                  $3/mo · $36/yr
+                                  $3/mo
                                 </span>
                               </div>
-                            </div>
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2 bg-white/[0.05] rounded-lg p-1">
-                                <button
-                                  onClick={() => updateMailboxes(plan.name, -1)}
-                                  disabled={getMailboxes(plan.name) === 0}
-                                  className="w-7 h-7 rounded-md bg-white/[0.08] hover:bg-white/[0.18] disabled:opacity-20 disabled:cursor-not-allowed flex items-center justify-center text-white font-bold text-base transition-all active:scale-90 select-none"
-                                >
-                                  −
-                                </button>
-                                <span className="text-sm font-black text-white w-6 text-center tabular-nums select-none">
-                                  {getMailboxes(plan.name)}
-                                </span>
-                                <button
-                                  onClick={() => updateMailboxes(plan.name, 1)}
-                                  className="w-7 h-7 rounded-md bg-emerald-500/40 hover:bg-emerald-500/65 flex items-center justify-center text-white font-bold text-base transition-all active:scale-90 select-none"
-                                >
-                                  +
-                                </button>
+                              <div className=" flex flex-col gap-2 items-center justify-between">
+                                <div className="flex w-full items-center justify-between gap-2 bg-white/[0.05] rounded-lg p-1">
+                                  <button
+                                    onClick={() =>
+                                      updateMailboxes(plan.name, -1)
+                                    }
+                                    disabled={getMailboxes(plan.name) === 0}
+                                    className="w-6 h-6 rounded-md bg-white/[0.08] hover:bg-white/[0.18] disabled:opacity-20 disabled:cursor-not-allowed flex items-center justify-center text-white font-bold text-base transition-all active:scale-90 select-none"
+                                  >
+                                    −
+                                  </button>
+                                  <span className="text-sm font-black text-white w-3 text-center tabular-nums select-none">
+                                    {getMailboxes(plan.name)}
+                                  </span>
+                                  <button
+                                    onClick={() =>
+                                      updateMailboxes(plan.name, 1)
+                                    }
+                                    className="w-6 h-6 rounded-md bg-emerald-500/40 hover:bg-emerald-500/65 flex items-center justify-center text-white font-bold text-base transition-all active:scale-90 select-none"
+                                  >
+                                    +
+                                  </button>
+                                </div>
+                                <div className="text-right h-5 hidden  items-center">
+                                  <AnimatePresence mode="wait">
+                                    {getMailboxes(plan.name) > 0 ? (
+                                      <motion.div
+                                        key="mbcost"
+                                        initial={{ opacity: 0, y: -6 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: 6 }}
+                                        transition={{ duration: 0.15 }}
+                                        className="text-right flex space-x-1 items-center justify-center"
+                                      >
+                                        <div className="text-xs font-bold text-emerald-400">
+                                          +${getMailboxes(plan.name) * 3}/mo
+                                        </div>
+                                      </motion.div>
+                                    ) : (
+                                      <motion.span
+                                        key="mbhint"
+                                        initial={{ opacity: 0, y: 6 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -6 }}
+                                        transition={{ duration: 0.15 }}
+                                        className="text-[10px] text-zinc-600 uppercase tracking-wider"
+                                      >
+                                        Unlimited
+                                      </motion.span>
+                                    )}
+                                  </AnimatePresence>
+                                </div>
                               </div>
-                              <div className="text-right h-5 flex items-center">
-                                <AnimatePresence mode="wait">
-                                  {getMailboxes(plan.name) > 0 ? (
-                                    <motion.div
-                                      key="mbcost"
-                                      initial={{ opacity: 0, y: -6 }}
-                                      animate={{ opacity: 1, y: 0 }}
-                                      exit={{ opacity: 0, y: 6 }}
-                                      transition={{ duration: 0.15 }}
-                                      className="text-right"
-                                    >
-                                      <div className="text-xs font-bold text-emerald-400">
-                                        +${getMailboxes(plan.name) * 3}/mo
-                                      </div>
-                                      <div className="text-[9px] text-emerald-600 font-semibold">
-                                        ${getMailboxes(plan.name) * 36}/yr
-                                      </div>
-                                    </motion.div>
-                                  ) : (
-                                    <motion.span
-                                      key="mbhint"
-                                      initial={{ opacity: 0, y: 6 }}
-                                      animate={{ opacity: 1, y: 0 }}
-                                      exit={{ opacity: 0, y: -6 }}
-                                      transition={{ duration: 0.15 }}
-                                      className="text-[10px] text-zinc-600 uppercase tracking-wider"
-                                    >
-                                      Unlimited
-                                    </motion.span>
-                                  )}
-                                </AnimatePresence>
-                              </div>
                             </div>
-                          </div>
-                        )}
+                          )}
+                        </div>
 
                         <div className="h-px bg-gradient-to-r from-white/[0.05] via-white/[0.1] to-white/[0.05]" />
 
@@ -1432,7 +1578,7 @@ export default function PricingSection() {
 
                 <p className="text-zinc-400 text-base md:text-lg mb-10 max-w-2xl leading-relaxed">
                   White-label infrastructure, multi-tenant management, and
-                  margin-boosting automation—purpose-built for firms ready to
+                  margin-boosting automationpurpose-built for firms ready to
                   scale.
                 </p>
 
@@ -1457,7 +1603,7 @@ export default function PricingSection() {
                   Compare Plans
                 </h3>
                 <p className="text-zinc-400 text-sm sm:text-base max-w-lg mx-auto">
-                  Every feature, side by side — so you can pick with confidence.
+                  Every feature, side by side so you can pick with confidence.
                 </p>
               </div>
 
@@ -1790,7 +1936,7 @@ export default function PricingSection() {
                                 </span>
                                 {restText && (
                                   <span className="text-zinc-500 block sm:inline sm:ml-1">
-                                    — {restText}
+                                    {restText}
                                   </span>
                                 )}
                               </div>

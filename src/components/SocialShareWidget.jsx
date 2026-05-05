@@ -42,19 +42,19 @@ Apollo for data. Clay for enrichment. Instantly for sending. A CRM bolted on top
 
 That's not a stack. That's a liability.
 
-NexusScale replaces all of it — one AI platform with database, writer, and sending infrastructure built together from day one.
+NexusScale replaces all of it  one AI platform with database, writer, and sending infrastructure built together from day one.
 
 Here's what that looks like in practice:
 
-✅ 24/7 autonomous lead prospecting — no manual list-building
-✅ Hyper-personalized outreach in 50+ languages — written by AI, not templates
+✅ 24/7 autonomous lead prospecting  no manual list-building
+✅ Hyper-personalized outreach in 50+ languages  written by AI, not templates
 ✅ Meetings auto-booked directly into your calendar
 ✅ Built-in CRM, inbox rotation & LinkedIn automation
 
 And it starts at $59/mo.
 
-"Got 3 signups from 13 emails on day one." — Peter Poulos, Founder, Photostudio.io
-"The personalization is miles ahead of anything else I've tested." — Francis Rozange, CEO, La Factory
+"Got 3 signups from 13 emails on day one."  Peter Poulos, Founder, Photostudio.io
+"The personalization is miles ahead of anything else I've tested."  Francis Rozange, CEO, La Factory
 
 If you're still duct-taping your outbound stack together, this is your sign to stop.
 
@@ -64,7 +64,7 @@ If you're still duct-taping your outbound stack together, this is your sign to s
 
 Apollo. Clay. Instantly. A CRM. A writer. An inbox manager.
 
-NexusScale replaces all of it — one AI platform, built together.
+NexusScale replaces all of it  one AI platform, built together.
 
 → 24/7 autonomous prospecting
 → AI outreach in 50+ languages
@@ -73,22 +73,22 @@ NexusScale replaces all of it — one AI platform, built together.
 
 From $59/mo. Your competitors are already switching 👇`,
 
-    whatsapp: `Hey — quick share because this is genuinely impressive.
+    whatsapp: `Hey  quick share because this is genuinely impressive.
 
-Most outbound teams are paying $4,000+/yr running Apollo, Clay, Instantly and a CRM separately. NexusScale replaces all of it with one AI platform — database, writer, and sending infra built together.
+Most outbound teams are paying $4,000+/yr running Apollo, Clay, Instantly and a CRM separately. NexusScale replaces all of it with one AI platform  database, writer, and sending infra built together.
 
-Real results: "Got 3 signups from 13 emails on day one." — Peter Poulos, Founder at Photostudio.io
+Real results: "Got 3 signups from 13 emails on day one."  Peter Poulos, Founder at Photostudio.io
 
 It starts at $59/mo and there's no duct-taping tools together. Worth 2 minutes of your time 👉 https://nexuscale.ai`,
 
-    facebook: `If your sales team is still paying separately for Apollo, Clay, Instantly, and a CRM — you're overpaying by thousands every year.
+    facebook: `If your sales team is still paying separately for Apollo, Clay, Instantly, and a CRM  you're overpaying by thousands every year.
 
-NexusScale is a single AI platform that does it all: lead database, AI writer, and sending infrastructure — built together, not bolted on.
+NexusScale is a single AI platform that does it all: lead database, AI writer, and sending infrastructure  built together, not bolted on.
 
 The results speak for themselves:
 
-⭐ "Got 3 signups from 13 emails on day one." — Peter Poulos, Founder, Photostudio.io
-⭐ "The personalization is miles ahead of anything else I've tested." — Francis Rozange, CEO, La Factory
+⭐ "Got 3 signups from 13 emails on day one."  Peter Poulos, Founder, Photostudio.io
+⭐ "The personalization is miles ahead of anything else I've tested."  Francis Rozange, CEO, La Factory
 
 One platform. From $59/mo. No $4,000/yr duct-tape bill.
 
@@ -96,17 +96,17 @@ See it for yourself 👇 https://nexuscale.ai`,
 
     instagram: `Your outbound stack has 6 tools. NexusScale has one. ⚡
 
-Database. AI Writer. Sending Infrastructure. CRM. LinkedIn Automation. All built together — from $59/mo.
+Database. AI Writer. Sending Infrastructure. CRM. LinkedIn Automation. All built together  from $59/mo.
 
 No Apollo. No Clay. No Instantly. No $4K/yr duct-tape bill. 🚫💸
 
 "Got 3 signups from 13 emails on day one." 🔥
 
-Link copied to clipboard — go check it out! 🔗 nexuscale.ai`,
+Link copied to clipboard  go check it out! 🔗 nexuscale.ai`,
 
     slack: `📣 *Stop paying $4,000/yr to stitch together 6 tools.*
 
-*NexusScale* replaces your entire outbound stack — database, AI writer, and sending infrastructure, built together as one platform.
+*NexusScale* replaces your entire outbound stack  database, AI writer, and sending infrastructure, built together as one platform.
 
 No Apollo. No Clay. No Instantly. No duct-tape.
 
@@ -116,8 +116,8 @@ What you get instead:
 • 📅 Meetings auto-booked to your calendar
 • 📥 Built-in CRM, inbox rotation & LinkedIn automation
 
-_"Got 3 signups from 13 emails on day one."_ — Peter Poulos, Founder, Photostudio.io
-_"The personalization is miles ahead of anything else I've tested."_ — Francis Rozange, CEO, La Factory
+_"Got 3 signups from 13 emails on day one."_  Peter Poulos, Founder, Photostudio.io
+_"The personalization is miles ahead of anything else I've tested."_  Francis Rozange, CEO, La Factory
 
 From $59/mo → https://nexuscale.ai`,
   };

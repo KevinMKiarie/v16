@@ -72,7 +72,8 @@ export default function HeroSection() {
         </ScrollReveal>
         <ScrollReveal delay={200}>
           <p className="text-lg md:text-xl text-zinc-400 mb-8 max-w-4xl mx-auto font-medium leading-relaxed antialiased">
-            Database, AI writer, and sending infrastructure, built together. No Apollo. No Clay. No Instantly. No $4,000/yr duct-tape bill.
+            Database, AI writer, and sending infrastructure, built together. No
+            Apollo. No Clay. No Instantly. No $4,000/yr duct-tape bill.
           </p>
 
           <HeroInput />
@@ -82,10 +83,16 @@ export default function HeroSection() {
               <G2ReviewCard />
             </div>
             <blockquote className="text-sm text-zinc-300 italic text-center">
-              "Got 3 signups from 13 emails on day one." — <span className="font-semibold text-white not-italic">Peter Poulos, Founder, Photostudio.io</span>
+              "Got 3 signups from 13 emails on day one."{" "}
+              <span className="font-semibold text-white not-italic">
+                Peter Poulos, Founder, Photostudio.io
+              </span>
             </blockquote>
             <blockquote className="text-sm text-zinc-300 italic text-center">
-              "The personalization is miles ahead of anything else I've tested." — <span className="font-semibold text-white not-italic">Francis Rozange, CEO, La Factory</span>
+              "The personalization is miles ahead of anything else I've tested."{" "}
+              <span className="font-semibold text-white not-italic">
+                Francis Rozange, CEO, La Factory
+              </span>
             </blockquote>
           </div>
 

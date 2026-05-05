@@ -14,7 +14,6 @@ export const pricingPlansData = [
     price: "0",
     desc: "For testing the waters.",
     credits: {
-      contacts: "100",
       workspaces: "1",
       teamSeats: "1",
       agents: "1",
@@ -104,11 +103,10 @@ export const pricingPlansData = [
     stripeAnnualUrl: "https://buy.stripe.com/14A00jdtN4oI0xmed3b7y0G",
     desc: "For solo founders and small teams automating their outbound.",
     credits: {
-      contacts: "2,500",
       workspaces: "1",
       teamSeats: "2",
       agents: "2",
-      agentsType: "Research",
+      agentsType: "",
       externalInboxes: "3",
       mailboxes: "Unlimited",
       mailboxSub: "3 Google / Outlook",
@@ -121,12 +119,7 @@ export const pricingPlansData = [
     },
     features: [
       { text: "Everything in Free", included: true, isBadge: true },
-      {
-        text: "10,000 Contact Storage",
-        tooltip:
-          "Store and organize up to 10,000 contacts. Expandable as you grow.",
-        included: true,
-      },
+     
       {
         text: "Unlimited Native Mailbox Connections",
         tooltip: "Connect unlimited native Nexuscale mailboxes at $4.99/ea.",
@@ -176,13 +169,13 @@ export const pricingPlansData = [
       {
         text: "Funding & Hiring Data",
         tooltip:
-          "Identify companies actively raising funding or hiring — prime buying signals.",
+          "Identify companies actively raising funding or hiring  prime buying signals.",
         included: true,
       },
       {
         text: "Premium Filters & Basic Lead Scoring",
         tooltip:
-          "Apply advanced filters — industry, headcount, tech stack — and auto-rank your hottest prospects.",
+          "Apply advanced filters  industry, headcount, tech stack  and auto-rank your hottest prospects.",
         included: true,
       },
       {
@@ -264,11 +257,10 @@ export const pricingPlansData = [
     stripeAnnualUrl: "https://buy.stripe.com/dRmbJ14Xh9J2gwkc4Vb7y0c",
     desc: "For growing sales teams scaling their outbound.",
     credits: {
-      contacts: "4,000",
       workspaces: "3",
-      teamSeats: "10",
-      agents: "10",
-      agentsType: "Deep AI",
+      teamSeats: "5",
+      agents: "5",
+      agentsType: "",
       externalInboxes: "4",
       mailboxes: "Unlimited",
       mailboxSub: "3 Google / Outlook",
@@ -281,22 +273,17 @@ export const pricingPlansData = [
     },
     features: [
       { text: "Everything in Start Up", included: true, isBadge: true },
+     
       {
-        text: "25,000 Contact Storage",
+        text: "3 Workspaces & 5 AI Agents",
         tooltip:
-          "Store and organize up to 25,000 contacts. Expandable as you grow.",
-        included: true,
-      },
-      {
-        text: "3 Workspaces & 10 AI Agents",
-        tooltip:
-          "Manage multiple campaigns in isolated workspaces with 10 AI agents running in parallel.",
+          "Manage multiple campaigns in isolated workspaces with 5 AI agents running in parallel.",
         included: true,
       },
       {
         text: "10 Team Seats",
         tooltip:
-          "Collaborate with your full team — up to 10 members in your workspace.",
+          "Collaborate with your full team  up to 10 members in your workspace.",
         included: true,
       },
       {
@@ -367,7 +354,7 @@ export const pricingPlansData = [
       },
     ],
     keyFeatures: [
-      "10 AI Agents",
+      "5 AI Agents",
       "3 Workspaces",
       "Advanced lead scoring",
       "AI Meeting Agent",
@@ -386,11 +373,10 @@ export const pricingPlansData = [
     stripeAnnualUrl: "https://buy.stripe.com/eVq6oH9dx3kE4NCc4Vb7y04",
     desc: "For rapidly scaling sales teams and lead-gen agencies.",
     credits: {
-      contacts: "15,000",
       workspaces: "10",
       teamSeats: "50",
-      agents: "50",
-      agentsType: "Deep AI",
+      agents: "10",
+      agentsType: "",
       externalInboxes: "12",
       mailboxes: "Unlimited",
       mailboxSub: "3 Google / Outlook",
@@ -403,22 +389,17 @@ export const pricingPlansData = [
     },
     features: [
       { text: "Everything in Growth", included: true, isBadge: true },
+     
       {
-        text: "50,000 Contact Storage",
+        text: "10 Workspaces & 10 AI Agents",
         tooltip:
-          "Store and organize up to 50,000 contacts. Expandable as you grow.",
-        included: true,
-      },
-      {
-        text: "10 Workspaces & 50 AI Agents",
-        tooltip:
-          "Run isolated campaigns across 10 workspaces with 50 AI agents at scale.",
+          "Run isolated campaigns across 10 workspaces with 10 AI agents at scale.",
         included: true,
       },
       {
         text: "50 Team Seats",
         tooltip:
-          "Onboard your entire sales organization — up to 50 team members.",
+          "Onboard your entire sales organization  up to 50 team members.",
         included: true,
       },
       {
@@ -435,7 +416,7 @@ export const pricingPlansData = [
       },
     ],
     keyFeatures: [
-      "50 AI Agents",
+      "10 AI Agents",
       "10 Workspaces",
       "15,000 leads/mo",
       "Unlimited LinkedIn seats",
@@ -455,7 +436,6 @@ export const pricingPlansData = [
     stripeAnnualUrl: "https://cal.com/kevin-nexuscale/15min",
     desc: "For enterprise teams and lead-gen agencies needing white-labeling and API access.",
     credits: {
-      contacts: "50,000",
       workspaces: "Unlimited",
       teamSeats: "Unlimited",
       agents: "∞",
@@ -499,7 +479,7 @@ export const pricingPlansData = [
       {
         text: "Unlimited LinkedIn Senders Included",
         tooltip:
-          "Run massive, multi-account LinkedIn campaigns — all LinkedIn senders included in your plan.",
+          "Run massive, multi-account LinkedIn campaigns  all LinkedIn senders included in your plan.",
         included: true,
       },
       {
@@ -767,7 +747,6 @@ export const comparisonStackData = [
   { name: "Clay", price: 149 },
   { name: "Apollo", price: 399 },
   { name: "Instantly", price: 97 },
-  { name: "ChatGPT API", price: 20 },
 ];
 
 export const customerLogos = [

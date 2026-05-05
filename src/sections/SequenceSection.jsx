@@ -339,7 +339,7 @@ function LiveBuyerVisual() {
       },
       {
         name: "Linear",
-        detail: "Hiring: VP Sales — 3 open roles",
+        detail: "Hiring: VP Sales  3 open roles",
         icon: (
           <img
             src="/svg/linear.jpeg"
@@ -367,7 +367,7 @@ function LiveBuyerVisual() {
       },
       {
         name: "Ramp",
-        detail: "Series C • $150M — Expanding sales team",
+        detail: "Series C • $150M  Expanding sales team",
         icon: (
           <img
             src="/svg/techflow.png"
@@ -389,7 +389,7 @@ function LiveBuyerVisual() {
       },
       {
         name: "Retool",
-        detail: "Switched to Outreach.io — new stack",
+        detail: "Switched to Outreach.io  new stack",
         icon: (
           <img
             src="/svg/retool.png"
@@ -580,7 +580,7 @@ function PersonalizationVisual() {
           "{{role_title}}",
         ],
         output:
-          '"Hi Sarah, saw TechFlow just closed your Series A — congrats. With the VP Sales role open, curious if outbound is on the roadmap?"',
+          '"Hi Sarah, saw TechFlow just closed your Series A  congrats. With the VP Sales role open, curious if outbound is on the roadmap?"',
         spamScore: 0.3,
       },
       {
@@ -607,7 +607,7 @@ function PersonalizationVisual() {
           "{{news_headline}}",
         ],
         output:
-          '"Hey Mike, noticed Retool just switched to HubSpot — the TechCrunch feature was well-deserved. We help teams like yours 3x pipeline post-migration."',
+          '"Hey Mike, noticed Retool just switched to HubSpot  the TechCrunch feature was well-deserved. We help teams like yours 3x pipeline post-migration."',
         spamScore: 0.2,
       },
       {
@@ -634,7 +634,7 @@ function PersonalizationVisual() {
           "{{competitor}}",
         ],
         output:
-          '"Hi Jordan, looks like Loom has been evaluating outbound tools — we just helped a team your size book 40 meetings in week one. Worth a quick look?"',
+          '"Hi Jordan, looks like Loom has been evaluating outbound tools  we just helped a team your size book 40 meetings in week one. Worth a quick look?"',
         spamScore: 0.1,
       },
     ],
@@ -883,7 +883,7 @@ function MultiChannelVisual() {
       {
         ref: n3,
         icon: <MessageSquare size={14} />,
-        label: "SMS",
+        label: "Database",
         position: "bottom-14 left-10",
       },
       {

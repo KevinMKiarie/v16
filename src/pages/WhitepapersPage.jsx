@@ -192,7 +192,7 @@ const PreviewModal = ({ isOpen, onClose, paper, onRequestDownload }) => {
           {isTruncated && (
             <p className="text-xs text-zinc-500 mt-4 flex items-center gap-1.5">
               <Lock className="w-3 h-3" />
-              Preview limited to {PREVIEW_WORD_LIMIT} words — download the full
+              Preview limited to {PREVIEW_WORD_LIMIT} words download the full
               whitepaper below.
             </p>
           )}
@@ -834,7 +834,7 @@ export default function WhitepapersPage() {
               <h2 className="text-2xl md:text-3xl font-bold text-white">
                 {currentPage === 1
                   ? "All Resources"
-                  : `Resources — Page ${currentPage}`}
+                  : `Resources  Page ${currentPage}`}
               </h2>
             </div>
 
@@ -869,7 +869,7 @@ export default function WhitepapersPage() {
                   No whitepapers available yet.
                 </p>
                 <p className="text-zinc-500 text-sm">
-                  We're preparing valuable resources — check back soon!
+                  We're preparing valuable resources check back soon!
                 </p>
               </div>
             )}

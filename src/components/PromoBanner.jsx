@@ -44,7 +44,7 @@ export function MiniBanner() {
             </span>
             <span className="hidden sm:inline text-zinc-400">
               {" "}
-              — Stop paying{" "}
+              Stop paying{" "}
               <span className="font-bold text-white line-through decoration-red-500/60">
                 $11 per inbox
               </span>
@@ -86,7 +86,7 @@ function MiniDemo() {
         company: "TechFlow",
         name: "Sarah",
         output:
-          '"Hi Sarah, saw TechFlow just closed your Series A — congrats. Curious if outbound is on the roadmap?"',
+          '"Hi Sarah, saw TechFlow just closed your Series A congrats. Curious if outbound is on the roadmap?"',
         spamScore: "0.3%",
       },
       {
@@ -114,7 +114,7 @@ function MiniDemo() {
         company: "Figma",
         name: "Jordan",
         output:
-          '"Hi Jordan, looks like Figma\'s been evaluating outbound tools — we helped a team your size book 40 meetings in week one."',
+          '"Hi Jordan, looks like Figma\'s been evaluating outbound tools  we helped a team your size book 40 meetings in week one."',
         spamScore: "0.1%",
       },
     ],
@@ -229,7 +229,7 @@ function MiniDemo() {
         />
       </div>
 
-      {/* Step 2 — AI Processing */}
+      {/* Step 2  AI Processing */}
       <motion.div
         animate={{
           opacity: stage === "processing" ? 1 : stage === "output" ? 0.4 : 0.2,
@@ -477,7 +477,7 @@ const PromoBanner = () => {
                     >
                       {[
                         "Unlimited sending mailboxes included",
-                        "Full workspace — zero per-inbox fees",
+                        "Full workspace  zero per-inbox fees",
                         "Launch infrastructure in one click",
                         "Scale outbound instantly with AI",
                       ].map((item) => (

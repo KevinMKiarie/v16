@@ -295,6 +295,12 @@ export default function Navigation({
               </div>
 
               <button
+                onClick={() => handleSetPage("mailboxes")}
+                className="hover:text-white transition-colors duration-200 px-3 text-xs py-2 rounded-lg font-medium"
+              >
+                Mailboxes
+              </button>
+              <button
                 onClick={() => handleSetPage("pricing")}
                 className="hover:text-white transition-colors duration-200 px-3 text-xs py-2 rounded-lg font-medium"
               >
@@ -682,6 +688,18 @@ export default function Navigation({
                     </div>
                   )}
                 </div>
+
+                <button
+                  onClick={() => {
+                    handleSetPage("mailboxes");
+                    setMobileMenuOpen(false);
+                  }}
+                  className="w-full text-left py-3 px-4 rounded-lg hover:bg-white/5 transition-colors"
+                >
+                  <span className="text-sm font-bold text-zinc-300">
+                    Mailboxes
+                  </span>
+                </button>
 
                 <button
                   onClick={() => {

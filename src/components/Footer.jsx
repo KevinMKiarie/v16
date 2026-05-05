@@ -69,7 +69,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="w-full flex flex-col">
-          <div className=" grid grid-cols-1  md:grid-cols-1  lg:grid-cols-3 gap-x-8 gap-y-12">
+          <div className=" grid grid-cols-1  md:grid-cols-1  lg:grid-cols-4 gap-x-8 gap-y-12">
             <div>
               <h4 className="font-semibold text-white mb-5 text-sm">
                 Get started
@@ -216,9 +216,6 @@ export default function Footer() {
                 </li>
               </ul>
             </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3  gap-x-8 gap-y-12 mt-12 w-full">
             <div>
               <h4 className="font-semibold text-white mb-5 text-sm">
                 Resources
@@ -269,6 +266,25 @@ export default function Footer() {
                 </li>
               </ul>
             </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-4  gap-x-8 gap-y-12 mt-12 w-full">
+            <div></div>
+            <div className="">
+              <h4 className="font-semibold text-white mb-5 text-sm">
+                Nexuscale Services
+              </h4>
+              <ul className="space-y-3 text-sm text-zinc-400">
+                <li>
+                  <Link
+                    to="/managed-services"
+                    className="hover:text-white transition-colors"
+                  >
+                    Managed Services
+                  </Link>
+                </li>
+              </ul>
+            </div>
 
             <div className="flex flex-col space-y-3">
               <div>
@@ -301,7 +317,7 @@ export default function Footer() {
                 <ul className="space-y-3 text-sm text-zinc-400">
                   <li>
                     <a
-                      href="https://intercom.help/nexuscale-ai/en/collections/16724635-general"
+                      href="https://intercom.help/nexuscale-ai/en/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover:text-white transition-colors"

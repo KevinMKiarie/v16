@@ -19,6 +19,7 @@ const TermsOfService = () => {
     "customer-responsibilities": true,
     "free-trial": true,
     purchases: true,
+    "refund-policy": true,
   });
   const [showScrollTop, setShowScrollTop] = useState(false);
   const sectionsRef = useRef({});
@@ -86,6 +87,18 @@ Your payment for the Purchases may be processed by third-party payment processin
 You represent and warrant that: (i) you have the legal right to use any credit card(s) or other payment method(s) in connection with any Purchase; and that (ii) the information you supply to us is true, correct and complete.
 
 By submitting such information, you grant us the right to provide the information to third parties for purposes of facilitating the completion of Purchases.`,
+    },
+    {
+      id: "refund-policy",
+      title: "Refund Policy",
+      icon: <ShieldCheck className="text-indigo-400" size={20} />,
+      content: `Refunds are only issued where there is a verified technical failure on Nexuscale's end that prevented the customer from using the product. This includes platform outages, provisioning failures, or confirmed bugs that could not be resolved.
+
+Refunds are not issued for:
+- Change of mind
+- Dissatisfaction with AI-generated content
+- Failure to complete onboarding
+- Cases where the customer declined or failed to complete the onboarding process`,
     },
   ];
 
