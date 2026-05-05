@@ -1072,7 +1072,7 @@ export default function PricingSection() {
               <p className="text-zinc-400 text-base max-w-xl mx-auto mb-10 leading-relaxed">
                 The choice is clear. Command more. Spend less.
               </p>
-              <ComparisonStack />
+              {/* <ComparisonStack /> */}
 
               <div className="flex flex-col items-center gap-3">
                 <div className="relative z-10 mx-auto flex w-fit rounded-full bg-neutral-900 border border-gray-700 p-1">
@@ -1271,8 +1271,8 @@ export default function PricingSection() {
                       </span>
                     </div>
 
-                    {/* ── Value Panel ── */}
-                    {plan.name === "Start Up" && (
+                    {/* ── Value Panel (commented out) ── */}
+                    {/* {plan.name === "Start Up" && (
                       <div className="p-4 bg-white/[0.025] rounded-2xl border border-white/[0.08] space-y-1">
                         <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-400 font-bold block mb-3">
                           Real cost calculator
@@ -1345,7 +1345,7 @@ export default function PricingSection() {
                           100k+ emails, 10 workspaces, one bill.
                         </div>
                       </div>
-                    )}
+                    )} */}
 
                     {/* ── CTA ── */}
                     <div>
