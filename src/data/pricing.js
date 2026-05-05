@@ -608,41 +608,34 @@ export const platformEcosystemData = [
 
 export const faqData = [
   {
-    question: "How exactly does the $29 per LinkedIn account billing work?",
+    question: "What happens to my mailboxes if I cancel?",
     answer:
-      "Your base subscription includes a set number of LinkedIn accounts (1 on Founder, 3 on Scale Up, 15 on Agency). If you need more capacity, you can add extra LinkedIn accounts a la carte for just $29/month per account directly inside your dashboard. You only pay for what you use, and you can scale up or down at any time.",
+      "Mailboxes are provisioned and managed on Nexuscale infrastructure. If you cancel, your mailboxes are deactivated, but historical data stays exportable for 90 days. Domain registered through Omnichannel stays with Nexuscale.",
   },
   {
-    question: "What counts as a 'Credit'?",
+    question: "Can I add more mailboxes to Omnichannel?",
     answer:
-      "Credits are the currency for our data and AI engines. You use a credit whenever you uncover a verified B2B email address from our database, or use the 'Upload and Enrich' feature to find data for your own lists. Note: Standard AI email generation and automated sending do not consume these credits. They are strictly for premium data enrichment.",
+      "Yes. Add mailboxes from $3/mo each in packs. Single mailboxes start at $5/mo, with bulk pricing down to $3 in packs of 100. Stack as many as you need on top of the 3 included.",
   },
   {
-    question: "Is my LinkedIn account safe from being restricted or banned?",
+    question: "How does the LinkedIn seat work?",
     answer:
-      "Absolutely. We built Nexus with enterprise-grade safety protocols. We use standard cloud IPs, randomized human-like delays between actions, and strict daily volume limits that mimic natural human behavior. We keep you well under LinkedIn’s radar so you can scale outbound safely.",
+      "Each LinkedIn seat connects to one LinkedIn account with a dedicated residential proxy bound to that session. You can swap which account a seat is bound to, with a 24-hour cooldown to keep proxy and session integrity intact.",
   },
   {
-    question: "What happens if I hit my credit or mailbox limits?",
+    question: "What does the domain cost after year one?",
     answer:
-      "We will never pause your active campaigns without warning. If you are approaching your limit, we'll send you a notification. From there, you can either upgrade your tier for a massive bump in limits, or buy simple add-on packs directly inside the app to keep your campaigns flowing.",
+      "Year one is included with Omnichannel. After that, renewal is on you at standard registrar pricing, typically $10 to $15/year. We send a 30-day reminder before expiration so deliverability never breaks.",
   },
   {
-    question:
-      "Do I have to use your inbuilt mailboxes, or can I connect my own?",
+    question: "What is a credit?",
     answer:
-      "You have total control. You can use our native mailbox servers to spin up infrastructure instantly, or you can connect your own Google Workspace, Outlook, or custom SMTP/IMAP servers. Our platform natively supports them all.",
+      "Credits cover lead enrichment and AI writing. One credit pulls one verified contact from the lead database. AI sequence generation, scoring, and meeting agent actions also draw from the same pool. Sending and warmup are unmetered.",
   },
   {
-    question:
-      "I run a lead-gen agency. Can I white-label the software for my clients?",
+    question: "Can I switch plans later?",
     answer:
-      "Yes! On the Agency ($1,799) plan, you get full white-labeling capabilities. You can set up a custom domain (e.g., app.youragency.com), upload your own logos, match your brand colors, and provide your clients with beautiful, read-only dashboards where they can watch the leads roll in.",
-  },
-  {
-    question: "Are there any long-term contracts?",
-    answer:
-      "No. All plans are billed month-to-month, and you can cancel at any time. However, if you choose annual billing, you get 2 months completely free.",
+      "Anytime, both directions. Upgrade and you’re credited for unused time. Downgrade and you keep current-tier features through the end of the billing period.",
   },
 ];
 

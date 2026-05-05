@@ -18,10 +18,7 @@ import {
   Rocket,
   TrendingUp,
 } from "lucide-react";
-import {
-  pricingPlansData,
-  platformEcosystemData,
-} from "../data/pricing";
+import { pricingPlansData } from "../data/pricing";
 import ComparisonStack from "./ComparisonStack";
 
 const ScrollReveal = ({ children, delay = 0 }) => (
@@ -1004,76 +1001,40 @@ export default function PricingSection() {
 
         <div className="md:max-w-7xl mx-auto relative z-10 w-full">
           <ScrollReveal>
-            <div className="text-center mb-12">
-              <div className="inline-flex flex-col sm:flex-row items-center gap-3 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] mb-6 backdrop-blur-sm">
-                <div className="flex items-center gap-1.5">
-                  <div className="flex gap-0.5">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className="w-3.5 h-3.5 fill-amber-400 text-amber-400"
-                      />
-                    ))}
-                  </div>
-                  <span className="text-xs font-black text-white ml-1">
-                    G2: 4.9/5
-                  </span>
-                </div>
-                <div className="hidden sm:block w-px h-3.5 bg-white/20"></div>
-                <span className="text-[11px] font-bold text-zinc-300 uppercase tracking-wide">
-                  Trusted by 2,000+ Revenue Teams{" "}
-                  <span className="text-zinc-500 lowercase">(76 reviews)</span>
-                </span>
+            <div className="mb-12">
+              {/* Pricing label */}
+              <div className="mb-10 flex items-center gap-3 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-zinc-500">
+                <span className="h-px w-7 shrink-0 bg-gradient-to-r from-indigo-500 to-transparent" />
+                Pricing · Effective May 2026
               </div>
 
-              <h1 className="font-bold  text-4xl md:text-5xl lg:text-7xl mb-1 tracking-tight flex flex-wrap justify-center gap-x-[0.3em] font-spline">
-                {["Replace", "$665/mo", "of", "Tools"].map((word, i) => (
-                  <span key={i} className="overflow-hidden inline-block">
-                    <motion.span
-                      className={`inline-block ${
-                        word === "$665/mo"
-                          ? "text-white"
-                          : "text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300"
-                      }`}
-                      initial={{ y: "-110%" }}
-                      animate={{ y: 0 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 250,
-                        damping: 40,
-                        delay: i * 0.15,
-                      }}
-                    >
-                      {word}
-                    </motion.span>
-                  </span>
-                ))}
-              </h1>
+              {/* Headline + $575 side panel */}
+              <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-16 pb-12 mb-10 border-b border-white/[0.06]">
+                <div>
+                  <h1 className="text-[clamp(3.5rem,9vw,7.5rem)] font-bold leading-[0.94] tracking-[-0.035em] text-zinc-50">
+                    Run outbound,<br />
+                    <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">
+                      not infrastructure.
+                    </span>
+                  </h1>
+                  <p className="mt-6 max-w-xl text-base md:text-lg leading-8 text-zinc-400">
+                    Email and LinkedIn, fully provisioned in one platform. Pick a plan,
+                    connect your accounts, send today. No stitched-together stack, no
+                    infrastructure tax.
+                  </p>
+                </div>
 
-              <h1 className="font-bold font-spline text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-400  text-4xl md:text-5xl lg:text-7xl mb-2 tracking-tight flex flex-wrap justify-center gap-x-[0.3em]">
-                {["With", "One", "Autopilot"].map((word, i) => (
-                  <span key={i} className="overflow-hidden inline-block">
-                    <motion.span
-                      className="inline-block"
-                      initial={{ y: "-110%" }}
-                      animate={{ y: 0 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 250,
-                        damping: 40,
-                        delay: 0.3 + i * 0.15,
-                      }}
-                    >
-                      {word}
-                    </motion.span>
-                  </span>
-                ))}
-              </h1>
-              <p className="text-zinc-400 text-base max-w-xl mx-auto mb-10 leading-relaxed">
-                The choice is clear. Command more. Spend less.
-              </p>
-              {/* <ComparisonStack /> */}
+                <aside className="border-t border-white/[0.06] pt-6 text-left lg:border-l lg:border-t-0 lg:pl-10 lg:text-right">
+                  <div className="text-[5.5rem] font-bold leading-none tracking-[-0.04em] bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">
+                    $575
+                  </div>
+                  <p className="mt-4 font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-zinc-500 max-w-[18ch] lg:ml-auto">
+                    Replaced monthly. Apollo + HeyReach + Instantly, in one bill.
+                  </p>
+                </aside>
+              </div>
 
+              {/* Billing toggle */}
               <div className="flex flex-col items-center gap-3">
                 <div className="relative z-10 mx-auto flex w-fit rounded-full bg-neutral-900 border border-gray-700 p-1">
                   <button
@@ -1271,8 +1232,7 @@ export default function PricingSection() {
                       </span>
                     </div>
 
-                    {/* ── Value Panel (commented out) ── */}
-                    {/* {plan.name === "Start Up" && (
+                    {plan.name === "Start Up" && (
                       <div className="p-4 bg-white/[0.025] rounded-2xl border border-white/[0.08] space-y-1">
                         <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-400 font-bold block mb-3">
                           Real cost calculator
@@ -1345,7 +1305,7 @@ export default function PricingSection() {
                           100k+ emails, 10 workspaces, one bill.
                         </div>
                       </div>
-                    )} */}
+                    )}
 
                     {/* ── CTA ── */}
                     <div>
@@ -1735,93 +1695,91 @@ export default function PricingSection() {
 
           <ScrollReveal delay={200}>
             <div className="max-w-7xl mx-auto mb-32">
-              <div className="text-center mb-16">
-                <h3 className="text-3xl md:text-7xl font-black text-white mb-4 tracking-tight">
-                  The Full Platform Ecosystem
-                </h3>
-                <p className="text-base text-zinc-400 max-w-2xl mx-auto">
-                  Every paid plan grants you access to the complete suite of
-                  Nexus tools designed to scale your pipeline from end to end.
-                </p>
+              <div className="grid gap-10 lg:grid-cols-2 lg:gap-20">
+                {/* Left: heading + description */}
+                <div>
+                  <h2 className="text-4xl font-bold leading-none tracking-[-0.035em] text-zinc-50 md:text-6xl">
+                    What $83{" "}
+                    <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">
+                      replaces.
+                    </span>
+                  </h2>
+                  <p className="mt-6 max-w-xl text-lg leading-8 text-zinc-400">
+                    Most teams running outbound today pay Apollo for data,
+                    HeyReach for LinkedIn, and Instantly for cold email. Three
+                    subscriptions, three logins, three places where things break.
+                  </p>
+                  <p className="mt-4 max-w-xl text-lg leading-8 text-zinc-400">
+                    Omnichannel absorbs the entire stack at less than 15% of the
+                    combined bill. One bill, one login, one place where things
+                    break.
+                  </p>
+                </div>
+
+                {/* Right: receipt card */}
+                <div className="rounded-2xl border border-white/[0.12] bg-zinc-950/70 p-6 font-mono text-sm shadow-[0_12px_40px_-16px_rgba(0,0,0,0.7)] backdrop-blur-xl md:p-9">
+                  <h3 className="font-sans text-xl font-bold tracking-tight text-zinc-50">
+                    Your typical outbound stack
+                  </h3>
+                  <div className="mb-7 mt-2 border-b border-dashed border-white/[0.12] pb-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-zinc-500">
+                    Monthly · Tools you'd otherwise stitch
+                  </div>
+
+                  {[
+                    { name: "Apollo", role: "B2B data + sequencing", price: "$399.00" },
+                    { name: "HeyReach", role: "LinkedIn outreach automation", price: "$79.00" },
+                    { name: "Instantly", role: "Cold email sending + warmup", price: "$97.00" },
+                  ].map(({ name, role, price: p }) => (
+                    <div key={name} className="flex justify-between gap-4 py-2.5">
+                      <div className="flex flex-col gap-1">
+                        <span className="font-sans text-sm font-bold tracking-tight text-zinc-50">{name}</span>
+                        <span className="text-[10px] font-medium uppercase tracking-wide text-zinc-500">{role}</span>
+                      </div>
+                      <span className="self-center font-semibold text-zinc-300">{p}</span>
+                    </div>
+                  ))}
+
+                  <div className="mt-3 flex items-baseline justify-between border-t-2 border-zinc-600 pt-4">
+                    <span className="font-sans text-sm font-semibold uppercase tracking-wide text-zinc-300">Stitched stack total</span>
+                    <span className="font-sans text-3xl font-bold tracking-tight text-zinc-50">$575</span>
+                  </div>
+
+                  <div className="my-6 flex items-center gap-4">
+                    <div className="h-px flex-1 bg-white/[0.12]" />
+                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500">vs</span>
+                    <div className="h-px flex-1 bg-white/[0.12]" />
+                  </div>
+
+                  <div className="flex justify-between gap-4 py-2.5">
+                    <div className="flex flex-col gap-1">
+                      <span className="font-sans text-sm font-bold tracking-tight bg-gradient-to-r from-indigo-300 to-violet-300 bg-clip-text text-transparent">
+                        Nexuscale Omnichannel
+                      </span>
+                      <span className="text-[10px] font-medium uppercase tracking-wide text-zinc-500">
+                        Everything above + hosted mailboxes
+                      </span>
+                    </div>
+                    <span className="self-center font-semibold bg-gradient-to-r from-indigo-300 to-violet-300 bg-clip-text text-transparent">
+                      $83.00
+                    </span>
+                  </div>
+
+                  <div className="mt-3 flex items-baseline justify-between border-t-2 border-zinc-600 pt-4">
+                    <span className="font-sans text-sm font-semibold uppercase tracking-wide text-zinc-300">Nexuscale, all in</span>
+                    <span className="font-sans text-3xl font-bold tracking-tight bg-gradient-to-r from-indigo-300 to-violet-300 bg-clip-text text-transparent">
+                      $83
+                    </span>
+                  </div>
+
+                  <div className="mt-5 rounded-xl border border-indigo-500/25 bg-gradient-to-br from-indigo-500/10 to-violet-500/10 p-4 font-sans text-sm leading-6 text-zinc-300">
+                    <strong className="bg-gradient-to-r from-indigo-300 to-violet-300 bg-clip-text font-bold text-transparent">
+                      $492 saved every month.
+                    </strong>{" "}
+                    That's $5,904/year back to your bottom line, plus mailbox
+                    infrastructure included with no tool in the stack above to match it.
+                  </div>
+                </div>
               </div>
-
-              <motion.div
-                className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-60px" }}
-              >
-                {platformEcosystemData.map((module, idx) => (
-                  <motion.div
-                    key={idx}
-                    variants={cardVariants}
-                    whileHover={{ y: -8, scale: 1.015 }}
-                    transition={{ type: "spring", stiffness: 320, damping: 25 }}
-                    className="relative group bg-[#0A0A0C] border border-white/[0.06] hover:border-white/[0.15] rounded-[2rem] p-8 transition-all duration-500 overflow-hidden hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)] cursor-default"
-                  >
-                    <div
-                      className={`absolute top-0 left-0 right-0 h-[2px] ${module.bg} origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500`}
-                    />
-
-                    <div
-                      className={`absolute inset-0 bg-gradient-to-br ${module.bg}/[0.02] pointer-events-none`}
-                    />
-
-                    <div
-                      className={`absolute -top-8 -right-8 w-32 h-32 ${module.bg} blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-700 rounded-full pointer-events-none`}
-                    />
-
-                    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                      <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/[0.05] to-transparent transition-transform duration-[900ms] ease-in-out" />
-                    </div>
-
-                    <div className="relative z-10 flex flex-col h-full">
-                      <div className="flex items-center justify-between mb-8">
-                        <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-[#111116] border border-white/[0.08] shadow-inner group-hover:scale-110 transition-transform duration-500">
-                          <module.icon className={`w-6 h-6 ${module.color}`} />
-                        </div>
-                        <div
-                          className={`text-[9px] font-black uppercase tracking-widest ${module.color} border border-white/[0.08] px-3.5 py-1.5 rounded-full bg-white/[0.02] backdrop-blur-md shadow-sm`}
-                        >
-                          {module.subtitle}
-                        </div>
-                      </div>
-
-                      <h4 className="text-xl font-bold text-white mb-3 tracking-wide">
-                        {module.title}
-                      </h4>
-                      <p className="text-sm text-zinc-400 mb-8 leading-relaxed font-medium">
-                        {module.desc}
-                      </p>
-
-                      <div className="space-y-4 pt-6 mt-auto border-t border-white/[0.05]">
-                        {module.features.map((item, i) => {
-                          const [boldText, ...restTextArray] = item.split(": ");
-                          const restText = restTextArray.join(": ");
-                          return (
-                            <div key={i} className="flex items-start gap-3">
-                              <div
-                                className={`w-1.5 h-1.5 rounded-full mt-2 shrink-0 ${module.color} opacity-80 shadow-[0_0_8px_currentColor]`}
-                              />
-                              <div className="text-[13px] leading-relaxed">
-                                <span className="text-zinc-200 font-bold">
-                                  {boldText}
-                                </span>
-                                {restText && (
-                                  <span className="text-zinc-500 block sm:inline sm:ml-1">
-                                    {restText}
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
             </div>
           </ScrollReveal>
 
