@@ -1217,10 +1217,10 @@ export default function PricingSection() {
                   )}
 
                   {/* Top accent line */}
-                  <div
+                  {/* <div
                     className="h-[2px] w-full shrink-0"
                     style={{ background: `linear-gradient(to right, ${accentFrom}, ${accentTo})`, opacity: isFeatured ? 1 : 0.45 }}
-                  />
+                  /> */}
 
                   {/* Featured ribbon */}
                   {isFeatured && (
