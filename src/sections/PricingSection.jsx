@@ -221,6 +221,303 @@ const CardFeatureList = ({ plan, s }) => {
   );
 };
 
+// --- INSIGHT BAND ---
+// Unique value-math panel per plan; Start Up has an interactive LinkedIn toggle
+
+const InsightBand = ({ plan, annual }) => {
+  const [includeLinkedIn, setIncludeLinkedIn] = useState(false);
+  const basePrice = annual && plan.annualPrice ? Number(plan.annualPrice) : Number(plan.price);
+
+  if (plan.name === "Start Up") {
+    const total = basePrice + (includeLinkedIn ? 19 : 0);
+    const growthPrice = annual ? 83 : 99;
+    const diff = growthPrice - total;
+
+    return (
+      <div className="rounded-2xl bg-white/[0.025] border border-white/[0.07] p-4 space-y-3">
+        <div className="flex items-center justify-between">
+          <span className="text-[9px] font-black uppercase tracking-[0.15em] text-zinc-500">
+            Cost Breakdown
+          </span>
+          <label className="flex items-center gap-2 cursor-pointer">
+            <span className="text-[10px] text-zinc-500">+ LinkedIn seat</span>
+            <div
+              onClick={() => setIncludeLinkedIn((v) => !v)}
+              className={`relative w-7 h-[15px] rounded-full border transition-all duration-300 cursor-pointer flex-shrink-0 ${
+                includeLinkedIn
+                  ? "bg-[#0077b5] border-[#0077b5]"
+                  : "bg-white/[0.06] border-white/[0.18]"
+              }`}
+            >
+              <div
+                className={`absolute top-[1px] w-[11px] h-[11px] rounded-full bg-white shadow-sm transition-all duration-300 ${
+                  includeLinkedIn ? "left-[calc(100%-12px)]" : "left-[1px]"
+                }`}
+              />
+            </div>
+          </label>
+        </div>
+
+        <div className="space-y-1.5">
+          <div className="flex justify-between items-center text-xs">
+            <span className="text-zinc-400">Start Up plan</span>
+            <span className="font-mono font-bold text-zinc-200">${basePrice}</span>
+          </div>
+          <AnimatePresence>
+            {includeLinkedIn && (
+              <motion.div
+                key="li-line"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                className="overflow-hidden"
+              >
+                <div className="flex justify-between items-center text-xs text-zinc-500 pb-1.5">
+                  <span>+ LinkedIn seat (add-on)</span>
+                  <span className="font-mono text-[#4fa3d4]">+$19</span>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <div className="flex justify-between items-center pt-1.5 border-t border-white/[0.07]">
+            <span className="text-xs font-bold text-zinc-300">Your monthly cost</span>
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={total}
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 8 }}
+                transition={{ duration: 0.2 }}
+                className="font-mono font-black text-sm text-white"
+              >
+                ${total}/mo
+              </motion.span>
+            </AnimatePresence>
+          </div>
+        </div>
+
+        <AnimatePresence>
+          {includeLinkedIn && (
+            <motion.div
+              key="growth-tip"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.28, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
+              className="overflow-hidden"
+            >
+              <div className="text-[11px] text-indigo-300/90 bg-indigo-500/[0.08] rounded-xl px-3 py-2 border border-indigo-500/15 leading-relaxed">
+                Growth at ${growthPrice}/mo adds{" "}
+                <span className="text-white font-bold">3× AI agents</span> +{" "}
+                <span className="text-white font-bold">AI Meeting Agent</span> for only{" "}
+                <span className="text-indigo-300 font-black">+${diff}/mo more</span>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    );
+  }
+
+  if (plan.name === "Growth") {
+    const startUpBase = annual ? 49 : 59;
+    const withLinkedIn = startUpBase + 19;
+    const diff = basePrice - withLinkedIn;
+
+    return (
+      <div className="rounded-2xl bg-indigo-500/[0.07] border border-indigo-500/20 p-4 space-y-3">
+        <div className="text-[9px] font-black uppercase tracking-[0.15em] text-indigo-400/80">
+          vs Start Up + LinkedIn seat
+        </div>
+        <div className="flex items-start justify-between gap-3">
+          <div className="space-y-1.5">
+            <div className="flex items-center gap-2 text-xs">
+              <span className="text-zinc-600 line-through font-mono">${withLinkedIn}/mo</span>
+              <span className="text-zinc-600">Start Up configured</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-indigo-300 font-black text-base font-mono">${basePrice}/mo</span>
+              <span className="text-[10px] text-zinc-500">this plan</span>
+            </div>
+          </div>
+          <div className="flex flex-col items-end gap-1">
+            <div className="text-[9px] font-black text-zinc-500 uppercase tracking-wider mb-0.5">
+              +${diff}/mo, you get
+            </div>
+            <div className="text-[10px] font-bold text-emerald-400 flex items-center gap-1">
+              <CheckCircle2 className="w-3 h-3" /> 3× AI agents
+            </div>
+            <div className="text-[10px] font-bold text-emerald-400 flex items-center gap-1">
+              <CheckCircle2 className="w-3 h-3" /> AI Meeting Agent
+            </div>
+          </div>
+        </div>
+        <p className="text-[11px] text-zinc-400 leading-relaxed border-t border-indigo-500/10 pt-2.5">
+          5 agents · 3 workspaces · Advanced scoring · Premium deliverability — fully unlocked.
+        </p>
+      </div>
+    );
+  }
+
+  if (plan.name === "Scale Up") {
+    return (
+      <div className="rounded-2xl bg-white/[0.025] border border-white/[0.07] p-4 space-y-2.5">
+        <div className="text-[9px] font-black uppercase tracking-[0.15em] text-zinc-500">
+          Built for
+        </div>
+        <p className="text-sm leading-relaxed text-zinc-300">
+          High-volume teams sending{" "}
+          <span className="text-white font-bold">100k+</span> emails/mo across{" "}
+          <span className="text-white font-bold">10 isolated workspaces</span>.
+        </p>
+        <div className="flex flex-wrap gap-1.5 pt-0.5">
+          {["10 Workspaces", "50 Seats", "10 AI Agents", "Unlimited LinkedIn"].map((tag, i) => (
+            <span
+              key={i}
+              className="text-[9px] font-bold text-violet-400/80 bg-violet-500/[0.09] border border-violet-500/20 px-2 py-0.5 rounded-full"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+};
+
+// --- PLAN FEATURE LIST ---
+// Feature list with "Overview / +vs Prev / All N" view-mode tabs
+
+const PlanFeatureList = ({ plan, s, prevPlanName }) => {
+  const [viewMode, setViewMode] = useState("key"); // 'key' | 'diff' | 'all'
+
+  const keyFeatures = plan.keyFeatures || [];
+  const allFeatures = plan.features.filter((f) => !f.isBadge);
+
+  const activeDiffStyle =
+    plan.name === "Growth"
+      ? "bg-indigo-500/[0.12] text-indigo-400 border-indigo-500/20"
+      : "bg-violet-500/[0.12] text-violet-400 border-violet-500/20";
+
+  const checkColor =
+    plan.name === "Start Up"
+      ? "text-blue-400 drop-shadow-[0_0_6px_rgba(59,130,246,0.5)]"
+      : plan.name === "Growth"
+      ? "text-indigo-400 drop-shadow-[0_0_6px_rgba(99,102,241,0.5)]"
+      : "text-violet-400 drop-shadow-[0_0_6px_rgba(139,92,246,0.5)]";
+
+  const plusIconColor =
+    plan.name === "Growth" ? "bg-indigo-500/20 text-indigo-400" : "bg-violet-500/20 text-violet-400";
+
+  return (
+    <div className="flex-1 flex flex-col min-h-0">
+      {/* View-mode tab bar */}
+      <div className="flex items-center gap-1.5 mb-3">
+        <span className="text-[9px] font-black uppercase tracking-[0.15em] text-zinc-600 mr-1 shrink-0">
+          Features
+        </span>
+        <button
+          onClick={() => setViewMode("key")}
+          className={`text-[9px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider transition-all border ${
+            viewMode === "key"
+              ? "bg-white/[0.08] text-zinc-200 border-white/[0.12]"
+              : "text-zinc-600 border-transparent hover:text-zinc-400"
+          }`}
+        >
+          Overview
+        </button>
+        {prevPlanName && (
+          <button
+            onClick={() => setViewMode(viewMode === "diff" ? "key" : "diff")}
+            className={`text-[9px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider transition-all border flex items-center gap-0.5 ${
+              viewMode === "diff"
+                ? activeDiffStyle
+                : "text-zinc-600 border-transparent hover:text-zinc-400"
+            }`}
+          >
+            <span>+</span> vs {prevPlanName}
+          </button>
+        )}
+        {allFeatures.length > keyFeatures.length && (
+          <button
+            onClick={() => setViewMode(viewMode === "all" ? "key" : "all")}
+            className={`text-[9px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider transition-all border ml-auto ${
+              viewMode === "all"
+                ? "bg-white/[0.08] text-zinc-200 border-white/[0.12]"
+                : "text-zinc-600 border-transparent hover:text-zinc-400"
+            }`}
+          >
+            {viewMode === "all" ? "Less" : `All ${allFeatures.length}`}
+          </button>
+        )}
+      </div>
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={viewMode}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+          className="space-y-2.5"
+        >
+          {viewMode === "diff" ? (
+            <>
+              <div className="text-[9px] text-zinc-600 mb-2 leading-relaxed">
+                What {plan.name} adds on top of {prevPlanName}
+              </div>
+              {keyFeatures.map((f, i) => (
+                <div key={i} className="flex items-center gap-2.5">
+                  <div
+                    className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${plusIconColor}`}
+                  >
+                    <svg className="w-2.5 h-2.5" viewBox="0 0 10 10" fill="none">
+                      <path
+                        d="M5 2v6M2 5h6"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </div>
+                  <span className="text-xs font-medium text-zinc-200 leading-tight">{f}</span>
+                </div>
+              ))}
+            </>
+          ) : viewMode === "all" ? (
+            allFeatures.map((f, i) => (
+              <div
+                key={i}
+                className={`flex items-start gap-2.5 text-xs font-medium ${
+                  f.included ? "text-zinc-300" : "text-zinc-600 line-through"
+                }`}
+              >
+                {f.included ? (
+                  <CheckCircle2 className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${checkColor}`} />
+                ) : (
+                  <MinusCircle className="w-3.5 h-3.5 shrink-0 mt-0.5 text-zinc-700" />
+                )}
+                <span className="leading-tight">{f.text}</span>
+                {f.tooltip && f.included && <FeatureTooltip text={f.tooltip} />}
+              </div>
+            ))
+          ) : (
+            keyFeatures.map((f, i) => (
+              <div key={i} className="flex items-center gap-2.5">
+                <CheckCircle2 className={`w-3.5 h-3.5 shrink-0 ${checkColor}`} />
+                <span className="text-xs font-medium text-zinc-200 leading-tight">{f}</span>
+              </div>
+            ))
+          )}
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+};
+
 // --- PRICE TICKER ---
 
 const PriceTicker = ({ value, gradClass }) => {
@@ -938,8 +1235,9 @@ export default function PricingSection() {
             </span>
           </div>
 
+          {/* ── NEW CLEAN THREE-CARD HORIZONTAL LAYOUT ── */}
           <motion.div
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 max-w-[95%]  md:max-w-[90%] mx-auto mb-16 items-start"
+            className="grid grid-cols-1 lg:grid-cols-3 gap-4 max-w-[95%] md:max-w-[88%] mx-auto mb-16"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -948,601 +1246,323 @@ export default function PricingSection() {
             {pricingPlansData
               .filter((plan) => plan.name !== "Free" && plan.name !== "Agency")
               .map((plan, i) => {
-                const isPopular = plan.popular;
+                const isFeatured = plan.name === "Growth";
                 const s = planStyles[plan.name] || planStyles["Free"];
-                const isLastAlone = false;
+                const linkedinSeats = getLinkedinSeats(plan.name);
+                const mailboxCount = getMailboxes(plan.name);
+                const maxSeats = getMaxSeats(plan);
+                const prevPlanName =
+                  plan.name === "Growth"
+                    ? "Start Up"
+                    : plan.name === "Scale Up"
+                    ? "Growth"
+                    : null;
+
+                /* Override visual treatment for featured Growth card */
+                const cardBorderClass = isFeatured
+                  ? "border-indigo-500/40"
+                  : s.border;
+                const cardGlowClass = isFeatured
+                  ? "ring-1 ring-indigo-500/25 shadow-[0_0_60px_rgba(99,102,241,0.13)]"
+                  : s.glow;
+                const accentGradient = isFeatured
+                  ? "from-indigo-500 to-violet-500"
+                  : s.accent;
+                const priceGradient = isFeatured
+                  ? "from-indigo-300 to-violet-400"
+                  : s.price;
+                const labelColor = isFeatured ? "text-indigo-400" : s.label;
 
                 return (
                   <motion.div
                     key={i}
                     variants={cardVariants}
-                    whileHover={{ y: -8, scale: 1.015 }}
-                    transition={{ type: "spring", stiffness: 320, damping: 25 }}
-                    className={`relative group rounded-3xl border bg-[#0A0A0C]/80 backdrop-blur-xl overflow-hidden cursor-default flex flex-col
-                              transition-all duration-500 ${s.border} ${s.glow}
-                              ${isLastAlone ? "md:col-span-2 lg:col-span-4 w-full" : ""}
-                              ${isPopular ? "lg:scale-[1.03] z-10 ring-1 ring-indigo-500/50 shadow-[0_0_40px_rgba(99,102,241,0.1)]" : ""}`}
+                    whileHover={{
+                      y: isFeatured ? -10 : -6,
+                      transition: { type: "spring", stiffness: 400, damping: 25 },
+                    }}
+                    className={`relative group rounded-3xl border bg-[#0A0A0C]/80 backdrop-blur-xl overflow-hidden flex flex-col
+                      transition-shadow duration-500 ${cardBorderClass} ${cardGlowClass}
+                      ${isFeatured ? "lg:scale-[1.04] lg:-translate-y-2 z-10" : "z-0"}`}
                   >
-                    {isPopular && (
-                      <div className="absolute top-0 left-0 right-0 flex justify-center z-20">
-                        <div className="bg-gradient-to-r from-indigo-500 to-violet-500 text-white text-[10px] font-black px-4 py-1.5 rounded-b-xl uppercase tracking-widest flex items-center gap-1.5 shadow-lg">
-                          <Zap className="w-3 h-3 text-yellow-300" /> Most
-                          Popular
+                    {/* Most Popular ribbon */}
+                    {isFeatured && (
+                      <div className="absolute top-0 left-0 right-0 flex justify-center z-20 pointer-events-none">
+                        <div className="bg-gradient-to-r from-indigo-500 to-violet-500 text-white text-[10px] font-black px-5 py-1.5 rounded-b-2xl uppercase tracking-widest flex items-center gap-1.5 shadow-lg shadow-indigo-600/30">
+                          <Zap className="w-3 h-3 text-yellow-300 fill-yellow-300" />
+                          Most Popular
                         </div>
                       </div>
                     )}
 
-                    {/* Ambient orb */}
+                    {/* Top accent stripe */}
                     <div
-                      className={`absolute -top-16 -right-16 w-48 h-48 rounded-full blur-3xl ${s.orb} opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`}
+                      className={`h-[2px] bg-gradient-to-r ${accentGradient} transition-opacity duration-500 ${
+                        isFeatured
+                          ? "opacity-100"
+                          : "opacity-0 group-hover:opacity-100"
+                      }`}
                     />
 
+                    {/* Ambient glow orb on hover */}
                     <div
-                      className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${s.accent} origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500`}
+                      className={`absolute -top-20 -right-20 w-60 h-60 rounded-full blur-3xl ${s.orb} opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`}
                     />
 
-                    {isLastAlone ? (
-                      <div
-                        className={`relative z-10 p-6 flex flex-col md:flex-row flex-1 gap-6 md:gap-8 ${isPopular ? "pt-10" : "pt-8"}`}
-                      >
-                        <div className="flex flex-col gap-5 md:w-[280px] md:shrink-0 md:border-r md:border-white/[0.06] md:pr-8">
-                          <div>
-                            <div
-                              className={`text-[10px] font-black uppercase tracking-widest ${s.label} mb-1.5`}
-                            >
-                              {plan.name}
-                            </div>
-                            <div className="text-xl font-black text-white mb-1">
-                              {plan.tier}
-                            </div>
-                            <div className="text-xs text-zinc-500 leading-relaxed">
-                              {plan.desc}
-                            </div>
-                          </div>
+                    {/* Featured indigo tint overlay */}
+                    {isFeatured && (
+                      <div className="absolute inset-0 bg-gradient-to-b from-indigo-900/10 via-transparent to-transparent pointer-events-none" />
+                    )}
 
-                          <div>
-                            <div className="flex items-baseline gap-1.5 flex-wrap">
-                              {s.priceGrad ? (
-                                <span
-                                  className={`text-5xl font-black tracking-tight leading-none text-transparent bg-clip-text bg-gradient-to-r ${s.price}`}
-                                >
-                                  <AnimatePresence mode="wait">
-                                    <motion.span
-                                      key={getPrice(plan)}
-                                      initial={{ y: -16, opacity: 0 }}
-                                      animate={{ y: 0, opacity: 1 }}
-                                      exit={{ y: 16, opacity: 0 }}
-                                      transition={{
-                                        duration: 0.2,
-                                        ease: "easeOut",
-                                      }}
-                                      className="inline-block"
-                                    >
-                                      ${getPrice(plan)}
-                                    </motion.span>
-                                  </AnimatePresence>
-                                </span>
-                              ) : (
-                                <span className="text-5xl font-black tracking-tight leading-none text-white">
-                                  <AnimatePresence mode="wait">
-                                    <motion.span
-                                      key={getPrice(plan)}
-                                      initial={{ y: -16, opacity: 0 }}
-                                      animate={{ y: 0, opacity: 1 }}
-                                      exit={{ y: 16, opacity: 0 }}
-                                      transition={{
-                                        duration: 0.2,
-                                        ease: "easeOut",
-                                      }}
-                                      className="inline-block"
-                                    >
-                                      ${getPrice(plan)}
-                                    </motion.span>
-                                  </AnimatePresence>
-                                </span>
-                              )}
-                              {plan.price !== "0" && (
-                                <>
-                                  {annual && (
-                                    <span className="text-xs text-emerald-500/80 font-bold uppercase tracking-wider">
-                                      Save 20%
-                                    </span>
-                                  )}
-                                  <span className="text-sm text-zinc-500 font-bold">
-                                    /mo
-                                  </span>
-                                </>
-                              )}
-                            </div>
-                            {plan.price !== "0" && annual && (
-                              <p className="text-[10px] text-emerald-500/80 mt-1.5 font-bold uppercase tracking-wider">
-                                Billed yearly
-                              </p>
-                            )}
-                          </div>
-
-                          <div className="mt-auto pt-2">
-                            <Button
-                              text={plan.cta}
-                              variant={isPopular ? "brand" : "secondary"}
-                              className="w-full py-3.5 text-sm"
-                              onClick={() => {
-                                if (
-                                  plan.cta.includes("Schedule Call") ||
-                                  plan.cta.includes("Demo")
-                                ) {
-                                  window.open(
-                                    "https://cal.com/kevin-nexuscale/15min",
-                                    "_blank",
-                                  );
-                                } else if (annual && plan.stripeAnnualUrl) {
-                                  window.open(plan.stripeAnnualUrl, "_blank");
-                                } else if (!annual && plan.stripeMonthlyUrl) {
-                                  window.open(plan.stripeMonthlyUrl, "_blank");
-                                } else {
-                                  window.open(
-                                    "https://app.nexuscale.ai/users/register",
-                                    "_blank",
-                                  );
-                                }
-                              }}
-                            />
-                            <div className="text-center mt-3">
-                              <span
-                                className={`text-[10px] font-semibold tracking-wide uppercase ${isPopular ? "text-indigo-400" : "text-zinc-500"}`}
-                              >
-                                {plan.microcopy}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="flex flex-col gap-5 flex-1 min-w-0">
-                          <div className="h-px md:hidden bg-gradient-to-r from-white/[0.05] via-white/[0.1] to-white/[0.05]" />
-
-                          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                            <StatChip
-                              value={plan.credits.contacts}
-                              label="Credits /mo"
-                              sublabel="Engine Credits"
-                            />
-                            <StatChip
-                              value={`${plan.credits.linkedinSeats}`}
-                              label="LinkedIn Add-ons"
-                              sublabel={plan.credits.linkedinSub}
-                              dim={plan.name === "Free"}
-                            />
-                            <StatChip
-                              value={plan.credits.agents}
-                              label="AI Agents"
-                              sublabel=""
-                            />
-                            <StatChip
-                              value={plan.credits.teamSeats}
-                              label="Team Seats"
-                              sublabel="Collaborators"
-                            />
-                            <StatChip
-                              value={plan.credits.mailboxes}
-                              label="Mailboxes"
-                              sublabel={`${plan.credits.mailboxSub}`}
-                            />
-                            <StatChip
-                              value={plan.credits.workspaces}
-                              label={
-                                plan.credits.workspaces === "1"
-                                  ? "Workspace"
-                                  : "Workspaces"
-                              }
-                              sublabel="Team & Client Isolation"
-                            />
-                          </div>
-
-                          <div className="h-px bg-gradient-to-r from-white/[0.05] via-white/[0.1] to-white/[0.05]" />
-
-                          <div className="relative flex-1 mb-2">
-                            <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-[#0A0A0C]/95 to-transparent z-10 pointer-events-none" />
-                            <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3.5 overflow-y-auto max-h-[320px] pr-2 custom-scrollbar pb-6">
-                              {plan.features.map((f, j) => {
-                                const isIncluded = f.included;
-                                const isBadge = f.isBadge;
-                                if (isBadge) {
-                                  return (
-                                    <div
-                                      key={j}
-                                      className={`sm:col-span-2 flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] -mx-1 text-sm font-bold ${s.label} mb-1`}
-                                    >
-                                      <LucideSparkles className="w-3.5 h-3.5 shrink-0" />
-                                      <span className="leading-tight">
-                                        {f.text}
-                                      </span>
-                                    </div>
-                                  );
-                                }
-                                return (
-                                  <div
-                                    key={j}
-                                    className={`flex items-start gap-3 text-sm font-medium transition-colors ${isIncluded ? "text-zinc-200" : "text-zinc-600 line-through decoration-zinc-700"}`}
-                                  >
-                                    {isIncluded ? (
-                                      <CheckCircle2 className="w-4 h-4 shrink-0 text-indigo-400 mt-0.5 drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]" />
-                                    ) : (
-                                      <MinusCircle className="w-4 h-4 shrink-0 text-zinc-700 mt-0.5" />
-                                    )}
-                                    <span className="leading-tight">
-                                      {f.text}
-                                    </span>
-                                    {f.tooltip && isIncluded && (
-                                      <FeatureTooltip text={f.tooltip} />
-                                    )}
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      <div
-                        className={`relative z-10 p-3 md:p-4 flex flex-col flex-1 gap-3 md:gap-5 ${isPopular ? "pt-10" : "pt-8"}`}
-                      >
-                        <div>
-                          <div
-                            className={`text-[10px] font-black uppercase tracking-widest ${s.label} mb-1.5`}
+                    <div
+                      className={`relative z-10 p-5 md:p-6 flex flex-col flex-1 gap-4 ${
+                        isFeatured ? "pt-11" : "pt-6"
+                      }`}
+                    >
+                      {/* ── Header ── */}
+                      <div>
+                        <div className="flex items-start justify-between mb-1.5">
+                          <span
+                            className={`text-[10px] font-black uppercase tracking-[0.15em] ${labelColor}`}
                           >
                             {plan.name}
-                          </div>
-                          <div className="text-xl font-black text-white mb-1">
-                            {plan.tier}
-                          </div>
-                          <div className="text-xs text-zinc-500 leading-relaxed min-h-[32px]">
-                            {plan.desc}
-                          </div>
-                        </div>
-
-                        <div>
-                          <div className="flex items-baseline gap-1.5 flex-wrap">
-                            <span className="text-5xl font-black tracking-tight leading-none">
-                              <PriceTicker
-                                value={getTotalPrice(plan)}
-                                gradClass={s.priceGrad ? s.price : null}
-                              />
-                            </span>
-                            {plan.price !== "0" && (
-                              <>
-                                {annual && (
-                                  <span className="text-xs text-emerald-500/80 font-bold uppercase tracking-wider">
-                                    Save 20%
-                                  </span>
-                                )}
-                                <span className="text-sm text-zinc-500 font-bold">
-                                  /mo
-                                </span>
-                              </>
-                            )}
-                          </div>
-                          <AnimatePresence>
-                            {(getLinkedinSeats(plan.name) > 0 ||
-                              getMailboxes(plan.name) > 0) && (
-                              <motion.div
-                                initial={{
-                                  opacity: 0,
-                                  height: 0,
-                                  marginTop: 0,
-                                }}
-                                animate={{
-                                  opacity: 1,
-                                  height: "auto",
-                                  marginTop: 6,
-                                }}
-                                exit={{ opacity: 0, height: 0, marginTop: 0 }}
-                                transition={{ duration: 0.2 }}
-                                className="flex items-center gap-1.5 flex-wrap overflow-hidden"
-                              >
-                                <span className="text-[10px] text-zinc-500">
-                                  Base ${getPrice(plan)}
-                                </span>
-                                {getLinkedinSeats(plan.name) > 0 && (
-                                  <>
-                                    <span className="text-[10px] text-zinc-600">
-                                      +
-                                    </span>
-                                    <span className="text-[10px] font-bold text-[#4fa3d4]">
-                                      ${getLinkedinSeats(plan.name) * 19}{" "}
-                                      LinkedIn
-                                    </span>
-                                  </>
-                                )}
-                                {getMailboxes(plan.name) > 0 && (
-                                  <>
-                                    <span className="text-[10px] text-zinc-600">
-                                      +
-                                    </span>
-                                    <span className="text-[10px] font-bold text-emerald-400">
-                                      ${getMailboxes(plan.name) * 3} Mailboxes
-                                    </span>
-                                  </>
-                                )}
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                          {plan.price !== "0" && annual && (
-                            <p className="text-[10px] text-emerald-500/80 mt-1.5 font-bold uppercase tracking-wider">
-                              Billed yearly
-                            </p>
-                          )}
-                          {plan.price === "0" && (
-                            <p className="text-[10px] text-zinc-600 mt-1.5 font-bold uppercase tracking-wider opacity-0">
-                              Spacer
-                            </p>
-                          )}
-                        </div>
-
-                        <div className="h-px bg-gradient-to-r from-white/[0.05] via-white/[0.1] to-white/[0.05]" />
-
-                        <div className="grid grid-cols-2 gap-2">
-                          <StatChip
-                            value={plan.credits.contacts}
-                            label="Credits /mo"
-                            sublabel="Engine Credits"
-                          />
-                          {/* <StatChip
-                            value={`${plan.credits.linkedinSeats}`}
-                            label="LinkedIn Add-ons"
-                            sublabel={plan.credits.linkedinSub}
-                            dim={plan.name === "Free"}
-                          /> */}
-                          <StatChip
-                            value={plan.credits.agents}
-                            label="AI Agents"
-                            sublabel={plan.credits.agentsType}
-                          />
-
-                          <StatChip
-                            value={plan.credits.teamSeats}
-                            label="Team Seats"
-                            sublabel="Collaborators"
-                          />
-
-                          {/* <StatChip
-                            value={plan.credits.mailboxes}
-                            label="Mailboxes"
-                            sublabel={`${plan.credits.mailboxSub}`}
-                          /> */}
+                          </span>
                           {plan.name === "Start Up" && (
+                            <span className="text-[9px] font-bold text-zinc-500 bg-white/[0.04] border border-white/[0.08] px-2 py-0.5 rounded-full uppercase tracking-wide">
+                              Solo & Founders
+                            </span>
+                          )}
+                          {plan.name === "Scale Up" && (
+                            <span className="text-[9px] font-bold text-violet-400/80 bg-violet-500/[0.07] border border-violet-500/20 px-2 py-0.5 rounded-full uppercase tracking-wide">
+                              Teams & Agencies
+                            </span>
+                          )}
+                        </div>
+                        <h3 className="text-xl font-black text-white leading-tight mb-1.5">
+                          {plan.tier}
+                        </h3>
+                        <p className="text-xs text-zinc-500 leading-relaxed min-h-[32px]">
+                          {plan.desc}
+                        </p>
+                      </div>
+
+                      {/* ── Price ── */}
+                      <div>
+                        <div className="flex items-baseline gap-1.5 flex-wrap">
+                          <span className="text-4xl md:text-5xl font-black tracking-tight leading-none overflow-hidden">
+                            <PriceTicker
+                              value={getTotalPrice(plan)}
+                              gradClass={s.priceGrad ? priceGradient : null}
+                            />
+                          </span>
+                          {plan.price !== "0" && (
                             <>
-                              <StatChip
-                                value={plan.credits.emails}
-                                label="Emails"
-                                sublabel="Sending Limit"
-                              />
-                              <StatChip
-                                value={plan.credits.warmup}
-                                label="Email Warmup"
-                                sublabel="Deliverability"
-                              />
+                              {annual && (
+                                <span className="text-[10px] text-emerald-400/80 font-bold uppercase tracking-wider">
+                                  Save 20%
+                                </span>
+                              )}
+                              <span className="text-sm text-zinc-500 font-bold">
+                                /mo
+                              </span>
                             </>
                           )}
-                          <StatChip
-                            value={plan.credits.workspaces}
-                            label={
-                              plan.credits.workspaces === "1"
-                                ? "Workspace"
-                                : "Workspaces"
-                            }
-                            sublabel="Team & Client Isolation"
-                          />
                         </div>
 
-                        <div className="grid grid-cols-2 gap-2">
-                          {getMaxSeats(plan) > 0 && (
-                            <div className="rounded-xl border border-[#0077b5]/25 bg-[#0077b5]/[0.07] p-3.5 space-y-2.5">
-                              <div className="flex flex-col items-center justify-between">
-                                <div className="flex  items-center gap-2">
-                                  <span className="text-[8px] font-black text-white bg-[#0077b5] rounded px-1.5 py-[3px] tracking-wider leading-none">
-                                    in
-                                  </span>
-                                  <span className="text-xs font-bold text-zinc-300">
-                                    LinkedIn Seats
-                                  </span>
-                                </div>
-                                <span className="text-[10px] font-bold text-[#4fa3d4] uppercase tracking-widest">
-                                  $19 / seat
-                                </span>
-                              </div>
-                              <div className=" flex flex-col gap-2 items-center justify-between">
-                                <div className="flex w-full justify-between items-center gap-2 bg-white/[0.05] rounded-lg p-1">
-                                  <button
-                                    onClick={() =>
-                                      updateLinkedinSeats(
-                                        plan.name,
-                                        -1,
-                                        getMaxSeats(plan),
-                                      )
-                                    }
-                                    disabled={getLinkedinSeats(plan.name) === 0}
-                                    className="w-6 h-6 rounded-md bg-white/[0.08] hover:bg-white/[0.18] disabled:opacity-20 disabled:cursor-not-allowed flex items-center justify-center text-white font-bold text-base transition-all active:scale-90 select-none"
-                                  >
-                                    −
-                                  </button>
-                                  <span className="text-sm font-black text-white w-3 text-center tabular-nums select-none">
-                                    {getLinkedinSeats(plan.name)}
-                                  </span>
-                                  <button
-                                    onClick={() =>
-                                      updateLinkedinSeats(
-                                        plan.name,
-                                        1,
-                                        getMaxSeats(plan),
-                                      )
-                                    }
-                                    disabled={
-                                      getLinkedinSeats(plan.name) >=
-                                      getMaxSeats(plan)
-                                    }
-                                    className="w-6 h-6 rounded-md bg-[#0077b5]/50 hover:bg-[#0077b5]/75 disabled:opacity-20 disabled:cursor-not-allowed flex items-center justify-center text-white font-bold text-base transition-all active:scale-90 select-none"
-                                  >
-                                    +
-                                  </button>
-                                </div>
-                                <div className="text-right h-5 hidden items-center">
-                                  <AnimatePresence mode="wait">
-                                    {getLinkedinSeats(plan.name) > 0 ? (
-                                      <motion.span
-                                        key="cost"
-                                        initial={{ opacity: 0, y: -6 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: 6 }}
-                                        transition={{ duration: 0.15 }}
-                                        className="text-xs font-bold text-[#4fa3d4]"
-                                      >
-                                        +${getLinkedinSeats(plan.name) * 19}/mo
-                                      </motion.span>
-                                    ) : (
-                                      <motion.span
-                                        key="hint"
-                                        initial={{ opacity: 0, y: 6 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: -6 }}
-                                        transition={{ duration: 0.15 }}
-                                        className="text-[10px] text-zinc-600 uppercase tracking-wider"
-                                      >
-                                        Max {getMaxSeats(plan)}
-                                      </motion.span>
-                                    )}
-                                  </AnimatePresence>
-                                </div>
-                              </div>
-                            </div>
-                          )}
-
-                          {plan.price !== "0" && (
-                            <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/[0.06] p-3.5 space-y-2.5">
-                              <div className="flex flex-col items-center justify-between">
-                                <div className="flex items-center gap-2">
-                                  <svg
-                                    className="w-3.5 h-3.5 text-emerald-400"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                  >
-                                    <rect
-                                      x="2"
-                                      y="4"
-                                      width="20"
-                                      height="16"
-                                      rx="2"
-                                    />
-                                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                                  </svg>
-                                  <span className="text-xs font-bold text-zinc-300">
-                                    Native Mailboxes
-                                  </span>
-                                </div>
-                                <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">
-                                  $3/mo
-                                </span>
-                              </div>
-                              <div className=" flex flex-col gap-2 items-center justify-between">
-                                <div className="flex w-full items-center justify-between gap-2 bg-white/[0.05] rounded-lg p-1">
-                                  <button
-                                    onClick={() =>
-                                      updateMailboxes(plan.name, -1)
-                                    }
-                                    disabled={getMailboxes(plan.name) === 0}
-                                    className="w-6 h-6 rounded-md bg-white/[0.08] hover:bg-white/[0.18] disabled:opacity-20 disabled:cursor-not-allowed flex items-center justify-center text-white font-bold text-base transition-all active:scale-90 select-none"
-                                  >
-                                    −
-                                  </button>
-                                  <span className="text-sm font-black text-white w-3 text-center tabular-nums select-none">
-                                    {getMailboxes(plan.name)}
-                                  </span>
-                                  <button
-                                    onClick={() =>
-                                      updateMailboxes(plan.name, 1)
-                                    }
-                                    className="w-6 h-6 rounded-md bg-emerald-500/40 hover:bg-emerald-500/65 flex items-center justify-center text-white font-bold text-base transition-all active:scale-90 select-none"
-                                  >
-                                    +
-                                  </button>
-                                </div>
-                                <div className="text-right h-5 hidden  items-center">
-                                  <AnimatePresence mode="wait">
-                                    {getMailboxes(plan.name) > 0 ? (
-                                      <motion.div
-                                        key="mbcost"
-                                        initial={{ opacity: 0, y: -6 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: 6 }}
-                                        transition={{ duration: 0.15 }}
-                                        className="text-right flex space-x-1 items-center justify-center"
-                                      >
-                                        <div className="text-xs font-bold text-emerald-400">
-                                          +${getMailboxes(plan.name) * 3}/mo
-                                        </div>
-                                      </motion.div>
-                                    ) : (
-                                      <motion.span
-                                        key="mbhint"
-                                        initial={{ opacity: 0, y: 6 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: -6 }}
-                                        transition={{ duration: 0.15 }}
-                                        className="text-[10px] text-zinc-600 uppercase tracking-wider"
-                                      >
-                                        Unlimited
-                                      </motion.span>
-                                    )}
-                                  </AnimatePresence>
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-
-                        <div className="h-px bg-gradient-to-r from-white/[0.05] via-white/[0.1] to-white/[0.05]" />
-
-                        <CardFeatureList plan={plan} s={s} />
-
-                        <div className="pt-2 mt-auto">
-                          <Button
-                            text={plan.cta}
-                            variant={isPopular ? "brand" : "secondary"}
-                            className="w-full py-3.5 text-sm"
-                            onClick={() => {
-                              if (
-                                plan.cta.includes("Schedule Call") ||
-                                plan.cta.includes("Demo")
-                              ) {
-                                window.open(
-                                  "https://cal.com/kevin-nexuscale/15min",
-                                  "_blank",
-                                );
-                              } else if (annual && plan.stripeAnnualUrl) {
-                                window.open(plan.stripeAnnualUrl, "_blank");
-                              } else if (!annual && plan.stripeMonthlyUrl) {
-                                window.open(plan.stripeMonthlyUrl, "_blank");
-                              } else {
-                                window.open(
-                                  "https://app.nexuscale.ai/users/register",
-                                  "_blank",
-                                );
-                              }
-                            }}
-                          />
-                          <div className="text-center mt-3">
-                            <span
-                              className={`text-[10px] font-semibold tracking-wide uppercase ${isPopular ? "text-indigo-400" : "text-zinc-500"}`}
+                        <AnimatePresence>
+                          {(linkedinSeats > 0 || mailboxCount > 0) && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                              animate={{ opacity: 1, height: "auto", marginTop: 4 }}
+                              exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                              transition={{ duration: 0.2 }}
+                              className="flex items-center gap-1.5 flex-wrap overflow-hidden"
                             >
-                              {plan.microcopy}
-                            </span>
-                          </div>
-                        </div>
+                              <span className="text-[10px] text-zinc-600">
+                                Base ${getPrice(plan)}
+                              </span>
+                              {linkedinSeats > 0 && (
+                                <span className="text-[10px] font-bold text-[#4fa3d4]">
+                                  +${linkedinSeats * 19} LinkedIn
+                                </span>
+                              )}
+                              {mailboxCount > 0 && (
+                                <span className="text-[10px] font-bold text-emerald-400">
+                                  +${mailboxCount * 3} Mailboxes
+                                </span>
+                              )}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+
+                        {plan.price !== "0" && annual && (
+                          <p className="text-[10px] text-emerald-500/70 mt-1.5 font-bold uppercase tracking-wider">
+                            Billed yearly
+                          </p>
+                        )}
                       </div>
-                    )}
+
+                      {/* ── Insight Band ── */}
+                      <InsightBand plan={plan} annual={annual} />
+
+                      {/* ── Divider ── */}
+                      <div className="h-px bg-gradient-to-r from-white/[0.03] via-white/[0.1] to-white/[0.03]" />
+
+                      {/* ── Stats Grid 2 × 2 ── */}
+                      <div className="grid grid-cols-2 gap-2">
+                        <StatChip
+                          value={plan.credits.contacts}
+                          label="Credits /mo"
+                          sublabel="Engine Credits"
+                        />
+                        <StatChip
+                          value={plan.credits.agents}
+                          label="AI Agents"
+                          sublabel={plan.credits.agentsType || ""}
+                        />
+                        <StatChip
+                          value={plan.credits.teamSeats}
+                          label="Team Seats"
+                          sublabel="Collaborators"
+                        />
+                        <StatChip
+                          value={plan.credits.workspaces}
+                          label={
+                            plan.credits.workspaces === "1"
+                              ? "Workspace"
+                              : "Workspaces"
+                          }
+                          sublabel="Isolation"
+                        />
+                      </div>
+
+                      {/* ── Add-ons: LinkedIn & Mailboxes ── */}
+                      <div className="grid grid-cols-2 gap-2">
+                        {maxSeats > 0 && (
+                          <div className="rounded-xl border border-[#0077b5]/25 bg-[#0077b5]/[0.06] p-3 space-y-2">
+                            <div className="flex items-center gap-1.5">
+                              <span className="text-[8px] font-black text-white bg-[#0077b5] rounded px-1 py-[2px] tracking-wider leading-none">
+                                in
+                              </span>
+                              <span className="text-[10px] font-bold text-zinc-300">
+                                LinkedIn
+                              </span>
+                            </div>
+                            <div className="text-[9px] font-bold text-[#4fa3d4] uppercase tracking-widest">
+                              $19 / seat
+                            </div>
+                            <div className="flex items-center justify-between gap-1 bg-white/[0.05] rounded-lg p-1">
+                              <button
+                                onClick={() =>
+                                  updateLinkedinSeats(plan.name, -1, maxSeats)
+                                }
+                                disabled={linkedinSeats === 0}
+                                className="w-5 h-5 rounded-md bg-white/[0.07] hover:bg-white/[0.15] disabled:opacity-20 disabled:cursor-not-allowed flex items-center justify-center text-white font-bold text-sm transition-all active:scale-90 select-none"
+                              >
+                                −
+                              </button>
+                              <span className="text-xs font-black text-white tabular-nums select-none">
+                                {linkedinSeats}
+                              </span>
+                              <button
+                                onClick={() =>
+                                  updateLinkedinSeats(plan.name, 1, maxSeats)
+                                }
+                                disabled={linkedinSeats >= maxSeats}
+                                className="w-5 h-5 rounded-md bg-[#0077b5]/50 hover:bg-[#0077b5]/75 disabled:opacity-20 disabled:cursor-not-allowed flex items-center justify-center text-white font-bold text-sm transition-all active:scale-90 select-none"
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
+                        )}
+
+                        {plan.price !== "0" && (
+                          <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/[0.05] p-3 space-y-2">
+                            <div className="flex items-center gap-1.5">
+                              <svg
+                                className="w-3 h-3 text-emerald-400"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <rect x="2" y="4" width="20" height="16" rx="2" />
+                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                              </svg>
+                              <span className="text-[10px] font-bold text-zinc-300">
+                                Mailboxes
+                              </span>
+                            </div>
+                            <div className="text-[9px] font-bold text-emerald-400 uppercase tracking-widest">
+                              $3/mo each
+                            </div>
+                            <div className="flex items-center justify-between gap-1 bg-white/[0.05] rounded-lg p-1">
+                              <button
+                                onClick={() => updateMailboxes(plan.name, -1)}
+                                disabled={mailboxCount === 0}
+                                className="w-5 h-5 rounded-md bg-white/[0.07] hover:bg-white/[0.15] disabled:opacity-20 disabled:cursor-not-allowed flex items-center justify-center text-white font-bold text-sm transition-all active:scale-90 select-none"
+                              >
+                                −
+                              </button>
+                              <span className="text-xs font-black text-white tabular-nums select-none">
+                                {mailboxCount}
+                              </span>
+                              <button
+                                onClick={() => updateMailboxes(plan.name, 1)}
+                                className="w-5 h-5 rounded-md bg-emerald-500/40 hover:bg-emerald-500/65 flex items-center justify-center text-white font-bold text-sm transition-all active:scale-90 select-none"
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* ── Divider ── */}
+                      <div className="h-px bg-gradient-to-r from-white/[0.03] via-white/[0.1] to-white/[0.03]" />
+
+                      {/* ── Feature List with view-mode tabs ── */}
+                      <PlanFeatureList plan={plan} s={s} prevPlanName={prevPlanName} />
+
+                      {/* ── CTA ── */}
+                      <div className="pt-1 mt-auto">
+                        <Button
+                          text={plan.cta}
+                          variant={isFeatured ? "brand" : "secondary"}
+                          className="w-full py-3.5 text-sm"
+                          onClick={() => {
+                            if (
+                              plan.cta.includes("Schedule Call") ||
+                              plan.cta.includes("Demo")
+                            ) {
+                              window.open(
+                                "https://cal.com/kevin-nexuscale/15min",
+                                "_blank",
+                              );
+                            } else if (annual && plan.stripeAnnualUrl) {
+                              window.open(plan.stripeAnnualUrl, "_blank");
+                            } else if (!annual && plan.stripeMonthlyUrl) {
+                              window.open(plan.stripeMonthlyUrl, "_blank");
+                            } else {
+                              window.open(
+                                "https://app.nexuscale.ai/users/register",
+                                "_blank",
+                              );
+                            }
+                          }}
+                        />
+                        <p
+                          className={`text-center mt-2.5 text-[10px] font-semibold uppercase tracking-wider ${
+                            isFeatured ? "text-indigo-400" : "text-zinc-500"
+                          }`}
+                        >
+                          {plan.microcopy}
+                        </p>
+                      </div>
+                    </div>
                   </motion.div>
                 );
               })}
