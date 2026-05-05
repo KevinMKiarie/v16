@@ -194,7 +194,7 @@ export default function ROICalculator() {
                <Zap className="w-2.5 h-2.5 text-indigo-400" />
                <span className="text-[9px] font-black uppercase tracking-[.2em] text-indigo-300">ROI calculater</span>
             </div>
-            <h2 className='text-3xl md:text-5xl font-bold tracking-tighter text-white mb-4'>
+            <h2 className='text-3xl md:text-6xl font-bold tracking-tighter text-white mb-4'>
               Calculate your potential
             </h2>
             <p className='text-zinc-500 text-sm max-w-lg leading-relaxed'>
