@@ -25,3 +25,24 @@ dist-ssr
 
 # dotenv
 .env
+
+# === Autopilot managed ===
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# JavaScript / Node
+node_modules/
+dist/
+build/
+.next/
+.nuxt/
+.cache/
+*.log
+.env.local
+.env.*.local
+# ==========================
