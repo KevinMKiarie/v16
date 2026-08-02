@@ -170,9 +170,7 @@ function ContactPage() {
                     <p className="text-xs text-zinc-500 font-medium uppercase tracking-wider">
                       Email
                     </p>
-                    <p className="text-sm text-zinc-300">
-                      hello@nexuscale.io
-                    </p>
+                    <p className="text-sm text-zinc-300">hello@nexuscale.io</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">

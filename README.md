@@ -52,12 +52,14 @@ src/
 ### Installation
 
 1. Install Node.js version using asdf:
+
    ```bash
    asdf install nodejs 18.18.0
    asdf local nodejs 18.18.0
    ```
 
 2. Install dependencies:
+
    ```bash
    npm install
    ```
@@ -87,6 +89,7 @@ The application will be available at `http://localhost:5173`
 ## Development Notes
 
 The application is currently in a hybrid state:
+
 - Core structure, hooks, data, and utilities have been extracted into organized modules
 - Page components and some complex components still reference `temp-code.jsx` for functionality
 - This allows the app to run while gradually refactoring components

@@ -34,10 +34,11 @@ const VerticalCutReveal = forwardRef(
       autoStart = true,
       ...props
     },
-    ref
+    ref,
   ) => {
     const containerRef = useRef(null);
-    const text = typeof children === "string" ? children : children?.toString() || "";
+    const text =
+      typeof children === "string" ? children : children?.toString() || "";
     const [isAnimating, setIsAnimating] = useState(false);
 
     const splitIntoCharacters = (text) => {
@@ -73,11 +74,12 @@ const VerticalCutReveal = forwardRef(
                   (typeof word === "string"
                     ? 1
                     : word.characters.length + (word.needsSpace ? 1 : 0)),
-                0
+                0,
               )
             : elements.length;
         if (staggerFrom === "first") return index * staggerDuration;
-        if (staggerFrom === "last") return (total - 1 - index) * staggerDuration;
+        if (staggerFrom === "last")
+          return (total - 1 - index) * staggerDuration;
         if (staggerFrom === "center") {
           const center = Math.floor(total / 2);
           return Math.abs(center - index) * staggerDuration;
@@ -88,7 +90,7 @@ const VerticalCutReveal = forwardRef(
         }
         return Math.abs(staggerFrom - index) * staggerDuration;
       },
-      [elements.length, staggerFrom, staggerDuration]
+      [elements.length, staggerFrom, staggerDuration],
     );
 
     const startAnimation = useCallback(() => {
@@ -113,7 +115,7 @@ const VerticalCutReveal = forwardRef(
         y: 0,
         transition: {
           ...transition,
-          delay: ((transition?.delay) || 0) + getStaggerDelay(i),
+          delay: (transition?.delay || 0) + getStaggerDelay(i),
         },
       }),
     };
@@ -123,7 +125,7 @@ const VerticalCutReveal = forwardRef(
         className={cn(
           containerClassName,
           "flex flex-wrap whitespace-pre-wrap",
-          splitBy === "lines" && "flex-col"
+          splitBy === "lines" && "flex-col",
         )}
         onClick={onClick}
         ref={containerRef}
@@ -152,7 +154,7 @@ const VerticalCutReveal = forwardRef(
                 <span
                   className={cn(
                     elementLevelClassName,
-                    "whitespace-pre-wrap relative"
+                    "whitespace-pre-wrap relative",
                   )}
                   key={charIndex}
                 >
@@ -179,7 +181,7 @@ const VerticalCutReveal = forwardRef(
         })}
       </span>
     );
-  }
+  },
 );
 
 VerticalCutReveal.displayName = "VerticalCutReveal";

@@ -14,15 +14,15 @@ const PrivacyPolicy = () => {
   const [activeSections, setActiveSections] = useState({
     scope: true,
     "data-collected": true,
-    "permissions": true,
+    permissions: true,
     "processing-retention": true,
     "storage-security": true,
     "data-sharing": true,
-    "advertising": true,
+    advertising: true,
     "website-data": true,
     "user-rights": true,
-    "compliance": true,
-    "contact": true,
+    compliance: true,
+    contact: true,
   });
   const [showScrollTop, setShowScrollTop] = useState(false);
   const sectionsRef = useRef({});
@@ -207,8 +207,8 @@ Requests can be sent to privacy@nexuscale.ai`,
             className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight leading-tight"
             style={{
               background: `linear-gradient(120deg, ${accentColor} 20%, #ffffff 100%)`,
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
             }}
           >
             Privacy Policy – Nexuscale <br className="hidden md:block" />
@@ -218,10 +218,13 @@ Requests can be sent to privacy@nexuscale.ai`,
             Last Updated: January 26, 2026
           </p>
           <p className="text-lg md:text-xl text-white max-w-3xl mx-auto leading-relaxed mb-6">
-            This Privacy Policy explains how 10xEngage Inc. ("Nexuscale", "we", "us") collects, uses, stores, and shares data when you use the Nexuscale Companion Chrome Extension and related services.
+            This Privacy Policy explains how 10xEngage Inc. ("Nexuscale", "we",
+            "us") collects, uses, stores, and shares data when you use the
+            Nexuscale Companion Chrome Extension and related services.
           </p>
           <p className="text-base md:text-lg text-white max-w-3xl mx-auto leading-relaxed">
-            This policy is written to comply with the Chrome Web Store Developer Program Policies and applies specifically to the Chrome Extension.
+            This policy is written to comply with the Chrome Web Store Developer
+            Program Policies and applies specifically to the Chrome Extension.
           </p>
         </div>
       </div>
@@ -233,7 +236,9 @@ Requests can be sent to privacy@nexuscale.ai`,
             {/* Mobile Table of Contents */}
             <div className="lg:hidden mb-8">
               <div className="bg-[#09090B]/50 border border-white/[0.08] rounded-xl p-4 backdrop-blur-sm">
-                <h3 className="text-lg font-semibold text-white mb-4">Contents</h3>
+                <h3 className="text-lg font-semibold text-white mb-4">
+                  Contents
+                </h3>
                 <div className="space-y-2">
                   {sections.map((section) => (
                     <div
@@ -289,7 +294,9 @@ Requests can be sent to privacy@nexuscale.ai`,
                     >
                       {section.icon}
                     </span>
-                    <h2 className="text-2xl font-bold text-white">{section.title}</h2>
+                    <h2 className="text-2xl font-bold text-white">
+                      {section.title}
+                    </h2>
                   </div>
                   <p className="text-zinc-300 whitespace-pre-line leading-relaxed">
                     {section.content}
@@ -312,10 +319,8 @@ Requests can be sent to privacy@nexuscale.ai`,
           <ArrowUp size={20} />
         </button>
       )}
-
     </div>
   );
 };
 
 export default PrivacyPolicy;
-

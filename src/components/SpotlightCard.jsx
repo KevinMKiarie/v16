@@ -1,7 +1,11 @@
-import { useState, useRef } from 'react';
-import { neu } from '../utils/styles';
+import { useState, useRef } from "react";
+import { neu } from "../utils/styles";
 
-export const SpotlightCard = ({ children, className = "", spotlightColor = "rgba(120, 119, 198, 0.15)" }) => {
+export const SpotlightCard = ({
+  children,
+  className = "",
+  spotlightColor = "rgba(120, 119, 198, 0.15)",
+}) => {
   const divRef = useRef(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
@@ -36,4 +40,3 @@ export const SpotlightCard = ({ children, className = "", spotlightColor = "rgba
     </div>
   );
 };
-

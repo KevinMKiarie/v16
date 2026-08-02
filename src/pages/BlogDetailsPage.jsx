@@ -10,11 +10,13 @@ import { ArrowLeft } from "lucide-react";
 const API_URL = "https://articles.nexuscale.ai/api/blogs";
 
 const getOrCreateMetaTag = (name, property = false) => {
-  const attribute = property ? 'property' : 'name';
-  const selector = property ? `meta[property="${name}"]` : `meta[name="${name}"]`;
+  const attribute = property ? "property" : "name";
+  const selector = property
+    ? `meta[property="${name}"]`
+    : `meta[name="${name}"]`;
   let meta = document.querySelector(selector);
   if (!meta) {
-    meta = document.createElement('meta');
+    meta = document.createElement("meta");
     meta.setAttribute(attribute, name);
     document.head.appendChild(meta);
   }
@@ -24,21 +26,22 @@ const getOrCreateMetaTag = (name, property = false) => {
 const getOrCreateLinkTag = (rel) => {
   let link = document.querySelector(`link[rel="${rel}"]`);
   if (!link) {
-    link = document.createElement('link');
-    link.setAttribute('rel', rel);
+    link = document.createElement("link");
+    link.setAttribute("rel", rel);
     document.head.appendChild(link);
   }
   return link;
 };
 
-
 const normalizeMarkdown = (text) => {
   if (!text || typeof text !== "string") return text || "";
 
- 
-  let normalized = text.replace(/^(\s*)(#{1,6})([^\s#\n])/gm, '$1$2 $3');
+  let normalized = text.replace(/^(\s*)(#{1,6})([^\s#\n])/gm, "$1$2 $3");
 
-  normalized = normalized.replace(/^(#{1,6}\s+[^\n]+)\n(?!\n|#|\s*$)([^\n])/gm, '$1\n\n$2');
+  normalized = normalized.replace(
+    /^(#{1,6}\s+[^\n]+)\n(?!\n|#|\s*$)([^\n])/gm,
+    "$1\n\n$2",
+  );
 
   return normalized;
 };
@@ -46,25 +49,46 @@ const normalizeMarkdown = (text) => {
 // Shared markdown components matching Phoenix preview styles
 const markdownComponents = {
   h1: (props) => (
-    <h1 className="text-3xl font-semibold text-white mb-4 mt-6 pb-1 border-b border-zinc-700 leading-tight first:mt-0" {...props} />
+    <h1
+      className="text-3xl font-semibold text-white mb-4 mt-6 pb-1 border-b border-zinc-700 leading-tight first:mt-0"
+      {...props}
+    />
   ),
   h2: (props) => (
-    <h2 className="text-2xl font-semibold text-white mb-4 mt-6 pb-1 border-b border-zinc-700 leading-tight first:mt-0" {...props} />
+    <h2
+      className="text-2xl font-semibold text-white mb-4 mt-6 pb-1 border-b border-zinc-700 leading-tight first:mt-0"
+      {...props}
+    />
   ),
   h3: (props) => (
-    <h3 className="text-xl font-semibold text-white mb-4 mt-6 leading-tight first:mt-0" {...props} />
+    <h3
+      className="text-xl font-semibold text-white mb-4 mt-6 leading-tight first:mt-0"
+      {...props}
+    />
   ),
   h4: (props) => (
-    <h4 className="text-lg font-semibold text-white mb-4 mt-6 leading-tight first:mt-0" {...props} />
+    <h4
+      className="text-lg font-semibold text-white mb-4 mt-6 leading-tight first:mt-0"
+      {...props}
+    />
   ),
   h5: (props) => (
-    <h5 className="text-base font-semibold text-white mb-4 mt-6 leading-tight first:mt-0" {...props} />
+    <h5
+      className="text-base font-semibold text-white mb-4 mt-6 leading-tight first:mt-0"
+      {...props}
+    />
   ),
   h6: (props) => (
-    <h6 className="text-sm font-semibold text-zinc-400 mb-4 mt-6 leading-tight first:mt-0" {...props} />
+    <h6
+      className="text-sm font-semibold text-zinc-400 mb-4 mt-6 leading-tight first:mt-0"
+      {...props}
+    />
   ),
   p: (props) => (
-    <p className="mb-4 text-zinc-300 leading-[1.75] mt-0 last:mb-0" {...props} />
+    <p
+      className="mb-4 text-zinc-300 leading-[1.75] mt-0 last:mb-0"
+      {...props}
+    />
   ),
   a: (props) => (
     <a
@@ -75,26 +99,39 @@ const markdownComponents = {
     />
   ),
   ul: (props) => (
-    <ul className="list-disc mb-4 mt-0 pl-8 text-zinc-300 space-y-2" {...props} />
+    <ul
+      className="list-disc mb-4 mt-0 pl-8 text-zinc-300 space-y-2"
+      {...props}
+    />
   ),
   ol: (props) => (
-    <ol className="list-decimal mb-4 mt-0 pl-8 text-zinc-300 space-y-2" {...props} />
+    <ol
+      className="list-decimal mb-4 mt-0 pl-8 text-zinc-300 space-y-2"
+      {...props}
+    />
   ),
-  li: (props) => (
-    <li className="mb-2 leading-[1.75]" {...props} />
-  ),
+  li: (props) => <li className="mb-2 leading-[1.75]" {...props} />,
   blockquote: (props) => (
-    <blockquote className="my-6 py-3 pl-6 pr-4 border-l-4 border-[#787ff7] bg-zinc-800 text-zinc-300 italic rounded-r border-r-0 first:mt-0 last:mb-0" {...props} />
+    <blockquote
+      className="my-6 py-3 pl-6 pr-4 border-l-4 border-[#787ff7] bg-zinc-800 text-zinc-300 italic rounded-r border-r-0 first:mt-0 last:mb-0"
+      {...props}
+    />
   ),
   code: ({ inline, className, children, ...props }) => {
-    const match = /language-(\w+)/.exec(className || '');
+    const match = /language-(\w+)/.exec(className || "");
     return inline ? (
-      <code className="bg-zinc-800 px-1.5 py-0.5 rounded text-sm font-mono text-zinc-300 border border-zinc-700" {...props}>
+      <code
+        className="bg-zinc-800 px-1.5 py-0.5 rounded text-sm font-mono text-zinc-300 border border-zinc-700"
+        {...props}
+      >
         {children}
       </code>
     ) : (
       <pre className="bg-zinc-800 text-zinc-50 p-4 rounded-lg overflow-x-auto my-6 leading-relaxed border border-zinc-700">
-        <code className={`text-sm font-mono bg-transparent p-0 border-0 text-inherit ${className || ''}`} {...props}>
+        <code
+          className={`text-sm font-mono bg-transparent p-0 border-0 text-inherit ${className || ""}`}
+          {...props}
+        >
           {children}
         </code>
       </pre>
@@ -113,20 +150,22 @@ const markdownComponents = {
     <table className="w-full border-collapse my-6" {...props} />
   ),
   th: (props) => (
-    <th className="border border-zinc-700 px-3 py-2 bg-zinc-800 font-semibold text-left text-white" {...props} />
+    <th
+      className="border border-zinc-700 px-3 py-2 bg-zinc-800 font-semibold text-left text-white"
+      {...props}
+    />
   ),
   td: (props) => (
     <td className="border border-zinc-700 px-3 py-2 text-zinc-300" {...props} />
   ),
   hr: (props) => (
-    <hr className="my-8 border-0 border-t-2 border-zinc-700 bg-transparent" {...props} />
+    <hr
+      className="my-8 border-0 border-t-2 border-zinc-700 bg-transparent"
+      {...props}
+    />
   ),
-  strong: (props) => (
-    <strong className="font-semibold text-white" {...props} />
-  ),
-  em: (props) => (
-    <em className="italic" {...props} />
-  ),
+  strong: (props) => <strong className="font-semibold text-white" {...props} />,
+  em: (props) => <em className="italic" {...props} />,
 };
 
 const BlogDetailsPage = () => {
@@ -152,82 +191,113 @@ const BlogDetailsPage = () => {
   });
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, [slug]);
 
   useEffect(() => {
     if (!blog || !slug) return;
 
-    const title = blog.title || 'Blog Post';
-    const publishedAt = blog.publishedAt || blog.published_at || blog.createdAt || blog.created_at;
-    const author = typeof blog.author === 'string' ? blog.author : blog.author?.name || 'Nexuscale Team';
+    const title = blog.title || "Blog Post";
+    const publishedAt =
+      blog.publishedAt ||
+      blog.published_at ||
+      blog.createdAt ||
+      blog.created_at;
+    const author =
+      typeof blog.author === "string"
+        ? blog.author
+        : blog.author?.name || "Nexuscale Team";
     const cover = blog.cover || blog.coverImage || blog.image;
-    let imageUrl = cover?.formats?.large?.url || cover?.formats?.medium?.url || cover?.url || cover || null;
+    let imageUrl =
+      cover?.formats?.large?.url ||
+      cover?.formats?.medium?.url ||
+      cover?.url ||
+      cover ||
+      null;
 
     // If it's a relative path (starts with /), make it absolute
-    if (imageUrl && typeof imageUrl === 'string' && imageUrl.startsWith('/')) {
+    if (imageUrl && typeof imageUrl === "string" && imageUrl.startsWith("/")) {
       imageUrl = `https://articles.nexuscale.ai${imageUrl}`;
     }
 
-    const description = blog.description || blog.excerpt || blog.summary || '';
-    const cleanDescription = description.replace(/<[^>]+>/g, '').slice(0, 160);
+    const description = blog.description || blog.excerpt || blog.summary || "";
+    const cleanDescription = description.replace(/<[^>]+>/g, "").slice(0, 160);
 
     const canonicalUrl = `https://www.nexuscale.ai/blogs/${slug}`;
-    const canonicalLink = getOrCreateLinkTag('canonical');
-    canonicalLink.setAttribute('href', canonicalUrl);
+    const canonicalLink = getOrCreateLinkTag("canonical");
+    canonicalLink.setAttribute("href", canonicalUrl);
 
     document.title = `${title} | Nexuscale Blog`;
 
-    const metaDescription = getOrCreateMetaTag('description');
-    metaDescription.setAttribute('content', cleanDescription || `${title} - Nexuscale Blog`);
+    const metaDescription = getOrCreateMetaTag("description");
+    metaDescription.setAttribute(
+      "content",
+      cleanDescription || `${title} - Nexuscale Blog`,
+    );
 
-    const ogTitle = getOrCreateMetaTag('og:title', true);
-    ogTitle.setAttribute('content', title);
+    const ogTitle = getOrCreateMetaTag("og:title", true);
+    ogTitle.setAttribute("content", title);
 
-    const ogDescription = getOrCreateMetaTag('og:description', true);
-    ogDescription.setAttribute('content', cleanDescription || `${title} - Nexuscale Blog`);
+    const ogDescription = getOrCreateMetaTag("og:description", true);
+    ogDescription.setAttribute(
+      "content",
+      cleanDescription || `${title} - Nexuscale Blog`,
+    );
 
-    const ogUrl = getOrCreateMetaTag('og:url', true);
-    ogUrl.setAttribute('content', canonicalUrl);
+    const ogUrl = getOrCreateMetaTag("og:url", true);
+    ogUrl.setAttribute("content", canonicalUrl);
 
-    const ogType = getOrCreateMetaTag('og:type', true);
-    ogType.setAttribute('content', 'article');
+    const ogType = getOrCreateMetaTag("og:type", true);
+    ogType.setAttribute("content", "article");
 
     if (imageUrl) {
-      const fullImageUrl = imageUrl.startsWith('http') ? imageUrl : `https://articles.nexuscale.ai${imageUrl}`;
-      const ogImage = getOrCreateMetaTag('og:image', true);
-      ogImage.setAttribute('content', fullImageUrl);
+      const fullImageUrl = imageUrl.startsWith("http")
+        ? imageUrl
+        : `https://articles.nexuscale.ai${imageUrl}`;
+      const ogImage = getOrCreateMetaTag("og:image", true);
+      ogImage.setAttribute("content", fullImageUrl);
     }
 
-    const ogSiteName = getOrCreateMetaTag('og:site_name', true);
-    ogSiteName.setAttribute('content', 'Nexuscale');
+    const ogSiteName = getOrCreateMetaTag("og:site_name", true);
+    ogSiteName.setAttribute("content", "Nexuscale");
 
-    const twitterCard = getOrCreateMetaTag('twitter:card');
-    twitterCard.setAttribute('content', 'summary_large_image');
+    const twitterCard = getOrCreateMetaTag("twitter:card");
+    twitterCard.setAttribute("content", "summary_large_image");
 
-    const twitterTitle = getOrCreateMetaTag('twitter:title');
-    twitterTitle.setAttribute('content', title);
+    const twitterTitle = getOrCreateMetaTag("twitter:title");
+    twitterTitle.setAttribute("content", title);
 
-    const twitterDescription = getOrCreateMetaTag('twitter:description');
-    twitterDescription.setAttribute('content', cleanDescription || `${title} - Nexuscale Blog`);
+    const twitterDescription = getOrCreateMetaTag("twitter:description");
+    twitterDescription.setAttribute(
+      "content",
+      cleanDescription || `${title} - Nexuscale Blog`,
+    );
 
     if (imageUrl) {
-      const fullImageUrl = imageUrl.startsWith('http') ? imageUrl : `https://articles.nexuscale.ai${imageUrl}`;
-      const twitterImage = getOrCreateMetaTag('twitter:image');
-      twitterImage.setAttribute('content', fullImageUrl);
+      const fullImageUrl = imageUrl.startsWith("http")
+        ? imageUrl
+        : `https://articles.nexuscale.ai${imageUrl}`;
+      const twitterImage = getOrCreateMetaTag("twitter:image");
+      twitterImage.setAttribute("content", fullImageUrl);
     }
 
     if (publishedAt) {
-      const articlePublishedTime = getOrCreateMetaTag('article:published_time');
-      articlePublishedTime.setAttribute('content', new Date(publishedAt).toISOString());
+      const articlePublishedTime = getOrCreateMetaTag("article:published_time");
+      articlePublishedTime.setAttribute(
+        "content",
+        new Date(publishedAt).toISOString(),
+      );
 
-      const articleModifiedTime = getOrCreateMetaTag('article:modified_time');
-      articleModifiedTime.setAttribute('content', new Date(publishedAt).toISOString());
+      const articleModifiedTime = getOrCreateMetaTag("article:modified_time");
+      articleModifiedTime.setAttribute(
+        "content",
+        new Date(publishedAt).toISOString(),
+      );
     }
 
     if (author) {
-      const articleAuthor = getOrCreateMetaTag('article:author');
-      articleAuthor.setAttribute('content', author);
+      const articleAuthor = getOrCreateMetaTag("article:author");
+      articleAuthor.setAttribute("content", author);
     }
 
     if (jsonLdScriptRef.current) {
@@ -237,21 +307,21 @@ const BlogDetailsPage = () => {
     const jsonLd = {
       "@context": "https://schema.org",
       "@type": "Article",
-      "headline": title,
-      "description": cleanDescription || `${title} - Nexuscale Blog`,
-      "author": {
+      headline: title,
+      description: cleanDescription || `${title} - Nexuscale Blog`,
+      author: {
         "@type": "Person",
-        "name": author
+        name: author,
       },
-      "publisher": {
+      publisher: {
         "@type": "Organization",
-        "name": "Nexuscale",
-        "url": "https://www.nexuscale.ai"
+        name: "Nexuscale",
+        url: "https://www.nexuscale.ai",
       },
-      "mainEntityOfPage": {
+      mainEntityOfPage: {
         "@type": "WebPage",
-        "@id": canonicalUrl
-      }
+        "@id": canonicalUrl,
+      },
     };
 
     if (publishedAt) {
@@ -260,14 +330,16 @@ const BlogDetailsPage = () => {
     }
 
     if (imageUrl) {
-      const fullImageUrl = imageUrl.startsWith('http') ? imageUrl : `https://articles.nexuscale.ai${imageUrl}`;
+      const fullImageUrl = imageUrl.startsWith("http")
+        ? imageUrl
+        : `https://articles.nexuscale.ai${imageUrl}`;
       jsonLd.image = fullImageUrl;
     }
 
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
     script.text = JSON.stringify(jsonLd);
-    script.id = 'blog-json-ld';
+    script.id = "blog-json-ld";
     jsonLdScriptRef.current = script;
     document.head.appendChild(script);
 
@@ -335,7 +407,8 @@ const BlogDetailsPage = () => {
   if (!blog) return null;
 
   const title = blog.title;
-  const publishedAt = blog.publishedAt || blog.published_at || blog.createdAt || blog.created_at;
+  const publishedAt =
+    blog.publishedAt || blog.published_at || blog.createdAt || blog.created_at;
   const author = blog.author;
   const blocks = blog.blocks || blog.content;
   const rawContent = blog.content || blog.body;
@@ -346,10 +419,14 @@ const BlogDetailsPage = () => {
     if (!allArticles || !Array.isArray(allArticles)) return [];
 
     const filtered = allArticles
-      .filter(article => article.slug !== slug)
+      .filter((article) => article.slug !== slug)
       .sort((a, b) => {
-        const dateA = new Date(a.publishedAt || a.published_at || a.createdAt || a.created_at || 0);
-        const dateB = new Date(b.publishedAt || b.published_at || b.createdAt || b.created_at || 0);
+        const dateA = new Date(
+          a.publishedAt || a.published_at || a.createdAt || a.created_at || 0,
+        );
+        const dateB = new Date(
+          b.publishedAt || b.published_at || b.createdAt || b.created_at || 0,
+        );
         return dateB - dateA;
       })
       .slice(0, 3);
@@ -364,23 +441,27 @@ const BlogDetailsPage = () => {
     let imageUrl = cover?.formats?.small?.url || cover?.url || cover;
 
     if (!imageUrl) return null;
-    if (typeof imageUrl === 'string' && imageUrl.startsWith('/')) {
+    if (typeof imageUrl === "string" && imageUrl.startsWith("/")) {
       imageUrl = `https://articles.nexuscale.ai${imageUrl}`;
     }
     return imageUrl;
   };
 
   const getTrendingBlogTitle = (article) => {
-    return article.title || article.name || 'Untitled Article';
+    return article.title || article.name || "Untitled Article";
   };
 
   const getTrendingBlogSlug = (article) => {
-    return article.slug || article.id || 'untitled';
+    return article.slug || article.id || "untitled";
   };
 
   const getTrendingBlogDate = (article) => {
-    const dateStr = article.publishedAt || article.published_at || article.createdAt || article.created_at;
-    if (!dateStr) return '';
+    const dateStr =
+      article.publishedAt ||
+      article.published_at ||
+      article.createdAt ||
+      article.created_at;
+    if (!dateStr) return "";
     try {
       return new Date(dateStr).toLocaleDateString("en-US", {
         month: "short",
@@ -388,35 +469,37 @@ const BlogDetailsPage = () => {
         year: "numeric",
       });
     } catch {
-      return '';
+      return "";
     }
   };
 
   const getTrendingBlogReadTime = (article) => {
     const readTime = article.read_time || article.readTime;
-    if (!readTime || typeof readTime !== 'number') return null;
+    if (!readTime || typeof readTime !== "number") return null;
     return `${readTime} min read`;
   };
 
   const getTrendingBlogDescription = (article) => {
-    const description = article.description || article.excerpt || article.summary || '';
-    if (!description) return '';
+    const description =
+      article.description || article.excerpt || article.summary || "";
+    if (!description) return "";
 
-    if (typeof description === 'object') {
-      const text = description.text || description.content || description.body || '';
+    if (typeof description === "object") {
+      const text =
+        description.text || description.content || description.body || "";
       if (text) {
-        const cleaned = text.replace(/<[^>]+>/g, '').slice(0, 120);
-        return cleaned || '';
+        const cleaned = text.replace(/<[^>]+>/g, "").slice(0, 120);
+        return cleaned || "";
       }
-      return '';
+      return "";
     }
 
-    if (typeof description === 'string') {
-      const cleaned = description.replace(/<[^>]+>/g, '').slice(0, 120);
-      return cleaned || '';
+    if (typeof description === "string") {
+      const cleaned = description.replace(/<[^>]+>/g, "").slice(0, 120);
+      return cleaned || "";
     }
 
-    return '';
+    return "";
   };
 
   return (
@@ -436,8 +519,8 @@ const BlogDetailsPage = () => {
               className="text-4xl md:text-5xl font-bold text-white mb-2 leading-tight"
               style={{
                 background: `linear-gradient(120deg, ${accentColor} 20%, #ffffff 100%)`,
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
               }}
             >
               {title}
@@ -445,7 +528,10 @@ const BlogDetailsPage = () => {
             <div className="text-zinc-400 text-sm mt-3">
               {author && (
                 <span className="font-medium text-zinc-300">
-                  By {typeof author === 'string' ? author : author.name || 'Unknown Author'}
+                  By{" "}
+                  {typeof author === "string"
+                    ? author
+                    : author.name || "Unknown Author"}
                 </span>
               )}
               {author && publishedAt && <span className="mx-2">•</span>}
@@ -463,9 +549,13 @@ const BlogDetailsPage = () => {
 
           <div className="markdown-content prose prose-invert max-w-none">
             {/* Handle structured blocks content */}
-            {blocks && Array.isArray(blocks) &&
+            {blocks &&
+              Array.isArray(blocks) &&
               blocks.map((block, index) => {
-                if (block.__component === "shared.rich-text" || block.type === "rich-text") {
+                if (
+                  block.__component === "shared.rich-text" ||
+                  block.type === "rich-text"
+                ) {
                   return (
                     <div key={index}>
                       <ReactMarkdown
@@ -481,7 +571,7 @@ const BlogDetailsPage = () => {
               })}
 
             {/* Handle simple content string */}
-            {content && typeof content === 'string' && (
+            {content && typeof content === "string" && (
               <div>
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
@@ -504,7 +594,9 @@ const BlogDetailsPage = () => {
         {/* Trending Blogs Section */}
         {trendingBlogs.length > 0 && (
           <div className="mt-16">
-            <h2 className="text-3xl font-bold text-white mb-8">Trending Blogs</h2>
+            <h2 className="text-3xl font-bold text-white mb-8">
+              Trending Blogs
+            </h2>
             <div className="grid md:grid-cols-3 gap-6">
               {trendingBlogs.map((article) => {
                 const articleTitle = getTrendingBlogTitle(article);
@@ -534,7 +626,14 @@ const BlogDetailsPage = () => {
   );
 };
 
-const TrendingBlogCard = ({ articleSlug, articleTitle, articleImage, articleDate, articleDescription, articleReadTime }) => {
+const TrendingBlogCard = ({
+  articleSlug,
+  articleTitle,
+  articleImage,
+  articleDate,
+  articleDescription,
+  articleReadTime,
+}) => {
   const [imageError, setImageError] = useState(false);
   const showPlaceholder = !articleImage || imageError;
 
@@ -557,7 +656,9 @@ const TrendingBlogCard = ({ articleSlug, articleTitle, articleImage, articleDate
             className="w-full h-full flex items-center justify-center"
             style={{ backgroundColor: accentColor }}
           >
-            <span className="text-white font-bold text-xl md:text-2xl">Nexuscale</span>
+            <span className="text-white font-bold text-xl md:text-2xl">
+              Nexuscale
+            </span>
           </div>
         )}
       </div>
@@ -586,4 +687,3 @@ const TrendingBlogCard = ({ articleSlug, articleTitle, articleImage, articleDate
 };
 
 export default BlogDetailsPage;
-

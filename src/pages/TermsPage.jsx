@@ -141,8 +141,8 @@ Refunds are not issued for:
             className="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight"
             style={{
               background: `linear-gradient(120deg, ${accentColor} 20%, #ffffff 100%)`,
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
             }}
           >
             Terms of Service
@@ -160,7 +160,9 @@ Refunds are not issued for:
             {/* Mobile Table of Contents */}
             <div className="lg:hidden mb-8">
               <div className="bg-[#09090B]/50 border border-white/[0.08] rounded-xl p-4 backdrop-blur-sm">
-                <h3 className="text-lg font-semibold text-white mb-4">Contents</h3>
+                <h3 className="text-lg font-semibold text-white mb-4">
+                  Contents
+                </h3>
                 <div className="space-y-2">
                   {sections.map((section) => (
                     <div
@@ -216,7 +218,9 @@ Refunds are not issued for:
                     >
                       {section.icon}
                     </span>
-                    <h2 className="text-2xl font-bold text-white">{section.title}</h2>
+                    <h2 className="text-2xl font-bold text-white">
+                      {section.title}
+                    </h2>
                   </div>
                   <p className="text-zinc-300 whitespace-pre-line leading-relaxed">
                     {section.content}
@@ -259,4 +263,3 @@ Refunds are not issued for:
 };
 
 export default TermsOfService;
-

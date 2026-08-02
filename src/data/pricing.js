@@ -119,7 +119,7 @@ export const pricingPlansData = [
     },
     features: [
       { text: "Everything in Free", included: true, isBadge: true },
-     
+
       {
         text: "Unlimited Native Mailbox Connections",
         tooltip: "Connect unlimited native Nexuscale mailboxes at $4.99/ea.",
@@ -273,7 +273,7 @@ export const pricingPlansData = [
     },
     features: [
       { text: "Everything in Start Up", included: true, isBadge: true },
-     
+
       {
         text: "3 Workspaces & 5 AI Agents",
         tooltip:
@@ -389,7 +389,7 @@ export const pricingPlansData = [
     },
     features: [
       { text: "Everything in Growth", included: true, isBadge: true },
-     
+
       {
         text: "10 Workspaces & 10 AI Agents",
         tooltip:

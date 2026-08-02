@@ -69,9 +69,7 @@ export default function StartupProgramPage() {
   };
 
   return (
-    <div
-      className="min-h-screen bg-[#020204] font-sans selection:bg-indigo-500/30 text-zinc-200 flex flex-col lg:flex-row relative overflow-hidden"
-    >
+    <div className="min-h-screen bg-[#020204] font-sans selection:bg-indigo-500/30 text-zinc-200 flex flex-col lg:flex-row relative overflow-hidden">
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none z-[100]"
         style={{
@@ -134,7 +132,6 @@ export default function StartupProgramPage() {
                 </div>
 
                 {/* The Rules Card */}
-               
               </div>
             </div>
           </ScrollReveal>

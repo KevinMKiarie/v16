@@ -18,7 +18,6 @@ import {
 // ];
 
 export const demoList = [
- 
   {
     title: "Book a Live Demo",
     desc: "Talk to our sales team.",

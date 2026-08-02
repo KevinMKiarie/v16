@@ -1,6 +1,11 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 
-export const ScrollReveal = ({ children, className = '', delay = 0, direction = 'up' }) => {
+export const ScrollReveal = ({
+  children,
+  className = "",
+  delay = 0,
+  direction = "up",
+}) => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef(null);
 
@@ -12,7 +17,7 @@ export const ScrollReveal = ({ children, className = '', delay = 0, direction = 
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" },
     );
 
     if (ref.current) observer.observe(ref.current);
@@ -22,11 +27,11 @@ export const ScrollReveal = ({ children, className = '', delay = 0, direction = 
   }, []);
 
   const transforms = {
-    up: 'translate-y-12',
-    down: '-translate-y-12',
-    left: '-translate-x-12',
-    right: 'translate-x-12',
-    scale: 'scale-95'
+    up: "translate-y-12",
+    down: "-translate-y-12",
+    left: "-translate-x-12",
+    right: "translate-x-12",
+    scale: "scale-95",
   };
 
   const initialClass = `${transforms[direction]} opacity-0`;
@@ -42,4 +47,3 @@ export const ScrollReveal = ({ children, className = '', delay = 0, direction = 
     </div>
   );
 };
-

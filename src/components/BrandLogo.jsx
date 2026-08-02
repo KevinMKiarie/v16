@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Zap } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { Zap } from "lucide-react";
 
 export default function BrandLogo({ className = "", showText = false }) {
   const [logoUrl, setLogoUrl] = useState(null);
@@ -9,26 +9,30 @@ export default function BrandLogo({ className = "", showText = false }) {
     const fetchLogo = async () => {
       try {
         // Try multiple domain variations for Brandfetch
-        const domains = ['nexuscale.ai', 'nexuscale.com', 'www.nexuscale.ai'];
-        
+        const domains = ["nexuscale.ai", "nexuscale.com", "www.nexuscale.ai"];
+
         for (const domain of domains) {
           try {
-            const response = await fetch(`https://api.brandfetch.io/v2/brands/${domain}`, {
-              headers: {
-                'Accept': 'application/json',
-              }
-            });
-            
+            const response = await fetch(
+              `https://api.brandfetch.io/v2/brands/${domain}`,
+              {
+                headers: {
+                  Accept: "application/json",
+                },
+              },
+            );
+
             if (response.ok) {
               const data = await response.json();
-              
+
               // Try to get the logo - Brandfetch returns logos in different formats
               if (data.logos && data.logos.length > 0) {
                 // Prefer icon first, then logo
-                const icon = data.logos.find(logo => logo.type === 'icon') || 
-                            data.logos.find(logo => logo.type === 'logo') ||
-                            data.logos[0];
-                
+                const icon =
+                  data.logos.find((logo) => logo.type === "icon") ||
+                  data.logos.find((logo) => logo.type === "logo") ||
+                  data.logos[0];
+
                 if (icon && icon.image) {
                   setLogoUrl(icon.image);
                   setLoading(false);
@@ -42,7 +46,7 @@ export default function BrandLogo({ className = "", showText = false }) {
           }
         }
       } catch (error) {
-        console.log('Could not fetch logo from Brandfetch, using fallback');
+        console.log("Could not fetch logo from Brandfetch, using fallback");
       }
       setLoading(false);
     };
@@ -58,7 +62,9 @@ export default function BrandLogo({ className = "", showText = false }) {
           <Zap className="w-5 h-5 text-white" />
         </div>
         {showText && (
-          <span className="font-bold text-white text-xl tracking-tight">Nexuscale</span>
+          <span className="font-bold text-white text-xl tracking-tight">
+            Nexuscale
+          </span>
         )}
       </div>
     );
@@ -66,9 +72,9 @@ export default function BrandLogo({ className = "", showText = false }) {
 
   return (
     <div className={`flex items-center gap-3 ${className}`}>
-      <img 
-        src={logoUrl} 
-        alt="Nexuscale" 
+      <img
+        src={logoUrl}
+        alt="Nexuscale"
         className="w-10 h-10 object-contain rounded-xl"
         onError={() => {
           // Fallback if image fails to load
@@ -76,7 +82,9 @@ export default function BrandLogo({ className = "", showText = false }) {
         }}
       />
       {showText && (
-        <span className="font-bold text-white text-xl tracking-tight">Nexuscale</span>
+        <span className="font-bold text-white text-xl tracking-tight">
+          Nexuscale
+        </span>
       )}
     </div>
   );

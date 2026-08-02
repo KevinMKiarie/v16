@@ -144,7 +144,7 @@ export default function Navigation({
                 </button>
               </div>
 
-              {[ "Use Cases", "Resources"].map((item) => (
+              {["Use Cases", "Resources"].map((item) => (
                 <div
                   key={item}
                   className="relative"

@@ -1,17 +1,26 @@
-import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Link, useSearchParams } from 'react-router-dom';
-import { Section } from '../components/ui/Section';
-import { accentColor, accentColorEnd } from '../constants/theme';
-import { useQuery } from '@tanstack/react-query';
-import { fetchCaseStudies } from '../lib/queryClient';
+import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Link, useSearchParams } from "react-router-dom";
+import { Section } from "../components/ui/Section";
+import { accentColor, accentColorEnd } from "../constants/theme";
+import { useQuery } from "@tanstack/react-query";
+import { fetchCaseStudies } from "../lib/queryClient";
 
 const PER_PAGE = 10;
 
-const extractText = (obj, fallback = '') => {
-  if (typeof obj === 'string') return obj;
-  if (obj && typeof obj === 'object') {
-    return obj.text || obj.content || obj.body || obj.name || obj.title || obj.label || obj.slug || fallback;
+const extractText = (obj, fallback = "") => {
+  if (typeof obj === "string") return obj;
+  if (obj && typeof obj === "object") {
+    return (
+      obj.text ||
+      obj.content ||
+      obj.body ||
+      obj.name ||
+      obj.title ||
+      obj.label ||
+      obj.slug ||
+      fallback
+    );
   }
   return fallback;
 };
@@ -20,16 +29,21 @@ const CaseStudyCard = ({ study, large = false, count = null }) => {
   const [imageError, setImageError] = useState(false);
   if (!study) return null;
 
-  const imageUrl = study.image?.url || study.image || study.coverImage || study.cover?.url;
+  const imageUrl =
+    study.image?.url || study.image || study.coverImage || study.cover?.url;
   const showPlaceholder = !imageUrl || imageError;
-  const author = extractText(study.author, 'Nexuscale Team') || 'Nexuscale Team';
+  const author =
+    extractText(study.author, "Nexuscale Team") || "Nexuscale Team";
   const readTime = study.read_time ?? study.readTime;
-  const readTimeStr = typeof readTime === 'number' ? `${readTime} min read` : null;
-  const description = study.description || study.excerpt || study.summary || '';
+  const readTimeStr =
+    typeof readTime === "number" ? `${readTime} min read` : null;
+  const description = study.description || study.excerpt || study.summary || "";
   const descText = extractText(description);
-  const snippet = descText ? descText.replace(/<[^>]+>/g, '').slice(0, 200) : 'Read more about this case study...';
-  const title = study.title || study.name || 'Untitled Case Study';
-  const slug = study.slug || study.id || 'untitled';
+  const snippet = descText
+    ? descText.replace(/<[^>]+>/g, "").slice(0, 200)
+    : "Read more about this case study...";
+  const title = study.title || study.name || "Untitled Case Study";
+  const slug = study.slug || study.id || "untitled";
 
   return (
     <Link to={`/case-studies/${slug}`} className="block h-full">
@@ -37,7 +51,11 @@ const CaseStudyCard = ({ study, large = false, count = null }) => {
         <div className="relative w-full aspect-[16/9] overflow-hidden rounded-t-2xl">
           {!showPlaceholder && imageUrl && (
             <img
-              src={imageUrl.startsWith('/') ? `https://articles.nexuscale.ai${imageUrl}` : imageUrl}
+              src={
+                imageUrl.startsWith("/")
+                  ? `https://articles.nexuscale.ai${imageUrl}`
+                  : imageUrl
+              }
               alt={title}
               className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               onError={() => setImageError(true)}
@@ -48,7 +66,9 @@ const CaseStudyCard = ({ study, large = false, count = null }) => {
               className="absolute inset-0 w-full h-full flex items-center justify-center"
               style={{ backgroundColor: accentColor }}
             >
-              <span className="text-white font-bold text-2xl md:text-3xl">Nexuscale</span>
+              <span className="text-white font-bold text-2xl md:text-3xl">
+                Nexuscale
+              </span>
             </div>
           )}
         </div>
@@ -56,14 +76,20 @@ const CaseStudyCard = ({ study, large = false, count = null }) => {
           {count !== null && (
             <div className="flex items-center justify-between mb-2">
               <div className="w-8 h-8 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/[0.08] flex-shrink-0">
-                <span className="text-sm font-bold text-indigo-400">{count}</span>
+                <span className="text-sm font-bold text-indigo-400">
+                  {count}
+                </span>
               </div>
             </div>
           )}
-          <h3 className={`font-bold text-white mb-3 group-hover:text-indigo-300 transition-colors ${large ? 'text-2xl' : 'text-xl'}`}>
+          <h3
+            className={`font-bold text-white mb-3 group-hover:text-indigo-300 transition-colors ${large ? "text-2xl" : "text-xl"}`}
+          >
             {title}
           </h3>
-          <p className="text-zinc-400 text-base leading-relaxed mb-4 flex-grow">{snippet}</p>
+          <p className="text-zinc-400 text-base leading-relaxed mb-4 flex-grow">
+            {snippet}
+          </p>
           <div className="text-sm text-zinc-500 flex items-center justify-between">
             <span>By {author}</span>
             {readTimeStr && <span>{readTimeStr}</span>}
@@ -98,17 +124,17 @@ const SkeletonCard = () => (
 
 export default function CaseStudiesPage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentPage = parseInt(searchParams.get('page') || '1', 10);
+  const currentPage = parseInt(searchParams.get("page") || "1", 10);
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['case-studies', currentPage],
+    queryKey: ["case-studies", currentPage],
     queryFn: () => fetchCaseStudies(currentPage, PER_PAGE),
     retry: 1,
     retryDelay: 1000,
   });
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentPage]);
 
   const entries = data?.entries || [];
@@ -130,8 +156,8 @@ export default function CaseStudiesPage() {
                 className="text-4xl md:text-6xl font-extrabold mb-2 leading-tight tracking-tight"
                 style={{
                   background: `linear-gradient(120deg, ${accentColor} 20%, #ffffff 100%)`,
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
                 }}
               >
                 Case Studies
@@ -146,11 +172,15 @@ export default function CaseStudiesPage() {
         {isLoading ? (
           <>
             <Section className="mb-8 md:mb-10">
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Featured</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+                Featured
+              </h2>
               <SkeletonCard />
             </Section>
             <Section>
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">More Case Studies</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+                More Case Studies
+              </h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {[1, 2, 3, 4, 5, 6].map((i) => (
                   <SkeletonCard key={i} />
@@ -162,7 +192,11 @@ export default function CaseStudiesPage() {
           <Section className="mb-8 md:mb-10">
             <div className="text-center py-8">
               <p className="text-red-400 mb-4">Failed to load case studies</p>
-              {error && <p className="text-zinc-500 text-sm mt-2">{error.message || 'Please try again later'}</p>}
+              {error && (
+                <p className="text-zinc-500 text-sm mt-2">
+                  {error.message || "Please try again later"}
+                </p>
+              )}
             </div>
           </Section>
         ) : entries.length === 0 ? (
@@ -175,17 +209,24 @@ export default function CaseStudiesPage() {
           <>
             {featured && (
               <Section className="mb-8 md:mb-10">
-                <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Featured</h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+                  Featured
+                </h2>
                 <CaseStudyCard study={featured} large count={1} />
               </Section>
             )}
             {rest.length > 0 && (
               <Section>
-                <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">More Case Studies</h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+                  More Case Studies
+                </h2>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {rest.map((study, index) => {
                     if (!study) return null;
-                    const num = currentPage === 1 ? index + 2 : (currentPage - 1) * PER_PAGE + index + 1;
+                    const num =
+                      currentPage === 1
+                        ? index + 2
+                        : (currentPage - 1) * PER_PAGE + index + 1;
                     return (
                       <CaseStudyCard
                         key={study.id ?? study.slug ?? `study-${num}`}

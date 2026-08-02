@@ -1,7 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-export const Typewriter = ({ text, delay = 0, speed = 30, onComplete, start }) => {
-  const [displayedText, setDisplayedText] = useState('');
+export const Typewriter = ({
+  text,
+  delay = 0,
+  speed = 30,
+  onComplete,
+  start,
+}) => {
+  const [displayedText, setDisplayedText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hasStarted, setHasStarted] = useState(false);
 
@@ -17,8 +23,8 @@ export const Typewriter = ({ text, delay = 0, speed = 30, onComplete, start }) =
     if (!hasStarted) return;
     if (currentIndex < text.length) {
       const timeout = setTimeout(() => {
-        setDisplayedText(prev => prev + text[currentIndex]);
-        setCurrentIndex(prev => prev + 1);
+        setDisplayedText((prev) => prev + text[currentIndex]);
+        setCurrentIndex((prev) => prev + 1);
       }, speed);
       return () => clearTimeout(timeout);
     } else if (onComplete) {
@@ -35,4 +41,3 @@ export const Typewriter = ({ text, delay = 0, speed = 30, onComplete, start }) =
     </span>
   );
 };
-
